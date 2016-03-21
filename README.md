@@ -1,6 +1,7 @@
 # LERN (Laravel Exception Recorder and Notifier)
 **_Lern from your mistakes_**
-LERN is a Laravel 5 package that will record exceptions into a database and will notify you via email, [Pushover](https://pushover.net/) or [Slack](https://slack.com/).
+
+LERN is a Laravel 5 package that will record exceptions into a database and will notify you via [Email](https://laravel.com/docs/master/mail), [Pushover](https://pushover.net/) or [Slack](https://slack.com/).
 
 
 ## Installation
