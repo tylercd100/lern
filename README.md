@@ -2,7 +2,6 @@
 [![Latest Version](https://img.shields.io/github/release/tylercd100/lern.svg?style=flat-square)](https://github.com/tylercd100/lern/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/tylercd100/lern/master.svg?style=flat-square)](https://travis-ci.org/tylercd100/lern)
-[![Quality Score](https://img.shields.io/scrutinizer/g/tylercd100/lern.svg?style=flat-square)](https://scrutinizer-ci.com/g/tylercd100/lern)
 [![Total Downloads](https://img.shields.io/packagist/dt/tylercd100/lern.svg?style=flat-square)](https://packagist.org/packages/tylercd100/lern)
 
 **_Lern from your mistakes_**
