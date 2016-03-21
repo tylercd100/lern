@@ -1,0 +1,33 @@
+{
+    "name": "tylercd100/lern",
+    "description": "A Laravel 5 package to record and notify of exceptions",
+    "keywords": [
+        "tylercd100",
+        "pushover",
+        "slack",
+        "exceptions",
+        "laravel",
+        "lern"
+    ],
+    "homepage": "https://github.com/tylercd100/lern",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tyler Arbon",
+            "email": "tylercd100@gmail.com"
+        }
+    ],
+    "autoload":{
+        "psr-4":{
+            "Tylercd100\\LERN\\":"src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^5.5|^7.0",
+        "illuminate/support": "^5.0.0"
+    },
+    "suggest": {
+        "maknz/slack": "Allows notifications to be sent via Slack"
+    }
+}
