@@ -3,7 +3,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Total Downloads](https://img.shields.io/packagist/dt/tylercd100/lern.svg?style=flat-square)](https://packagist.org/packages/tylercd100/lern)
 
-**_Lern from your mistakes_**
+**_LERN from your mistakes_**
 
 LERN is a Laravel 5 package that will record exceptions into a database and will notify you via [Email](https://laravel.com/docs/master/mail), [Pushover](https://pushover.net/) or [Slack](https://slack.com/).
 
