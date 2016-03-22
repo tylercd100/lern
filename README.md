@@ -57,3 +57,8 @@ $mostRecentException = ExceptionModel::orderBy('created_at','DESC')->first()
 
 ### Notifications
 LERN can notify you using Slack, Pushover or Email. To start using any of these just edit the provided config file `config/lern.php`
+
+## Roadmap
+- Exception report page or command to easily identify your application's issues.
+- More notification options. Maybe Twitter or an SMS Service? Whatever is useful, ya know?
+- Notification rate limiting and/or grouping. 
