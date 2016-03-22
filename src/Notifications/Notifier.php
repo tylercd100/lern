@@ -3,46 +3,39 @@
 namespace Tylercd100\LERN\Notifications;
 
 use Exception;
+use Monolog\Logger;
+use Tylercd100\LERN\Notifications\MonologHandlerFactory;
 
 class Notifier {
-    private $config;
+    protected $config;
+    protected $log;
 
-    public function __construct(){
+    public function __construct(Logger $log = null){
+        if($log === null){
+            $log = new Logger('Tylercd100\LERN');
+        }
+
+        $this->log = $log;
         $this->config = config('lern.notify');
     }
 
-    public function sendException(Exception $e){
-        
-        $drivers = $this->config['drivers'];
-
-        if(!is_array($drivers))
-            return false;
-
-        $subject = get_class($e) . " was thrown!";
-        $message = "{$e->getFile()}:{$e->getLine()} {$e->getMessage()}";
-
-        foreach ($drivers as $driver) {
-            $stackTrace = "";
-            if($this->config[$driver]['includeExceptionStackTrace'] === true){
-                $stackTrace = PHP_EOL.$e->getTraceAsString();
-            }
-
-            $sender = $this->createDriverInstance($driver);
-            $sender->setSubject($subject)
-                ->setMessage($message.$stackTrace)
-                ->send();
-        }
-
-        return true;
+    public function pushHandler($handler){
+        $this->log->pushHandler($handler);
+        return $this;
     }
 
-    private function createDriverInstance($driver){
-        $file = __DIR__.'/Drivers/'.ucfirst($driver).'.php';
+    public function send(Exception $e){
+        $factory = new MonologHandlerFactory();
+        $drivers = $this->config['drivers'];
 
-        if (file_exists($file)) {
-            return app('\\Tylercd100\\LERN\\Notifications\\Drivers\\'.ucfirst($driver));
-        } else {
-            throw new Exception("Driver '{$driver}' doesn't exist");
+        foreach ($drivers as $driver) {
+            $handler = $factory->create($driver,['subject'=>get_class($e)]);
+            $this->log->pushHandler($handler);
         }
+
+        //TODO: Figure out how to change this message!
+        $this->log->addError(get_class($e) . " was thrown! \n".$e->getMessage());
+
+        return;
     }
 }

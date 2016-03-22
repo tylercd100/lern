@@ -3,7 +3,7 @@
 return [
 
     'record'=>[
-
+        'table'=>'vendor_tylercd100_lern_exceptions',
     ],
 
     'notify'=>[

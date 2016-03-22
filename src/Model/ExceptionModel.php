@@ -5,6 +5,12 @@ namespace Tylercd100\LERN\Model;
 use Illuminate\Database\Eloquent\Model;
 
 class ExceptionModel extends Model {
-    protected $table = 'vendor_tylercd100_lern_exceptions';
+    protected $table;
     protected $guarded = array('id');
+
+    public function __construct(array $attributes = [])
+    {
+        $this->table = config('lern.record.table');
+        parent::__construct($attributes);
+    }
 }
