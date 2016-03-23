@@ -3,7 +3,8 @@
 namespace Tylercd100\LERN;
 
 use Exception;
-use Tylercd100\LERN\Model\ExceptionModel;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Tylercd100\LERN\Models\ExceptionModel;
 use Tylercd100\LERN\Notifications\Notifier;
 
 /**
@@ -87,6 +88,26 @@ class LERN
     public function setNotifier(Notifier $notifier)
     {
         $this->notifier = $notifier;
+    }
+
+    /**
+     * Set a string or a closure to be called that will generate the message body for the notification
+     * @param function|string $cb This closure function will be passed an Exception and must return a string
+     */
+    public function setMessage($cb)
+    {
+        $this->notifier->setMessage($cb);
+        return $this;
+    }
+
+    /**
+     * Set a string or a closure to be called that will generate the subject line for the notification
+     * @param function|string $cb This closure function will be passed an Exception and must return a string
+     */
+    public function setSubject($cb)
+    {
+        $this->notifier->setSubject($cb);
+        return $this;
     }
 
 }

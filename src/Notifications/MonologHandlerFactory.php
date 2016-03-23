@@ -9,44 +9,59 @@ class MonologHandlerFactory {
 
     protected $config;
 
-    public function __construct()
-    {
-        $this->config = config('lern.notify');
-    }
-
+    /**
+     * Creates a handler for a specified driver
+     * @param  string $driver                   Lowercase driver string that is also in the config/lern.php file
+     * @param  array  $opts                     Extra options
+     * @return Monolog\Handler\HandlerInterface A handler to use with a Monolog\Logger instance
+     */
     public function create($driver,$opts = array())
     {
-        if(isset($this->config[$driver]) && is_array($this->config[$driver]))
-            return $this->{$driver}($this->config[$driver],$opts);
+        $this->config = config('lern.notify.'.$driver);
+        if(is_array($this->config))
+            return $this->{$driver}($opts);
     }
 
-    protected function pushover($config, $opts)
+    /**
+     * Creates Pushover Monolog Handler
+     * @param  array $opts     Extra Options
+     * @return PushoverHandler A handler to use with a Monolog\Logger instance
+     */
+    protected function pushover($opts)
     {
         return new \Monolog\Handler\PushoverHandler(
-            $config['token'],
-            $config['user'],
-            (!empty($opts['subject']) ? $opts['subject'] : $config['subject']),
+            $this->config['token'],
+            $this->config['user'],
+            (!empty($opts['subject']) ? $opts['subject'] : $this->config['subject']),
             Logger::ERROR
         );
     }
 
-    protected function mail($config, $opts)
+    /**
+     * Creates Mail Monolog Handler
+     * @param  array $opts         Extra Options
+     * @return NativeMailerHandler A handler to use with a Monolog\Logger instance
+     */
+    protected function mail($opts)
     {
         return new \Monolog\Handler\NativeMailerHandler(
-            $config['to'],
-            (!empty($opts['subject']) ? $opts['subject'] : $config['subject']),
-            $config['from']
+            $this->config['to'],
+            (!empty($opts['subject']) ? $opts['subject'] : $this->config['subject']),
+            $this->config['from']
         );
     }
 
-    protected function slack($config, $opts)
+    /**
+     * Creates Slack Monolog Handler
+     * @param  array $opts   Extra Options
+     * @return SlackHandler  A handler to use with a Monolog\Logger instance
+     */
+    protected function slack($opts)
     {
         return new \Monolog\Handler\SlackHandler(
-            $config['token'], 
-            $config['channel'], 
-            $config['username'], 
-            $config['useAttachment'], 
-            $config['iconEmoji']
+            $this->config['token'], 
+            $this->config['channel'], 
+            $this->config['username']
         );
     }
 }

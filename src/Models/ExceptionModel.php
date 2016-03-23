@@ -1,6 +1,6 @@
 <?php
 
-namespace Tylercd100\LERN\Model;
+namespace Tylercd100\LERN\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

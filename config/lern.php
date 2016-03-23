@@ -8,6 +8,16 @@ return [
 
     'notify'=>[
         /**
+         * The default name of the monolog logger channel
+         */
+        'channel'=>'Tylercd100\LERN',
+
+        /**
+         * When using the default message body this will also include the stack trace
+         */
+        'includeExceptionStackTrace'=>true,
+        
+        /**
          * mail, pushover and/or slack
          */
         'drivers'=>['mail'],
@@ -18,7 +28,6 @@ return [
         'mail'=>[
             'to'=>'to@address.com',
             'from'=>'from@address.com',
-            'includeExceptionStackTrace'=>true,
         ],
 
         /**
@@ -28,7 +37,6 @@ return [
             'token' => env('PUSHOVER_APP_TOKEN'),
             'user'  => env('PUSHOVER_USER_KEY'),
             'sound'=>'siren',
-            'includeExceptionStackTrace'=>true,
         ],
 
         /**
@@ -38,7 +46,6 @@ return [
             'username'=>'',
             'icon'=>'',
             'channel'=>'',
-            'includeExceptionStackTrace'=>true,
         ]
     ],
     
