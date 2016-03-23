@@ -75,7 +75,7 @@ class Notifier {
         $factory = new MonologHandlerFactory();
         $drivers = $this->config['drivers'];
 
-        $message = (is_callable($this->messageCb) ? $this->messageCb->__invoke($e) : get_class($e) . " was thrown! \n".$e->getMessage());
+        $message = (is_callable($this->messageCb) ? $this->messageCb->__invoke($e) : get_class($e) . " was thrown! \n".$e->getMessage().($this->config['includeExceptionStackTrace']===true?"\n\n".$e->getTraceAsString():''));
         $subject = (is_callable($this->subjectCb) ? $this->subjectCb->__invoke($e) : get_class($e));
         
         foreach ($drivers as $driver) {
