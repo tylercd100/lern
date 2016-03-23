@@ -56,7 +56,7 @@ $mostRecentException = ExceptionModel::orderBy('created_at','DESC')->first()
 ```
 
 ### Notifications
-LERN uses the Monolog library to send notifications. Out of the box LERN supports Slack, Pushover and Email but if you need more then you can add your own custom Monolog handlers. To start using any of the out-of-the-box handlers just edit the provided config file `config/lern.php`. If you want to add your own handlers skip to the Advanced Use section.
+LERN uses the Monolog library to send notifications. Out of the box LERN supports Slack, Pushover and Email but if you need more, then you can add your own custom Monolog handlers. To start using any of the out-of-the-box handlers just edit the provided config file `config/lern.php`. If you want to add your own handlers skip to the Advanced Use section.
 
 ## Advanced Use
 ... Coming soon. In the meantime checkout `Tylercd100\LERN\Notifications\Notifier` and use `LERN::getNotifier()->pushHandler($handler);`
