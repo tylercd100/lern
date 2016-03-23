@@ -28,8 +28,8 @@ class LERN
 
     /**
      * Will execute record and notify methods
-     * @param  Exception $e   [description]
-     * @return ExceptionModel [description]
+     * @param  Exception $e   The exception to use
+     * @return ExceptionModel the recorded Eloquent Model
      */
     public function handle(Exception $e)
     {
@@ -40,8 +40,8 @@ class LERN
 
     /**
      * Stores the exception in the database
-     * @param  Exception $e   [description]
-     * @return ExceptionModel [description]
+     * @param  Exception $e   The exception to use
+     * @return ExceptionModel the recorded Eloquent Model
      */
     public function record(Exception $e)
     {
@@ -63,8 +63,8 @@ class LERN
 
     /**
      * Will send the exception to all monolog handlers
-     * @param  Exception $e [description]
-     * @return [type]       [description]
+     * @param  Exception $e The exception to use
+     * @return void
      */
     public function notify(Exception $e)
     {
@@ -74,7 +74,7 @@ class LERN
 
     /**
      * Get Notifier
-     * @return Notifier [description]
+     * @return Notifier 
      */
     public function getNotifier()
     {
@@ -83,7 +83,7 @@ class LERN
 
     /**
      * Set Notifier
-     * @param Notifier $notifier [description]
+     * @param Notifier $notifier A Notifier instance to use
      */
     public function setNotifier(Notifier $notifier)
     {
