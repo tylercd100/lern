@@ -12,7 +12,7 @@ class CreateLERNTables extends Migration {
      */
     public function up()
     {
-        Schema::create('vendor_tylercd100_lern_exceptions', function(Blueprint $table){
+        Schema::create(config('lern.record.table'), function(Blueprint $table){
             $table->increments('id', true)->unsigned();
             $table->string('class');
             $table->string('file');
@@ -32,7 +32,7 @@ class CreateLERNTables extends Migration {
      */
     public function down()
     {
-        Schema::drop('vendor_tylercd100_lern_exceptions');
+        Schema::drop(config('lern.record.table'));
     }
 
 }

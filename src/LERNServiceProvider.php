@@ -8,6 +8,10 @@ class LERNServiceProvider extends ServiceProvider
 {
     public function register(){
         $this->mergeConfigFrom(__DIR__ . '/../config/lern.php', 'lern');
+
+        $this->app->singleton('lern', function () {
+            return new LERN;
+        });
     }
 
     public function boot()
