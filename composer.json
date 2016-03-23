@@ -25,7 +25,7 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": "^5.5|^7.0",
+        "php": "^5.4|^7.0",
         "illuminate/support": "^5.0.0",
         "monolog/monolog": "~1.11"
     },
