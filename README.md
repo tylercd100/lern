@@ -11,26 +11,26 @@ LERN is a Laravel 5 package that will record exceptions into a database and will
 ## Installation
 
 Install via [composer](https://getcomposer.org/) - In the terminal:
-
 ```bash
 composer require tylercd100/lern
 ```
 
 Now add the following to the `providers` array in your `config/app.php`
-
 ```php
 Tylercd100\LERN\LERNServiceProvider::class
 ```
 
-Then you will need to run these commands in the terminal to copy the config and migration files and run the migration
-
+Then you will need to run these commands in the terminal to copy the config and migration files
 ```bash
 php artisan vendor:publish --provider="Tylercd100\LERN\LERNServiceProvider"
+```
+
+Before you run the migration you may want to take a look at `config/lern.php` and change the `table` property to a table name that you would like to use. After that run the migration 
+```bash
 php artisan migrate
 ```
 
-And finally you will need to change your `app/Exceptions/Handler.php` file to extend the new handler class
-
+And finally you will need to change your `app/Exceptions/Handler.php` file to extend the new handler class. (If you want to use your own Monolog handlers please skip this step and continue to the Advanced Use section)
 ```php
 use Tylercd100\LERN\Handler as ExceptionHandler;
 
@@ -56,9 +56,13 @@ $mostRecentException = ExceptionModel::orderBy('created_at','DESC')->first()
 ```
 
 ### Notifications
-LERN can notify you using Slack, Pushover or Email. To start using any of these just edit the provided config file `config/lern.php`
+LERN uses the Monolog library to send notifications. Out of the box LERN supports Slack, Pushover and Email but if you need more then you can add your own custom Monolog handlers. To start using any of the out-of-the-box handlers just edit the provided config file `config/lern.php`. If you want to add your own handlers skip to the Advanced Use section.
+
+## Advanced Use
+... Coming soon. In the meantime checkout `Tylercd100\LERN\Notifications\Notifier` and use `LERN::getNotifier()->pushHandler($handler);`
 
 ## Roadmap
+- Unit tests
+- More out-of-the-box support for additional Monolog Handlers
 - Exception report page or command to easily identify your application's issues.
-- More notification options. Maybe Twitter or an SMS Service? Whatever is useful, ya know?
 - Notification rate limiting and/or grouping. 
