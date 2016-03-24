@@ -21,8 +21,9 @@ class LERN
      */
     public function __construct(Notifier $notifier = null)
     {
-        if (empty($notifier))
-            $notifier = new Notifier();
+        if (empty($notifier)) {
+                    $notifier = new Notifier();
+        }
         $this->notifier = $notifier;
     }
 
@@ -55,8 +56,9 @@ class LERN
             'trace'       => $e->getTraceAsString(),
         ];
 
-        if ($e instanceof HttpExceptionInterface)
-            $opts['status_code'] = $e->getStatusCode();
+        if ($e instanceof HttpExceptionInterface) {
+                    $opts['status_code'] = $e->getStatusCode();
+        }
 
         return ExceptionModel::create($opts);
     }
@@ -77,7 +79,7 @@ class LERN
      * @param  HandlerInterface $handler The handler instance to add on
      * @return Notifier                  Returns this
      */
-    public function pushHandler(HandlerInterface $handler){
+    public function pushHandler(HandlerInterface $handler) {
         $this->notifier->pushHandler($handler);
         return $this;
     }

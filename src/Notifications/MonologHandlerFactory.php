@@ -18,8 +18,9 @@ class MonologHandlerFactory {
     public function create($driver, $subject = null)
     {
         $this->config = config('lern.notify.' . $driver);
-        if (is_array($this->config))
-            return $this->{$driver}($subject);
+        if (is_array($this->config)) {
+                    return $this->{$driver}($subject);
+        }
     }
 
     /**
