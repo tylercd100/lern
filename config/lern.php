@@ -43,6 +43,7 @@ return [
          * Slack settings
          */
         'slack'=>[
+            'token'=>'',
             'username'=>'',
             'icon'=>'',
             'channel'=>'',

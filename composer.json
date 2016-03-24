@@ -23,11 +23,19 @@
             "Tylercd100\\LERN\\":"src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tylercd100\\LERN\\Tests\\": "tests/"
+        }
+    },
     "minimum-stability": "stable",
     "require": {
         "php": "^5.4|^7.0",
         "illuminate/support": "^5.0.0",
         "monolog/monolog": "~1.11"
+    },
+    "require-dev": {
+        "orchestra/testbench": "~3.0"
     },
     "suggest": {
     }
