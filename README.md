@@ -47,7 +47,7 @@ public function report(Exception $e)
 	    LERN::handle($e); //Record and Notify the Exception
 	    /*
 	    OR...
-	    LERN::record($e); //Record the Exception to the data base
+	    LERN::record($e); //Record the Exception to the database
 	    LERN::notify($e); //Notify the Exception
 	    */
 	}
@@ -61,14 +61,22 @@ You can call `LERN::record($exception);` to record an Exception to the database.
 To query any Exception that has been recorded you can use `ExceptionModel` which is an Eloquent Model
 ```php
 use Tylercd100\LERN\Model\ExceptionModel;
-
 $mostRecentException = ExceptionModel::orderBy('created_at','DESC')->first()
 ```
 
 ### Notifications
 LERN uses the Monolog library to send notifications. LERN currently supports Slack, Pushover and Email but if you need more, then you can add your own custom Monolog handlers. To start using any of the supported handlers just edit the provided config file `config/lern.php`.
+
+#### Changing the text
 ```php
-LERN::notify($exception);
+//Custom notification subject/title
+LERN::setSubject("An Exception was thrown");
+//Custom notification message body
+LERN::setMessage(function($exception){
+	return get_class($exception) . " " . $exception->getFile() . ":" . $exception->getLine();
+});
+//Send it
+LERN::notify( new Exception );
 ```
 
 #### Custom Monolog Handlers
