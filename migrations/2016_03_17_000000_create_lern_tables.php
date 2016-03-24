@@ -12,7 +12,7 @@ class CreateLERNTables extends Migration {
      */
     public function up()
     {
-        Schema::create(config('lern.record.table'), function(Blueprint $table){
+        Schema::create(config('lern.record.table'), function(Blueprint $table) {
             $table->increments('id', true)->unsigned();
             $table->string('class');
             $table->string('file');
