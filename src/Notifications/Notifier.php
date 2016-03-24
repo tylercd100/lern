@@ -3,8 +3,8 @@
 namespace Tylercd100\LERN\Notifications;
 
 use Exception;
-use Monolog\Logger;
 use Monolog\Handler\HandlerInterface;
+use Monolog\Logger;
 use Tylercd100\LERN\Notifications\MonologHandlerFactory;
 
 class Notifier {
