@@ -73,6 +73,16 @@ class LERN
     }
 
     /**
+     * Pushes on another Monolog Handler
+     * @param  HandlerInterface $handler The handler instance to add on
+     * @return Notifier                  Returns this
+     */
+    public function pushHandler(HandlerInterface $handler){
+        $this->notifier->pushHandler($handler);
+        return $this;
+    }
+
+    /**
      * Get Notifier
      * @return Notifier 
      */
@@ -88,6 +98,7 @@ class LERN
     public function setNotifier(Notifier $notifier)
     {
         $this->notifier = $notifier;
+        return $this;
     }
 
     /**
