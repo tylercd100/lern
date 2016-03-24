@@ -12,24 +12,6 @@ class MonologHandlerFactoryTest extends TestCase
     {
         parent::setUp();
         $this->factory = new MonologHandlerFactory();
-
-        $this->app['config']->set('lern.notify.slack', [
-            'token'=>'token',
-            'username'=>'username',
-            'icon'=>'icon',
-            'channel'=>'channel',
-        ]);
-
-        $this->app['config']->set('lern.notify.mail', [
-            'to'=>'to@address.com',
-            'from'=>'from@address.com',
-        ]);
-
-        $this->app['config']->set('lern.notify.pushover', [
-            'token' => 'token',
-            'user'  => 'user',
-            'sound'=>'siren',
-        ]);
     }
 
     public function tearDown()
@@ -38,7 +20,7 @@ class MonologHandlerFactoryTest extends TestCase
     }
 
     public function testFactoryShouldSuccessfullyCreateAllSupportedDrivers(){
-        foreach (['slack','mail','pushover'] as $driver) {
+        foreach ($this->supportedDrivers as $driver) {
             $subject = 'Test Subject Line';
             $handler = $this->factory->create($driver,$subject);
             $this->assertNotEmpty($handler);
@@ -50,5 +32,4 @@ class MonologHandlerFactoryTest extends TestCase
         $handler = $this->factory->create('slack');
         $this->assertInstanceOf('\Monolog\Handler\HandlerInterface',$handler);
     }
-
 }

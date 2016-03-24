@@ -14,11 +14,25 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        // Your code here
-        // $this->artisan('migrate', [
-        //     '--database' => 'testbench',
-        //     '--realpath' => realpath(__DIR__.'/../migrations'),
-        // ]);
+        $this->supportedDrivers = ['slack','mail','pushover'];
+
+        $this->app['config']->set('lern.notify.slack', [
+            'token'=>'token',
+            'username'=>'username',
+            'icon'=>'icon',
+            'channel'=>'channel',
+        ]);
+
+        $this->app['config']->set('lern.notify.mail', [
+            'to'=>'to@address.com',
+            'from'=>'from@address.com',
+        ]);
+
+        $this->app['config']->set('lern.notify.pushover', [
+            'token' => 'token',
+            'user'  => 'user',
+            'sound'=>'siren',
+        ]);
     }
 
     /**

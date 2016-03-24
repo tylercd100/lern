@@ -42,6 +42,23 @@ class Notifier {
     }
 
     /**
+     * Returns the result of the message closure
+     * @param  Exception $e The Exception instance that you want to build the message around
+     * @return string       The message string
+     */
+    public function getMessage(Exception $e){
+        if(is_callable($this->messageCb)){
+            return $this->messageCb->__invoke($e);
+        } else {
+            $msg = get_class($e) . " was thrown! \n".$e->getMessage();
+            if($this->config['includeExceptionStackTrace']===true){
+                $msg.="\n\n".$e->getTraceAsString();
+            }
+            return $msg;
+        }
+    }
+
+    /**
      * Set a string or a closure to be called that will generate the subject line for the notification
      * @param function|string $cb This closure function will be passed an Exception and must return a string
      */
@@ -54,6 +71,19 @@ class Notifier {
         }
 
         return $this;
+    }
+
+    /**
+     * Returns the result of the subject closure
+     * @param  Exception $e The Exception instance that you want to build the subject around
+     * @return string       The subject string
+     */
+    public function getSubject(Exception $e){
+        if(is_callable($this->subjectCb)){
+            return $this->subjectCb->__invoke($e);
+        } else {
+            return get_class($e);
+        }
     }
 
     /**
@@ -75,11 +105,11 @@ class Notifier {
         $factory = new MonologHandlerFactory();
         $drivers = $this->config['drivers'];
 
-        $message = (is_callable($this->messageCb) ? $this->messageCb->__invoke($e) : get_class($e) . " was thrown! \n".$e->getMessage().($this->config['includeExceptionStackTrace']===true?"\n\n".$e->getTraceAsString():''));
-        $subject = (is_callable($this->subjectCb) ? $this->subjectCb->__invoke($e) : get_class($e));
+        $message = $this->getMessage($e);
+        $subject = $this->getSubject($e);
         
         foreach ($drivers as $driver) {
-            $handler = $factory->create($driver,['subject'=>$subject]);
+            $handler = $factory->create($driver,$subject);
             $this->log->pushHandler($handler);
         }
 
