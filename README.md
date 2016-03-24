@@ -22,8 +22,13 @@ Now add the following to the `providers` array in your `config/app.php`
 ```php
 Tylercd100\LERN\LERNServiceProvider::class
 ```
+and this to the `aliases` array in `config/app.php`
+```php
+"LERN" => "Tylercd100\LERN\Facades\LERN",
+```
 
-Then you will need to run these commands in the terminal to copy the config and migration files
+
+Then you will need to run these commands in the terminal in order to copy the config and migration files
 ```bash
 php artisan vendor:publish --provider="Tylercd100\LERN\LERNServiceProvider"
 ```
@@ -33,25 +38,27 @@ Before you run the migration you may want to take a look at `config/lern.php` an
 php artisan migrate
 ```
 
-And finally you will need to change your `app/Exceptions/Handler.php` file to extend the new handler class. (If you want to use your own Monolog handlers please skip this step and continue to the Advanced Use section)
-```php
-use Tylercd100\LERN\Handler as ExceptionHandler;
-
-class Handler extends ExceptionHandler{
-```
-
 ## Usage
-This package has two parts, recording and notifying.
-
-To ignore certain Exceptions just edit this property found in `app/Exceptions/Handler.php`
+To use LERN modify the report method in the `app/Exceptions/Handler.php` file
 ```php
-protected $dontReport = [
-	'Symfony\Component\HttpKernel\Exception\HttpException'
-];
+public function report(Exception $e)
+{
+	if ($this->shouldReport($e)) {
+	    LERN::handle($e); //Record and Notify the Exception
+	    /*
+	    OR...
+	    LERN::record($e); //Record the Exception to the data base
+	    LERN::notify($e); //Notify the Exception
+	    */
+	}
+	
+	return parent::report($e);
+}
 ```
 
 ### Recording
-Once you have migrated the provided migration file, recording will happen automatically. You can use the Eloquent Model to query any exception that has been automatically recorded
+You can call `LERN::record($exception);` to record an Exception to the database.
+To query any Exception that has been recorded you can use `ExceptionModel` which is an Eloquent Model
 ```php
 use Tylercd100\LERN\Model\ExceptionModel;
 
@@ -59,13 +66,21 @@ $mostRecentException = ExceptionModel::orderBy('created_at','DESC')->first()
 ```
 
 ### Notifications
-LERN uses the Monolog library to send notifications. Out of the box LERN supports Slack, Pushover and Email but if you need more, then you can add your own custom Monolog handlers. To start using any of the out-of-the-box handlers just edit the provided config file `config/lern.php`. If you want to add your own handlers skip to the Advanced Use section.
+LERN uses the Monolog library to send notifications. LERN currently supports Slack, Pushover and Email but if you need more, then you can add your own custom Monolog handlers. To start using any of the supported handlers just edit the provided config file `config/lern.php`.
+```php
+LERN::notify($exception);
+```
 
-## Advanced Use
-... Coming soon. In the meantime checkout `Tylercd100\LERN\Notifications\Notifier` and use `LERN::getNotifier()->pushHandler($handler);`
+#### Custom Monolog Handlers
+To use a custom Monolog Handler call the `pushHandler` method
+```php
+use Monolog\Handler\HipChatHandler;
+$handler = new HipChatHandler($token,$room);
+LERN::pushHandler($handler);
+LERN::notify($exception);
+```
 
 ## Roadmap
-- Unit tests
-- More out-of-the-box support for additional Monolog Handlers
+- Support more Monolog Handlers
 - Exception report page or command to easily identify your application's issues.
 - Notification rate limiting and/or grouping. 
