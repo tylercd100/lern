@@ -17,8 +17,8 @@ class Notifier {
      * You can provide a Monolog Logger instance to use in the constructor 
      * @param Logger|null $log Logger instance to use
      */
-    public function __construct(Logger $log = null){
-        if($log === null){
+    public function __construct(Logger $log = null) {
+        if ($log === null) {
             $log = new Logger(config('lern.notify.channel'));
         }
 
@@ -32,9 +32,9 @@ class Notifier {
      */
     public function setMessage($cb)
     {
-        if(is_string($cb)) {
+        if (is_string($cb)) {
             $this->messageCb = function() use ($cb) { return $cb; };
-        } else if(is_callable($cb)) {
+        } else if (is_callable($cb)) {
             $this->messageCb = $cb;
         }
 
@@ -46,13 +46,13 @@ class Notifier {
      * @param  Exception $e The Exception instance that you want to build the message around
      * @return string       The message string
      */
-    public function getMessage(Exception $e){
-        if(is_callable($this->messageCb)){
+    public function getMessage(Exception $e) {
+        if (is_callable($this->messageCb)) {
             return $this->messageCb->__invoke($e);
         } else {
-            $msg = get_class($e) . " was thrown! \n".$e->getMessage();
-            if($this->config['includeExceptionStackTrace']===true){
-                $msg.="\n\n".$e->getTraceAsString();
+            $msg = get_class($e) . " was thrown! \n" . $e->getMessage();
+            if ($this->config['includeExceptionStackTrace'] === true) {
+                $msg .= "\n\n" . $e->getTraceAsString();
             }
             return $msg;
         }
@@ -64,9 +64,9 @@ class Notifier {
      */
     public function setSubject($cb)
     {
-        if(is_string($cb)) {
+        if (is_string($cb)) {
             $this->subjectCb = function() use ($cb) { return $cb; };
-        } else if(is_callable($cb)) {
+        } else if (is_callable($cb)) {
             $this->subjectCb = $cb;
         }
 
@@ -78,8 +78,8 @@ class Notifier {
      * @param  Exception $e The Exception instance that you want to build the subject around
      * @return string       The subject string
      */
-    public function getSubject(Exception $e){
-        if(is_callable($this->subjectCb)){
+    public function getSubject(Exception $e) {
+        if (is_callable($this->subjectCb)) {
             return $this->subjectCb->__invoke($e);
         } else {
             return get_class($e);
@@ -91,7 +91,7 @@ class Notifier {
      * @param  HandlerInterface $handler The handler instance to add on
      * @return Notifier                  Returns this
      */
-    public function pushHandler(HandlerInterface $handler){
+    public function pushHandler(HandlerInterface $handler) {
         $this->log->pushHandler($handler);
         return $this;
     }
@@ -101,7 +101,7 @@ class Notifier {
      * @param  Exception $e The exception to use
      * @return Notifier     Returns this
      */
-    public function send(Exception $e){
+    public function send(Exception $e) {
         $factory = new MonologHandlerFactory();
         $drivers = $this->config['drivers'];
 
@@ -109,7 +109,7 @@ class Notifier {
         $subject = $this->getSubject($e);
         
         foreach ($drivers as $driver) {
-            $handler = $factory->create($driver,$subject);
+            $handler = $factory->create($driver, $subject);
             $this->log->pushHandler($handler);
         }
 

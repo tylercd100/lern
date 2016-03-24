@@ -13,19 +13,19 @@ class MonologHandlerFactory {
      * Creates a handler for a specified driver
      * @param  string $driver                   Lowercase driver string that is also in the config/lern.php file
      * @param  array  $subject                  Title or Subject line for the notification
-     * @return Monolog\Handler\HandlerInterface A handler to use with a Monolog\Logger instance
+     * @return \Monolog\Handler\HandlerInterface A handler to use with a Monolog\Logger instance
      */
-    public function create($driver,$subject = null)
+    public function create($driver, $subject = null)
     {
-        $this->config = config('lern.notify.'.$driver);
-        if(is_array($this->config))
+        $this->config = config('lern.notify.' . $driver);
+        if (is_array($this->config))
             return $this->{$driver}($subject);
     }
 
     /**
      * Creates Pushover Monolog Handler
      * @param  array $subject  Title or Subject line for the notification
-     * @return PushoverHandler A handler to use with a Monolog\Logger instance
+     * @return \Monolog\Handler\PushoverHandler A handler to use with a Monolog\Logger instance
      */
     protected function pushover($subject)
     {
@@ -41,7 +41,7 @@ class MonologHandlerFactory {
     /**
      * Creates Mail Monolog Handler
      * @param  array $subject      Title or Subject line for the notification
-     * @return NativeMailerHandler A handler to use with a Monolog\Logger instance
+     * @return \Monolog\Handler\NativeMailerHandler A handler to use with a Monolog\Logger instance
      */
     protected function mail($subject)
     {
@@ -55,8 +55,7 @@ class MonologHandlerFactory {
 
     /**
      * Creates Slack Monolog Handler
-     * @param  array $subject Title or Subject line for the notification
-     * @return SlackHandler   A handler to use with a Monolog\Logger instance
+     * @return \Monolog\Handler\SlackHandler   A handler to use with a Monolog\Logger instance
      */
     protected function slack()
     {
@@ -72,12 +71,12 @@ class MonologHandlerFactory {
      * @param  mixed $subject [description]
      * @return [type]          [description]
      */
-    private function checkSubject($subject){
-        if(empty($subject)) {
+    private function checkSubject($subject) {
+        if (empty($subject)) {
             throw new Exception('$subject must not be empty!');
         }
 
-        if(!is_string($subject)) {
+        if (!is_string($subject)) {
             throw new Exception('$subject must be a string!');
         }
     }
