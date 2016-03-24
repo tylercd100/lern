@@ -29,7 +29,10 @@ class MonologHandlerFactoryTest extends TestCase
 
     public function testFactoryShouldReturnAMonologHandlerInterface()
     {
-        $handler = $this->factory->create('slack');
-        $this->assertInstanceOf('\Monolog\Handler\HandlerInterface',$handler);
+        foreach ($this->supportedDrivers as $driver) {
+            $subject = 'Test Subject Line';
+            $handler = $this->factory->create($driver,$subject);
+            $this->assertInstanceOf('\Monolog\Handler\HandlerInterface',$handler);
+        }
     }
 }

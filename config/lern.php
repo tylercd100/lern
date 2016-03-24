@@ -18,7 +18,7 @@ return [
         'includeExceptionStackTrace'=>true,
         
         /**
-         * mail, pushover and/or slack
+         * mail, pushover, slack, flowdock and/or hipchat
          */
         'drivers'=>['mail'],
 
@@ -26,7 +26,7 @@ return [
          * Mail settings
          */
         'mail'=>[
-            'to'=>'to@address.com',
+            'to'  =>'to@address.com',
             'from'=>'from@address.com',
         ],
 
@@ -36,17 +36,41 @@ return [
         'pushover'=>[
             'token' => env('PUSHOVER_APP_TOKEN'),
             'user'  => env('PUSHOVER_USER_KEY'),
-            'sound'=>'siren',
+            'sound' => 'siren',
         ],
 
         /**
          * Slack settings
          */
         'slack'=>[
-            'token'=>'',
+            'token'   =>'',
             'username'=>'',
-            'icon'=>'',
-            'channel'=>'',
+            'icon'    =>'',
+            'channel' =>'',
+        ],
+
+        /**
+         * HipChat settings
+         */
+        'hipchat'=>[
+            'token' => 'token',
+            'room'  => 'room',
+            'name'  => 'name',
+            'notify'=> false,
+        ],
+
+        /**
+         * Flowdock settings
+         */
+        'flowdock'=>[
+            'token' => 'token',
+        ],
+
+        /**
+         * Fleephook settings
+         */
+        'fleephook'=>[
+            'token' => 'token',
         ]
     ],
     

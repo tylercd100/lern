@@ -23,6 +23,42 @@ class MonologHandlerFactory {
     }
 
     /**
+     * Creates FleepHook Monolog Handler
+     * @return \Monolog\Handler\FleepHookHandler A handler to use with a Monolog\Logger instance
+     */
+    protected function fleephook(){
+        return new \Monolog\Handler\FleepHookHandler(
+            $this->config['token'],
+            Logger::ERROR
+        );
+    }
+
+    /**
+     * Creates HipChat Monolog Handler
+     * @return \Monolog\Handler\HipChatHandler A handler to use with a Monolog\Logger instance
+     */
+    protected function hipchat(){
+        return new \Monolog\Handler\HipChatHandler(
+            $this->config['token'],
+            $this->config['room'],
+            $this->config['name'],
+            $this->config['notify'],
+            Logger::ERROR
+        );
+    }
+
+    /**
+     * Creates Flowdock Monolog Handler
+     * @return \Monolog\Handler\FlowdockHandler A handler to use with a Monolog\Logger instance
+     */
+    protected function flowdock(){
+        return new \Monolog\Handler\FlowdockHandler(
+            $this->config['token'],
+            Logger::ERROR
+        );
+    }
+
+    /**
      * Creates Pushover Monolog Handler
      * @param  array $subject  Title or Subject line for the notification
      * @return \Monolog\Handler\PushoverHandler A handler to use with a Monolog\Logger instance

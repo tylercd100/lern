@@ -14,13 +14,17 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->supportedDrivers = ['slack','mail','pushover'];
+        $this->supportedDrivers = ['slack','mail','pushover','hipchat','flowdock','fleephook'];
 
         $this->app['config']->set('lern.notify.slack', [
             'token'=>'token',
             'username'=>'username',
             'icon'=>'icon',
             'channel'=>'channel',
+        ]);
+
+        $this->app['config']->set('lern.notify.fleephook', [
+            'token'=>'token',
         ]);
 
         $this->app['config']->set('lern.notify.mail', [
@@ -32,6 +36,17 @@ class TestCase extends Orchestra
             'token' => 'token',
             'user'  => 'user',
             'sound'=>'siren',
+        ]);
+
+        $this->app['config']->set('lern.notify.hipchat', [
+            'token' => 'token',
+            'room'  => 'room',
+            'name'  => 'name',
+            'notify'  => false,
+        ]);
+
+        $this->app['config']->set('lern.notify.flowdock', [
+            'token' => 'token',
         ]);
     }
 
