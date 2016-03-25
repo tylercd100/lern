@@ -74,18 +74,6 @@ $mostRecentException = ExceptionModel::orderBy('created_at','DESC')->first()
 ### Notifications
 LERN uses the Monolog library to send notifications. If you need more than the supported notification channels, then you can add your own custom Monolog handlers. To start using any of the supported handlers just edit the provided config file `config/lern.php`.
 
-#### Changing the text
-```php
-//Custom notification subject/title
-LERN::setSubject("An Exception was thrown");
-//Custom notification message body
-LERN::setMessage(function($exception){
-	return get_class($exception) . " " . $exception->getFile() . ":" . $exception->getLine();
-});
-//Send it
-LERN::notify( new Exception );
-```
-
 #### Custom Monolog Handlers
 To use a custom Monolog Handler call the `pushHandler` method
 ```php
@@ -93,6 +81,46 @@ use Monolog\Handler\HipChatHandler;
 $handler = new HipChatHandler($token,$room);
 LERN::pushHandler($handler);
 LERN::notify($exception);
+```
+
+#### Changing the text
+```php
+//Change the subject
+LERN::setSubject("An Exception was thrown!");
+
+//Change the message body
+LERN::setMessage(function($exception){
+    $msg = "";
+
+    //Get the route
+    $url = Request::url();
+    $method = Request::method();
+    if($url) {
+        $msg.="URL: {$method}@{$url}".PHP_EOL;
+    }
+
+    //Get the User
+    $user = Auth::user();
+    if($user) {
+        $msg.="User: #{$user->id} {$user->first_name} {$user->last_name}".PHP_EOL;
+    }
+
+    //Exception
+    $msg.=get_class($exception).":{$exception->getLine()} {$exception->getMessage()}".PHP_EOL;
+
+    //Input
+    $input = Input::all();
+    if(!empty($input)){
+        $msg.="Data: ".json_encode($input).PHP_EOL;
+    }
+
+    //Trace
+    $msg.=PHP_EOL."Trace: {$exception->getTraceAsString()}";
+    return $msg;
+});
+
+LERN::notify($e); //Notify the Exception
+
 ```
 
 ## Roadmap
