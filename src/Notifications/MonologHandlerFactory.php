@@ -27,7 +27,7 @@ class MonologHandlerFactory {
      * Creates FleepHook Monolog Handler
      * @return \Monolog\Handler\FleepHookHandler A handler to use with a Monolog\Logger instance
      */
-    protected function fleephook(){
+    protected function fleephook() {
         return new \Monolog\Handler\FleepHookHandler(
             $this->config['token'],
             Logger::ERROR
@@ -38,7 +38,7 @@ class MonologHandlerFactory {
      * Creates HipChat Monolog Handler
      * @return \Monolog\Handler\HipChatHandler A handler to use with a Monolog\Logger instance
      */
-    protected function hipchat(){
+    protected function hipchat() {
         return new \Monolog\Handler\HipChatHandler(
             $this->config['token'],
             $this->config['room'],
@@ -57,7 +57,7 @@ class MonologHandlerFactory {
      * Creates Flowdock Monolog Handler
      * @return \Monolog\Handler\FlowdockHandler A handler to use with a Monolog\Logger instance
      */
-    protected function flowdock(){
+    protected function flowdock() {
         return new \Monolog\Handler\FlowdockHandler(
             $this->config['token'],
             Logger::ERROR

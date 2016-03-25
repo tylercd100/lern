@@ -8,8 +8,15 @@
 
 **_LERN from your mistakes_**
 
-LERN is a Laravel 5 package that will record exceptions into a database and will notify you via [Email](https://laravel.com/docs/master/mail), [Pushover](https://pushover.net/) or [Slack](https://slack.com/).
+LERN is a Laravel 5 package that will record exceptions into a database and will send you a notification.
 
+Currently supported notification channels
+- Email
+- [Pushover](https://pushover.net/)
+- [Slack](https://slack.com/)
+- [Hipchat](https://www.hipchat.com/)
+- [Fleephook](https://fleep.io/)
+- [Flowdock](https://www.flowdock.com/)
 
 ## Installation
 
@@ -65,7 +72,7 @@ $mostRecentException = ExceptionModel::orderBy('created_at','DESC')->first()
 ```
 
 ### Notifications
-LERN uses the Monolog library to send notifications. LERN currently supports Slack, Pushover and Email but if you need more, then you can add your own custom Monolog handlers. To start using any of the supported handlers just edit the provided config file `config/lern.php`.
+LERN uses the Monolog library to send notifications. If you need more than the supported notification channels, then you can add your own custom Monolog handlers. To start using any of the supported handlers just edit the provided config file `config/lern.php`.
 
 #### Changing the text
 ```php
