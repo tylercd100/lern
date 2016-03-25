@@ -113,7 +113,7 @@ class Notifier {
             $this->log->pushHandler($handler);
         }
 
-        $this->log->addError($message);
+        $this->log->addCritical($message);
 
         return $this;
     }

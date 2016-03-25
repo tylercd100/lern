@@ -24,9 +24,9 @@ class NotifierTest extends TestCase
     {
         $this->app['config']->set('lern.notify.drivers', ['slack','pushover']);
 
-        $observer = $this->getMock('Monolog\Logger',['addError'],['channelName']);
+        $observer = $this->getMock('Monolog\Logger',['addCritical'],['channelName']);
         $observer->expects($this->once())
-                 ->method('addError');
+                 ->method('addCritical');
 
         $subject = new Notifier($observer);
         $subject->send(new Exception);

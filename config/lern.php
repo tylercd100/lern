@@ -43,34 +43,33 @@ return [
          * Slack settings
          */
         'slack'=>[
-            'token'   =>'',
-            'username'=>'',
-            'icon'    =>'',
-            'channel' =>'',
+            'token'   => env('SLACK_APP_TOKEN'), //https://api.slack.com/web#auth
+            'channel' => env('SLACK_CHANNEL','#exceptions'), //Dont forget the '#'
+            'username'=> env('SLACK_USERNAME','LERN'), //The 'from' name
         ],
 
         /**
          * HipChat settings
          */
         'hipchat'=>[
-            'token' => 'token',
+            'token' => env('HIPCHAT_APP_TOKEN'),
             'room'  => 'room',
             'name'  => 'name',
-            'notify'=> false,
+            'notify'=> true,
         ],
 
         /**
          * Flowdock settings
          */
         'flowdock'=>[
-            'token' => 'token',
+            'token' => env('FLOWDOCK_APP_TOKEN'),
         ],
 
         /**
          * Fleephook settings
          */
         'fleephook'=>[
-            'token' => 'token',
+            'token' => env('FLEEPHOOK_APP_TOKEN'),
         ]
     ],
     

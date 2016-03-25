@@ -11,15 +11,15 @@ class MonologHandlerFactory {
 
     /**
      * Creates a handler for a specified driver
-     * @param  string $driver                   Lowercase driver string that is also in the config/lern.php file
-     * @param  array  $subject                  Title or Subject line for the notification
+     * @param  string $driver                    Lowercase driver string that is also in the config/lern.php file
+     * @param  array  $subject                   Title or Subject line for the notification
      * @return \Monolog\Handler\HandlerInterface A handler to use with a Monolog\Logger instance
      */
     public function create($driver, $subject = null)
     {
         $this->config = config('lern.notify.' . $driver);
         if (is_array($this->config)) {
-                    return $this->{$driver}($subject);
+            return $this->{$driver}($subject);
         }
     }
 
@@ -29,8 +29,7 @@ class MonologHandlerFactory {
      */
     protected function fleephook() {
         return new \Monolog\Handler\FleepHookHandler(
-            $this->config['token'],
-            Logger::ERROR
+            $this->config['token']
         );
     }
 
@@ -44,7 +43,7 @@ class MonologHandlerFactory {
             $this->config['room'],
             $this->config['name'],
             $this->config['notify'],
-            Logger::ERROR,
+            Logger::CRITICAL,
             true, 
             true, 
             'text', 
@@ -59,8 +58,7 @@ class MonologHandlerFactory {
      */
     protected function flowdock() {
         return new \Monolog\Handler\FlowdockHandler(
-            $this->config['token'],
-            Logger::ERROR
+            $this->config['token']
         );
     }
 
@@ -75,8 +73,7 @@ class MonologHandlerFactory {
         return new \Monolog\Handler\PushoverHandler(
             $this->config['token'],
             $this->config['user'],
-            $subject,
-            Logger::ERROR
+            $subject
         );
     }
 
