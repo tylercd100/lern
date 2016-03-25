@@ -2,6 +2,13 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 2.1.2
+- Improved config file with env functions and comments. 
+- Fixed some handlers by increasing the log level from ERROR to CRITICAL
+
+### 2.1.1
+- Fixed HipChat by making it use api v2
+
 ### 2.1.0
 - Added Hipchat, Flowdock and Fleephook support
 
