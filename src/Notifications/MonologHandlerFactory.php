@@ -44,7 +44,12 @@ class MonologHandlerFactory {
             $this->config['room'],
             $this->config['name'],
             $this->config['notify'],
-            Logger::ERROR
+            Logger::ERROR,
+            true, 
+            true, 
+            'text', 
+            'api.hipchat.com', 
+            'v2'
         );
     }
 
