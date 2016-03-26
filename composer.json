@@ -35,7 +35,8 @@
         "monolog/monolog": "~1.11"
     },
     "require-dev": {
-        "orchestra/testbench": "~3.0"
+        "orchestra/testbench": "~3.0",
+        "phpunit/phpunit": "^4.8 || ^5.0"
     },
     "suggest": {
     }
