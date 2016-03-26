@@ -6,6 +6,7 @@ use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Tylercd100\LERN\Models\ExceptionModel;
 use Tylercd100\LERN\Notifications\Notifier;
+use Monolog\Handler\HandlerInterface;
 
 /**
 * The master class
