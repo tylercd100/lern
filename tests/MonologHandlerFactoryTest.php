@@ -6,24 +6,24 @@ use Tylercd100\LERN\Notifications\MonologHandlerFactory;
 
 class MonologHandlerFactoryTest extends TestCase
 {
-    private $factory;
+    private $factoryInstance;
 
     public function setUp()
     {
         parent::setUp();
-        $this->factory = new MonologHandlerFactory();
+        $this->factoryInstance = new MonologHandlerFactory();
     }
 
     public function tearDown()
     {
-        unset($this->factory);
+        unset($this->factoryInstance);
         parent::tearDown();        
     }
 
     public function testFactoryShouldSuccessfullyCreateAllSupportedDrivers(){
         foreach ($this->supportedDrivers as $driver) {
             $subject = 'Test Subject Line';
-            $handler = $this->factory->create($driver,$subject);
+            $handler = $this->factoryInstance->create($driver,$subject);
             $this->assertNotEmpty($handler);
         }
     }
@@ -32,7 +32,7 @@ class MonologHandlerFactoryTest extends TestCase
     {
         foreach ($this->supportedDrivers as $driver) {
             $subject = 'Test Subject Line';
-            $handler = $this->factory->create($driver,$subject);
+            $handler = $this->factoryInstance->create($driver,$subject);
             $this->assertInstanceOf('\Monolog\Handler\HandlerInterface',$handler);
         }
     }
