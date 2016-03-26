@@ -11,13 +11,13 @@ class NotifierTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-
         $this->notifier = new Notifier;
     }
 
     public function tearDown()
     {
         unset($this->notifier);
+        parent::tearDown();        
     }
 
     public function testLoggerCallsAddsError()

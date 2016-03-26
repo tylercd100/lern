@@ -22,7 +22,7 @@ class LERN
     public function __construct(Notifier $notifier = null)
     {
         if (empty($notifier)) {
-                    $notifier = new Notifier();
+            $notifier = new Notifier();
         }
         $this->notifier = $notifier;
     }
@@ -57,7 +57,7 @@ class LERN
         ];
 
         if ($e instanceof HttpExceptionInterface) {
-                    $opts['status_code'] = $e->getStatusCode();
+            $opts['status_code'] = $e->getStatusCode();
         }
 
         return ExceptionModel::create($opts);

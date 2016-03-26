@@ -17,6 +17,7 @@ class MonologHandlerFactoryTest extends TestCase
     public function tearDown()
     {
         unset($this->factory);
+        parent::tearDown();        
     }
 
     public function testFactoryShouldSuccessfullyCreateAllSupportedDrivers(){

@@ -50,6 +50,22 @@ class TestCase extends Orchestra
         ]);
     }
 
+    public function tearDown()
+    {
+        parent::tearDown();        
+    }
+
+    protected function migrate(){
+        $this->artisan('migrate', [
+            '--database' => 'testbench',
+            '--realpath' => realpath(__DIR__.'/../migrations'),
+        ]);
+    }
+
+    protected function migrateReset(){
+        $this->artisan('migrate:reset');
+    }
+
     /**
      * @param \Illuminate\Foundation\Application $app
      */
@@ -67,12 +83,12 @@ class TestCase extends Orchestra
     protected function getEnvironmentSetUp($app)
     {
         // Setup default database to use sqlite :memory:
-        // $app['config']->set('database.default', 'testbench');
-        // $app['config']->set('database.connections.testbench', [
-        //     'driver'   => 'sqlite',
-        //     'database' => ':memory:',
-        //     'prefix'   => '',
-        // ]);
+        $app['config']->set('database.default', 'testbench');
+        $app['config']->set('database.connections.testbench', [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        ]);
 
         $app['config']->set('lern.notify', [
             'channel'=>'Tylercd100\LERN',
