@@ -106,7 +106,7 @@ LERN::setMessage(function($exception){
     }
 
     //Exception
-    $msg.=get_class($exception).":{$exception->getLine()} {$exception->getMessage()}".PHP_EOL;
+    $msg.=get_class($exception).":{$exception->getFile()}:{$exception->getLine()} {$exception->getMessage()}".PHP_EOL;
 
     //Input
     $input = Input::all();
