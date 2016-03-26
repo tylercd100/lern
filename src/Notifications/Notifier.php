@@ -31,7 +31,7 @@ class Notifier {
      * @param  callable|string $cb The value that you want to wrap in a closure
      * @return callable
      */
-    private function wrapValueInClosure($cb){
+    private function wrapValueInClosure($cb) {
         if (is_callable($cb)) {
             return $cb;
         } else {

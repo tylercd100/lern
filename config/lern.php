@@ -44,8 +44,8 @@ return [
          */
         'slack'=>[
             'token'   => env('SLACK_APP_TOKEN'), //https://api.slack.com/web#auth
-            'channel' => env('SLACK_CHANNEL','#exceptions'), //Dont forget the '#'
-            'username'=> env('SLACK_USERNAME','LERN'), //The 'from' name
+            'channel' => env('SLACK_CHANNEL', '#exceptions'), //Dont forget the '#'
+            'username'=> env('SLACK_USERNAME', 'LERN'), //The 'from' name
         ],
 
         /**
