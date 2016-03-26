@@ -12,7 +12,7 @@ class MonologHandlerFactory {
     /**
      * Creates a handler for a specified driver
      * @param  string $driver                    Lowercase driver string that is also in the config/lern.php file
-     * @param  array  $subject                   Title or Subject line for the notification
+     * @param  string $subject                   Title or Subject line for the notification
      * @return \Monolog\Handler\HandlerInterface A handler to use with a Monolog\Logger instance
      */
     public function create($driver, $subject = null)
@@ -64,7 +64,7 @@ class MonologHandlerFactory {
 
     /**
      * Creates Pushover Monolog Handler
-     * @param  array $subject  Title or Subject line for the notification
+     * @param  string $subject  Title or Subject line for the notification
      * @return \Monolog\Handler\PushoverHandler A handler to use with a Monolog\Logger instance
      */
     protected function pushover($subject)
@@ -79,7 +79,7 @@ class MonologHandlerFactory {
 
     /**
      * Creates Mail Monolog Handler
-     * @param  array $subject      Title or Subject line for the notification
+     * @param  string $subject Title or Subject line for the notification
      * @return \Monolog\Handler\NativeMailerHandler A handler to use with a Monolog\Logger instance
      */
     protected function mail($subject)
@@ -107,8 +107,8 @@ class MonologHandlerFactory {
 
     /**
      * Validates that the subject is an unempty string
-     * @param  mixed $subject [description]
-     * @return [type]          [description]
+     * @param  mixed $subject The value to check
+     * @return void
      */
     private function checkSubject($subject) {
         if (empty($subject)) {

@@ -1,5 +1,7 @@
 <?php
 
+namespace Tylercd100\LERN\Migrations;
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
@@ -13,7 +15,7 @@ class CreateLERNTables extends Migration {
     public function up()
     {
         Schema::create(config('lern.record.table'), function(Blueprint $table) {
-            $table->increments('id', true)->unsigned();
+            $table->increments('id')->unsigned();
             $table->string('class');
             $table->string('file');
             $table->integer('code');

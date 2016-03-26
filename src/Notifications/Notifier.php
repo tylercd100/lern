@@ -27,17 +27,25 @@ class Notifier {
     }
 
     /**
+     * Transforms a value into a closure that returns itself when called
+     * @param  callable|string $cb The value that you want to wrap in a closure
+     * @return callable
+     */
+    private function wrapValueInClosure($cb){
+        if (is_callable($cb)) {
+            return $cb;
+        } else {
+            return function() use ($cb) { return $cb; };
+        }
+    }
+
+    /**
      * Set a string or a closure to be called that will generate the message body for the notification
-     * @param function|string $cb This closure function will be passed an Exception and must return a string
+     * @param callable|string $cb A closure or string that will be set for the message
      */
     public function setMessage($cb)
     {
-        if (is_string($cb)) {
-            $this->messageCb = function() use ($cb) { return $cb; };
-        } else if (is_callable($cb)) {
-            $this->messageCb = $cb;
-        }
-
+        $this->messageCb = $this->wrapValueInClosure($cb);
         return $this;
     }
 
@@ -60,16 +68,11 @@ class Notifier {
 
     /**
      * Set a string or a closure to be called that will generate the subject line for the notification
-     * @param function|string $cb This closure function will be passed an Exception and must return a string
+     * @param callable|string $cb A closure or string that will be set for the subject line
      */
     public function setSubject($cb)
     {
-        if (is_string($cb)) {
-            $this->subjectCb = function() use ($cb) { return $cb; };
-        } else if (is_callable($cb)) {
-            $this->subjectCb = $cb;
-        }
-
+        $this->subjectCb = $this->wrapValueInClosure($cb);
         return $this;
     }
 
