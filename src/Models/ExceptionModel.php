@@ -14,11 +14,11 @@ class ExceptionModel extends Model {
         parent::__construct($attributes);
     }
 
-    public function setDataAttribute($value){
+    public function setDataAttribute($value) {
         $this->attributes['data'] = json_encode($value);
     }
 
-    public function getDataAttribute($value){
+    public function getDataAttribute($value) {
         return json_decode($value);
     }
 }
