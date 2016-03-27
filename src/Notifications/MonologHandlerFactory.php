@@ -94,7 +94,7 @@ class MonologHandlerFactory {
 
     /**
      * Creates Slack Monolog Handler
-     * @return \Monolog\Handler\SlackHandler   A handler to use with a Monolog\Logger instance
+     * @return \Monolog\Handler\SlackHandler A handler to use with a Monolog\Logger instance
      */
     protected function slack()
     {
@@ -105,6 +105,19 @@ class MonologHandlerFactory {
         );
     }
 
+    /**
+     * Creates Plivo Monolog Handler
+     * @return \Tylercd100\Monolog\Handler\PlivoHandler A handler to use with a Monolog\Logger instance
+     */
+    protected function plivo()
+    {
+        return new \Tylercd100\Monolog\Handler\PlivoHandler(
+            $this->config['token'], 
+            $this->config['auth_id'], 
+            $this->config['from'],
+            $this->config['to']
+        );
+    }
     /**
      * Validates that the subject is an unempty string
      * @param  mixed $subject The value to check

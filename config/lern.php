@@ -18,7 +18,7 @@ return [
         'includeExceptionStackTrace'=>true,
         
         /**
-         * mail, pushover, slack, flowdock and/or hipchat
+         * mail, pushover, slack, etc...
          */
         'drivers'=>['mail'],
 
@@ -70,6 +70,16 @@ return [
          */
         'fleephook'=>[
             'token' => env('FLEEPHOOK_APP_TOKEN'),
+        ],
+
+        /**
+         * Plivo settings
+         */
+        'plivo'=>[
+            'auth_id' => env('PLIVO_AUTH_ID'),
+            'token'   => env('PLIVO_AUTH_TOKEN'),
+            'to'      => env('PLIVO_APP_TOKEN'),
+            'from'    => env('PLIVO_APP_TOKEN'),
         ]
     ],
     
