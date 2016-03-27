@@ -74,6 +74,14 @@ public function report(Exception $e)
 }
 ```
 
+Dont forget to add this to the top of the file 
+```php
+//If you updated your aliases array in "config/app.php"
+use LERN;
+//or if you didnt...
+use Tylercd100\LERN\Facades\LERN;
+```
+
 ### Recording
 You can call `LERN::record($exception);` to record an Exception to the database.
 To query any Exception that has been recorded you can use `ExceptionModel` which is an Eloquent Model
