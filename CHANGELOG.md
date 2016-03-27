@@ -2,6 +2,15 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.0.0
+- When enabled in the config file you can now collect:
+    - user_id - The id of the currently logged in user.
+    - method - Then method of the request: GET, POST, DELETE, PUT, etc...
+    - url - The full URL of the request.
+    - data - The input data of the request, if any.
+
+__Reason for Major release: 3.0.0 introduces a new migration file and structure changes that could cause issues for 2.x users__
+
 ### 2.3.0
 - Added support for [Twilio](https://www.twilio.com/) an SMS messaging service.
 
