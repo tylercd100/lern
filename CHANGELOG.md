@@ -2,6 +2,12 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 2.1.3
+- Scutinizer Code Coverage
+- Fixed Docblocks
+- Added more Unit Tests (60% -> 94% Coverage)
+- Changed dev dependencies
+
 ### 2.1.2
 - Improved config file with env functions and comments. 
 - Fixed some handlers by increasing the log level from ERROR to CRITICAL
