@@ -40,10 +40,10 @@ class Recorder {
         ];
 
         $opts['status_code'] = $this->getStatusCode($e);
-        $opts['user_id'] = $this->getUserId($e);
-        $opts['method'] = $this->getMethod($e);
-        $opts['data'] = $this->getData($e);
-        $opts['url'] = $this->getUrl($e);
+        $opts['user_id'] = $this->getUserId();
+        $opts['method'] = $this->getMethod();
+        $opts['data'] = $this->getData();
+        $opts['url'] = $this->getUrl();
 
         return ExceptionModel::create($opts);
     }
