@@ -21,6 +21,14 @@ Currently supported notification channels via [Monolog](https://github.com/Selda
 - [Plivo](https://www.plivo.com/) an SMS messaging service.
 - [Twilio](https://www.twilio.com/) an SMS messaging service.
 
+## Migrating from `2.x` to `3.x`
+Version 3.x introduces the ability to collect more information from the error such as the user_id, url, method, and input data. In order to use 3.x you will need to copy over the new [config file](https://github.com/tylercd100/lern/blob/master/config/lern.php), the migration file and then migrate it.
+```php
+# This will only copy over the migration file. For the config file you can either include the --force flag (Which will overwrite it) or copy it manually from github 
+php artisan vendor:publish --provider="Tylercd100\LERN\LERNServiceProvider"
+php artisan migrate
+```
+
 ## Installation
 
 Install via [composer](https://getcomposer.org/) - In the terminal:
@@ -32,11 +40,11 @@ Now add the following to the `providers` array in your `config/app.php`
 ```php
 Tylercd100\LERN\LERNServiceProvider::class
 ```
+
 and this to the `aliases` array in `config/app.php`
 ```php
 "LERN" => "Tylercd100\LERN\Facades\LERN",
 ```
-
 
 Then you will need to run these commands in the terminal in order to copy the config and migration files
 ```bash
@@ -79,7 +87,21 @@ You can call `LERN::record($exception);` to record an Exception to the database.
 To query any Exception that has been recorded you can use `ExceptionModel` which is an Eloquent Model
 ```php
 use Tylercd100\LERN\Model\ExceptionModel;
-$mostRecentException = ExceptionModel::orderBy('created_at','DESC')->first()
+$mostRecentException = ExceptionModel::orderBy('created_at','DESC')->first();
+```
+
+To change what is recorded in to the database take a look at `config/lern.php`
+```php
+'record'=>[
+	'table'=>'vendor_tylercd100_lern_exceptions',
+	'collect'=>[
+	    'method'=>false, //When true it will collect GET, POST, DELETE, PUT, etc...
+	    'data'=>false, //When true it will collect Input data
+	    'status_code'=>true,
+	    'user_id'=>false,
+	    'url'=>false,
+	],
+],
 ```
 
 ### Notifications

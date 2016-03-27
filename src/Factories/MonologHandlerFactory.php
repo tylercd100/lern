@@ -1,6 +1,6 @@
 <?php
 
-namespace Tylercd100\LERN\Notifications;
+namespace Tylercd100\LERN\Factories;
 
 use Exception;
 use Monolog\Logger;

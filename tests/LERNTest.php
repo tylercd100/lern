@@ -3,8 +3,8 @@
 namespace Tylercd100\LERN\Tests;
 
 use Tylercd100\LERN\LERN;
-use Tylercd100\LERN\Notifications\MonologHandlerFactory;
-use Tylercd100\LERN\Notifications\Notifier;
+use Tylercd100\LERN\Factories\MonologHandlerFactory;
+use Tylercd100\LERN\Components\Notifier;
 use Exception;
 
 class LERNTest extends TestCase
@@ -42,7 +42,7 @@ class LERNTest extends TestCase
     }
 
     public function testItCallsNotifierSendMethod() {
-        $mock = $this->getMock('Tylercd100\LERN\Notifications\Notifier', array('send'));
+        $mock = $this->getMock('Tylercd100\LERN\Components\Notifier', array('send'));
         $mock->expects($this->once())
              ->method('send');
         $lern = new LERN($mock);
@@ -50,7 +50,7 @@ class LERNTest extends TestCase
     }
 
     public function testItCallsNotifierPushHandlerMethod() {
-        $mock = $this->getMock('Tylercd100\LERN\Notifications\Notifier', array('pushHandler'));
+        $mock = $this->getMock('Tylercd100\LERN\Components\Notifier', array('pushHandler'));
         $mock->expects($this->once())
              ->method('pushHandler');
         $lern = new LERN($mock);
@@ -59,7 +59,7 @@ class LERNTest extends TestCase
     }
 
     public function testItCallsNotifierSetSubjectMethod() {
-        $mock = $this->getMock('Tylercd100\LERN\Notifications\Notifier', array('setSubject'));
+        $mock = $this->getMock('Tylercd100\LERN\Components\Notifier', array('setSubject'));
         
         $mock->expects($this->once())
              ->method('setSubject');
@@ -69,7 +69,7 @@ class LERNTest extends TestCase
     }
 
     public function testItCallsNotifierSetMessageMethod() {
-        $mock = $this->getMock('Tylercd100\LERN\Notifications\Notifier', array('setMessage'));
+        $mock = $this->getMock('Tylercd100\LERN\Components\Notifier', array('setMessage'));
         
         $mock->expects($this->once())
              ->method('setMessage');

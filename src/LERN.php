@@ -3,29 +3,45 @@
 namespace Tylercd100\LERN;
 
 use Exception;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
-use Tylercd100\LERN\Models\ExceptionModel;
-use Tylercd100\LERN\Notifications\Notifier;
 use Monolog\Handler\HandlerInterface;
+use Tylercd100\LERN\Components\Notifier;
+use Tylercd100\LERN\Components\Recorder;
 
 /**
 * The master class
 */
 class LERN 
 {
-
+    /**
+     * @var Exception
+     */
     private $exception;
+
+    /**
+     * @var \Tylercd100\LERN\Components\Notifier
+     */
     private $notifier;
+
+    /**
+     * @var \Tylercd100\LERN\Components\Recorder
+     */
+    private $recorder;
     
     /**
-     * @param Notifier|null $notifier Notifier instance
+     * @param \Tylercd100\LERN\Components\Notifier|null $notifier Notifier instance
+     * @param \Tylercd100\LERN\Components\Recorder|null $recorder Recorder instance
      */
-    public function __construct(Notifier $notifier = null)
+    public function __construct(Notifier $notifier = null, Recorder $recorder = null)
     {
         if (empty($notifier)) {
             $notifier = new Notifier();
         }
         $this->notifier = $notifier;
+
+        if (empty($recorder)) {
+            $recorder = new Recorder();
+        }
+        $this->recorder = $recorder;
     }
 
     /**
@@ -43,25 +59,12 @@ class LERN
     /**
      * Stores the exception in the database
      * @param  Exception $e   The exception to use
-     * @return ExceptionModel the recorded Eloquent Model
+     * @return \Tylercd100\LERN\Models\ExceptionModel The recorded Exception as an Eloquent Model
      */
     public function record(Exception $e)
     {
         $this->exception = $e;
-        $opts = [
-            'class'       => get_class($e),
-            'file'        => $e->getFile(),
-            'line'        => $e->getLine(),
-            'code'        => $e->getCode(),
-            'message'     => $e->getMessage(),
-            'trace'       => $e->getTraceAsString(),
-        ];
-
-        if ($e instanceof HttpExceptionInterface) {
-            $opts['status_code'] = $e->getStatusCode();
-        }
-
-        return ExceptionModel::create($opts);
+        return $this->recorder->record($e);
     }
 
     /**
@@ -78,7 +81,6 @@ class LERN
     /**
      * Pushes on another Monolog Handler
      * @param  HandlerInterface $handler The handler instance to add on
-     * @return Notifier                  Returns this
      */
     public function pushHandler(HandlerInterface $handler) {
         $this->notifier->pushHandler($handler);
@@ -87,7 +89,7 @@ class LERN
 
     /**
      * Get Notifier
-     * @return Notifier 
+     * @return \Tylercd100\LERN\Components\Notifier 
      */
     public function getNotifier()
     {
@@ -96,11 +98,32 @@ class LERN
 
     /**
      * Set Notifier
-     * @param Notifier $notifier A Notifier instance to use
+     * @param \Tylercd100\LERN\Components\Notifier $notifier A Notifier instance to use
+     * @return \Tylercd100\LERN\LERN
      */
     public function setNotifier(Notifier $notifier)
     {
         $this->notifier = $notifier;
+        return $this;
+    }
+
+    /**
+     * Get Recorder
+     * @return \Tylercd100\LERN\Components\Recorder 
+     */
+    public function getRecorder()
+    {
+        return $this->recorder;
+    }
+
+    /**
+     * Set Recorder
+     * @param \Tylercd100\LERN\Components\Recorder $recorder A Recorder instance to use
+     * @return \Tylercd100\LERN\LERN
+     */
+    public function setRecorder(Recorder $recorder)
+    {
+        $this->recorder = $recorder;
         return $this;
     }
 

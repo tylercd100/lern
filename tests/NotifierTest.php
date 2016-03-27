@@ -3,8 +3,8 @@
 namespace Tylercd100\LERN\Tests;
 
 use Exception;
-use Tylercd100\LERN\Notifications\Notifier;
-use Tylercd100\LERN\Notifications\MonologHandlerFactory;
+use Tylercd100\LERN\Components\Notifier;
+use Tylercd100\LERN\Factories\MonologHandlerFactory;
 
 class NotifierTest extends TestCase
 {
@@ -62,7 +62,7 @@ class NotifierTest extends TestCase
         $this->assertEquals($result,"This is a test");
     }
 
-    public function itReturnsTheCorrectSubjectWhenUsingString(){
+    public function testItReturnsTheCorrectSubjectWhenUsingString(){
         $this->notifier->setSubject("This is a test");
         $result = $this->notifier->getSubject(new Exception);
         $this->assertEquals($result,"This is a test");

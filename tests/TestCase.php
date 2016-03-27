@@ -3,7 +3,7 @@
 namespace Tylercd100\LERN\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use Tylercd100\LERN\Notifications\MonologHandlerFactory;
+use Tylercd100\LERN\Factories\MonologHandlerFactory;
 
 class TestCase extends Orchestra
 {
@@ -72,7 +72,7 @@ class TestCase extends Orchestra
     protected function migrate(){
         $this->artisan('migrate', [
             '--database' => 'testbench',
-            '--realpath' => realpath(__DIR__.'/../migrations'),
+            '--realpath' => realpath(__DIR__.'/migrations'),
         ]);
     }
 
@@ -102,6 +102,17 @@ class TestCase extends Orchestra
             'driver'   => 'sqlite',
             'database' => ':memory:',
             'prefix'   => '',
+        ]);
+
+        $app['config']->set('lern.record', [
+            'table'=>'vendor_tylercd100_lern_exceptions',
+            'collect'=>[
+                'method'=>true,//When true it will collect GET, POST, DELETE, PUT, etc...
+                'data'=>true,//When true it will collect Input data
+                'status_code'=>true,
+                'user_id'=>true,
+                'url'=>true,
+            ],
         ]);
 
         $app['config']->set('lern.notify', [
