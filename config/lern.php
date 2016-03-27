@@ -78,8 +78,8 @@ return [
         'plivo'=>[
             'auth_id' => env('PLIVO_AUTH_ID'),
             'token'   => env('PLIVO_AUTH_TOKEN'),
-            'to'      => env('PLIVO_APP_TOKEN'),
-            'from'    => env('PLIVO_APP_TOKEN'),
+            'to'      => env('PLIVO_TO'),
+            'from'    => env('PLIVO_FROM'),
         ]
     ],
     
