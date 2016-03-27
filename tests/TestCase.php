@@ -14,7 +14,7 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->supportedDrivers = ['slack','mail','pushover','plivo','hipchat','flowdock','fleephook'];
+        $this->supportedDrivers = ['slack','mail','pushover','plivo','twilio','hipchat','flowdock','fleephook'];
 
         $this->app['config']->set('lern.notify.slack', [
             'token'=>'token',
@@ -41,6 +41,13 @@ class TestCase extends Orchestra
         $this->app['config']->set('lern.notify.plivo', [
             'token'   => 'token',
             'auth_id' => 'auth_id',
+            'to'      => '+15555555555',
+            'from'    => '+16666666666',
+        ]);
+
+        $this->app['config']->set('lern.notify.twilio', [
+            'secret'  => 'secret',
+            'sid'     => 'sid',
             'to'      => '+15555555555',
             'from'    => '+16666666666',
         ]);

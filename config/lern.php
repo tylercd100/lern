@@ -80,6 +80,16 @@ return [
             'token'   => env('PLIVO_AUTH_TOKEN'),
             'to'      => env('PLIVO_TO'),
             'from'    => env('PLIVO_FROM'),
+        ],
+
+        /**
+         * Twilio settings
+         */
+        'twilio'=>[
+            'sid'    => env('TWILIO_AUTH_SID'),
+            'secret' => env('TWILIO_AUTH_SECRET'),
+            'to'     => env('TWILIO_TO'),
+            'from'   => env('TWILIO_FROM'),
         ]
     ],
     

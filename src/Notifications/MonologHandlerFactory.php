@@ -20,6 +20,8 @@ class MonologHandlerFactory {
         $this->config = config('lern.notify.' . $driver);
         if (is_array($this->config)) {
             return $this->{$driver}($subject);
+        } else {
+            throw new Exception("config must be an array! You may have chosen an unsupported monolog handler.");
         }
     }
 
@@ -114,6 +116,20 @@ class MonologHandlerFactory {
         return new \Tylercd100\Monolog\Handler\PlivoHandler(
             $this->config['token'], 
             $this->config['auth_id'], 
+            $this->config['from'],
+            $this->config['to']
+        );
+    }
+
+    /**
+     * Creates Twilio Monolog Handler
+     * @return \Tylercd100\Monolog\Handler\TwilioHandler A handler to use with a Monolog\Logger instance
+     */
+    protected function twilio()
+    {
+        return new \Tylercd100\Monolog\Handler\TwilioHandler(
+            $this->config['secret'], 
+            $this->config['sid'], 
             $this->config['from'],
             $this->config['to']
         );

@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 2.3.0
+- Added support for [Twilio](https://www.twilio.com/) an SMS messaging service.
+
 ### 2.2.2
 - Fixed config for Plivo
 
