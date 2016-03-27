@@ -40,11 +40,11 @@ class Recorder {
         ];
 
 
-        $configDependant = ['user_id','status_code','method','data','url'];
+        $configDependant = ['user_id', 'status_code', 'method', 'data', 'url'];
 
         foreach ($configDependant as $key) {
-            if($this->canCollect($key)){
-                $opts[$key] = $this->collect($key,$e);
+            if ($this->canCollect($key)) {
+                $opts[$key] = $this->collect($key, $e);
             }
         }
 
@@ -63,6 +63,9 @@ class Recorder {
         return false;
     }
 
+    /**
+     * @param string $key
+     */
     protected function collect($key,Exception $e = null){
         switch ($key) {
             case 'user_id':
