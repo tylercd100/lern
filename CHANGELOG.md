@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 2.2.0
+- Added support for [Plivo](https://www.plivo.com/)
+
 ### 2.1.3
 - Scutinizer Code Coverage
 - Fixed Docblocks
