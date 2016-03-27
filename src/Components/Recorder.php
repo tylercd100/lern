@@ -67,27 +67,16 @@ class Recorder {
         switch ($key) {
             case 'user_id':
                 return $this->getUserId();
-                break;
-
             case 'method':
                 return $this->getMethod();
-                break;
-
             case 'status_code':
                 return $this->getStatusCode($e);
-                break;
-
             case 'url':
                 return $this->getUrl();
-                break;
-
             case 'data':
                 return $this->getData();
-                break;
-            
             default:
                 throw new Exception("{$key} is not supported! Therefore it cannot be collected!");
-                break;
         }
     }
 
