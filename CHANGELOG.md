@@ -3,7 +3,7 @@
 All notable changes to `LERN` will be documented in this file.
 
 ### 2.2.0
-- Added support for [Plivo](https://www.plivo.com/)
+- Added support for [Plivo](https://www.plivo.com/) an SMS messaging service.
 
 ### 2.1.3
 - Scutinizer Code Coverage
