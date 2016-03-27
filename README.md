@@ -18,6 +18,7 @@ Currently supported notification channels via [Monolog](https://github.com/Selda
 - [Hipchat](https://www.hipchat.com/)
 - [Fleephook](https://fleep.io/)
 - [Flowdock](https://www.flowdock.com/)
+- [Plivo](https://www.plivo.com/) an SMS messaging service.
 
 ## Installation
 
