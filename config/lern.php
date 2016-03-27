@@ -4,6 +4,12 @@ return [
 
     'record'=>[
         'table'=>'vendor_tylercd100_lern_exceptions',
+        'collect'=>[
+            'method'=>false,//When true it will collect GET, POST, DELETE, PUT, etc...
+            'data'=>false,//When true it will collect Input data
+            'user_id'=>false,
+            'url'=>false,
+        ],
     ],
 
     'notify'=>[

@@ -3,8 +3,8 @@
 namespace Tylercd100\LERN\Tests;
 
 use Exception;
-use Tylercd100\LERN\Notifications\Notifier;
-use Tylercd100\LERN\Notifications\MonologHandlerFactory;
+use Tylercd100\LERN\Components\Notifier;
+use Tylercd100\LERN\Factories\MonologHandlerFactory;
 
 class NotifierTest extends TestCase
 {

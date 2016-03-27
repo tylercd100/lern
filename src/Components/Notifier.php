@@ -1,11 +1,11 @@
 <?php
 
-namespace Tylercd100\LERN\Notifications;
+namespace Tylercd100\LERN\Components;
 
 use Exception;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
-use Tylercd100\LERN\Notifications\MonologHandlerFactory;
+use Tylercd100\LERN\Factories\MonologHandlerFactory;
 
 class Notifier {
     protected $config;
