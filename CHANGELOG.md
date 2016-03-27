@@ -9,7 +9,7 @@ All notable changes to `LERN` will be documented in this file.
     - url - The full URL of the request.
     - data - The input data of the request, if any.
 
-__Reason for Major release: 3.0.0 introduces a new migration file and structure changes that could cause issues for 2.x users__
+*__Reason for Major release: 3.0.0 introduces a new migration file and structure changes that could cause issues for 2.x users__*
 
 ### 2.3.0
 - Added support for [Twilio](https://www.twilio.com/) an SMS messaging service.
