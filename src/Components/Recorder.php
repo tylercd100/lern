@@ -39,11 +39,14 @@ class Recorder {
             'trace'       => $e->getTraceAsString(),
         ];
 
-        $opts['status_code'] = $this->getStatusCode($e);
-        $opts['user_id'] = $this->getUserId();
-        $opts['method'] = $this->getMethod();
-        $opts['data'] = $this->getData();
-        $opts['url'] = $this->getUrl();
+
+        $configDependant = ['user_id','status_code','method','data','url'];
+
+        foreach ($configDependant as $key) {
+            if($this->canCollect($key)){
+                $opts[$key] = $this->collect($key,$e);
+            }
+        }
 
         return ExceptionModel::create($opts);
     }
@@ -60,13 +63,41 @@ class Recorder {
         return false;
     }
 
+    protected function collect($key,Exception $e = null){
+        switch ($key) {
+            case 'user_id':
+                return $this->getUserId();
+                break;
+
+            case 'method':
+                return $this->getMethod();
+                break;
+
+            case 'status_code':
+                return $this->getStatusCode($e);
+                break;
+
+            case 'url':
+                return $this->getUrl();
+                break;
+
+            case 'data':
+                return $this->getData();
+                break;
+            
+            default:
+                throw new Exception("{$key} is not supported! Therefore it cannot be collected!");
+                break;
+        }
+    }
+
     /**
      * Gets the ID of the User that is logged in
      * @return integer|null The ID of the User or Null if not logged in
      */
     protected function getUserId() {
         $user = Auth::user();
-        if ($this->canCollect('user_id') && is_object($user)) {
+        if (is_object($user)) {
             return $user->id;
         } else {
             return null;
@@ -79,7 +110,7 @@ class Recorder {
      */
     protected function getMethod() {
         $method = Request::method();
-        if ($this->canCollect('method') && !empty($method)) {
+        if (!empty($method)) {
             return $method;
         } else {
             return null;
@@ -92,7 +123,7 @@ class Recorder {
      */
     protected function getData() {
         $data = Input::all();
-        if ($this->canCollect('data') && is_array($data)) {
+        if (is_array($data)) {
             return $data;
         } else {
             return null;
@@ -105,7 +136,7 @@ class Recorder {
      */
     protected function getUrl() {
         $url = Request::url();
-        if ($this->canCollect('url') && is_array($url)) {
+        if (is_string($url)) {
             return $url;
         } else {
             return null;

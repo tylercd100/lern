@@ -13,4 +13,12 @@ class ExceptionModel extends Model {
         $this->table = config('lern.record.table');
         parent::__construct($attributes);
     }
+
+    public function setDataAttribute($value){
+        $this->attributes['data'] = json_encode($value);
+    }
+
+    public function getDataAttribute($value){
+        return json_decode($value);
+    }
 }

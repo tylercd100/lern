@@ -62,7 +62,7 @@ class NotifierTest extends TestCase
         $this->assertEquals($result,"This is a test");
     }
 
-    public function itReturnsTheCorrectSubjectWhenUsingString(){
+    public function testItReturnsTheCorrectSubjectWhenUsingString(){
         $this->notifier->setSubject("This is a test");
         $result = $this->notifier->getSubject(new Exception);
         $this->assertEquals($result,"This is a test");
