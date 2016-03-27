@@ -3,11 +3,11 @@
 namespace Tylercd100\LERN\Components;
 
 use Exception;
-use Tylercd100\LERN\Models\ExceptionModel;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Tylercd100\LERN\Models\ExceptionModel;
 
 class Recorder {
 
@@ -19,14 +19,14 @@ class Recorder {
     /**
      * The constructor
      */
-    public function __construct(){
+    public function __construct() {
         $this->config = config('lern.record');
     }
 
     /**
      * Records an Exception to the database
      * @param  Exception $e The exception you want to record
-     * @return Tylercd100\LERN\Models\ExceptionModel
+     * @return ExceptionModel
      */
     public function record(Exception $e)
     {
@@ -53,8 +53,8 @@ class Recorder {
      * @param  string $type the config value you want to check
      * @return boolean      
      */
-    private function canCollect($type){
-        if(!empty($this->config) && !empty($this->config['collect']) && !empty($this->config['collect'][$type])){
+    private function canCollect($type) {
+        if (!empty($this->config) && !empty($this->config['collect']) && !empty($this->config['collect'][$type])) {
             return $this->config['collect'][$type] === true;
         }
         return false;
@@ -64,9 +64,9 @@ class Recorder {
      * Gets the ID of the User that is logged in
      * @return integer|null The ID of the User or Null if not logged in
      */
-    protected function getUserId(){
+    protected function getUserId() {
         $user = Auth::user();
-        if($this->canCollect('user_id') && is_object($user)) {
+        if ($this->canCollect('user_id') && is_object($user)) {
             return $user->id;
         } else {
             return null;
@@ -77,9 +77,9 @@ class Recorder {
      * Gets the Method of the Request
      * @return string|null Possible values are null or GET, POST, DELETE, PUT, etc...
      */
-    protected function getMethod(){
+    protected function getMethod() {
         $method = Request::method();
-        if($this->canCollect('method') && !empty($method)) {
+        if ($this->canCollect('method') && !empty($method)) {
             return $method;
         } else {
             return null;
@@ -90,9 +90,9 @@ class Recorder {
      * Gets the input data of the Request
      * @return array|null The Input data or null
      */
-    protected function getData(){
+    protected function getData() {
         $data = Input::all();
-        if($this->canCollect('data') && is_array($data)) {
+        if ($this->canCollect('data') && is_array($data)) {
             return $data;
         } else {
             return null;
@@ -103,9 +103,9 @@ class Recorder {
      * Gets the URL of the Request
      * @return string|null Returns a URL string or null
      */
-    protected function getUrl(){
+    protected function getUrl() {
         $url = Request::url();
-        if($this->canCollect('url') && is_array($url)) {
+        if ($this->canCollect('url') && is_array($url)) {
             return $url;
         } else {
             return null;
@@ -117,7 +117,7 @@ class Recorder {
      * @param  Exception $e The Exception to check
      * @return string|integer The status code value
      */
-    protected function getStatusCode(Exception $e){
+    protected function getStatusCode(Exception $e) {
         if ($e instanceof HttpExceptionInterface) {
             return $e->getStatusCode();
         } else {
