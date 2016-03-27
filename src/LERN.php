@@ -99,6 +99,7 @@ class LERN
     /**
      * Set Notifier
      * @param \Tylercd100\LERN\Components\Notifier $notifier A Notifier instance to use
+     * @return \Tylercd100\LERN\LERN
      */
     public function setNotifier(Notifier $notifier)
     {
@@ -118,6 +119,7 @@ class LERN
     /**
      * Set Recorder
      * @param \Tylercd100\LERN\Components\Recorder $recorder A Recorder instance to use
+     * @return \Tylercd100\LERN\LERN
      */
     public function setRecorder(Recorder $recorder)
     {
