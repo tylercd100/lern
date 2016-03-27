@@ -18,18 +18,18 @@ class LERN
     private $exception;
 
     /**
-     * @var Tylercd100\LERN\Components\Notifier
+     * @var \Tylercd100\LERN\Components\Notifier
      */
     private $notifier;
 
     /**
-     * @var Tylercd100\LERN\Components\Recorder
+     * @var \Tylercd100\LERN\Components\Recorder
      */
     private $recorder;
     
     /**
-     * @param Notifier|null $notifier Notifier instance
-     * @param Recorder|null $recorder Recorder instance
+     * @param \Tylercd100\LERN\Components\Notifier|null $notifier Notifier instance
+     * @param \Tylercd100\LERN\Components\Recorder|null $recorder Recorder instance
      */
     public function __construct(Notifier $notifier = null, Recorder $recorder = null)
     {
@@ -59,7 +59,7 @@ class LERN
     /**
      * Stores the exception in the database
      * @param  Exception $e   The exception to use
-     * @return Tylercd100\LERN\Models\ExceptionModel The recorded Exception as an Eloquent Model
+     * @return \Tylercd100\LERN\Models\ExceptionModel The recorded Exception as an Eloquent Model
      */
     public function record(Exception $e)
     {
@@ -81,7 +81,6 @@ class LERN
     /**
      * Pushes on another Monolog Handler
      * @param  HandlerInterface $handler The handler instance to add on
-     * @return Notifier                  Returns this
      */
     public function pushHandler(HandlerInterface $handler) {
         $this->notifier->pushHandler($handler);
@@ -90,7 +89,7 @@ class LERN
 
     /**
      * Get Notifier
-     * @return Notifier 
+     * @return \Tylercd100\LERN\Components\Notifier 
      */
     public function getNotifier()
     {
@@ -99,7 +98,7 @@ class LERN
 
     /**
      * Set Notifier
-     * @param Notifier $notifier A Notifier instance to use
+     * @param \Tylercd100\LERN\Components\Notifier $notifier A Notifier instance to use
      */
     public function setNotifier(Notifier $notifier)
     {
@@ -109,7 +108,7 @@ class LERN
 
     /**
      * Get Recorder
-     * @return Recorder 
+     * @return \Tylercd100\LERN\Components\Recorder 
      */
     public function getRecorder()
     {
@@ -118,7 +117,7 @@ class LERN
 
     /**
      * Set Recorder
-     * @param Recorder $recorder A Recorder instance to use
+     * @param \Tylercd100\LERN\Components\Recorder $recorder A Recorder instance to use
      */
     public function setRecorder(Recorder $recorder)
     {

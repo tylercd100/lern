@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Input;
 class Recorder {
 
     /**
-     * @var array
+     * @var mixed
      */
     protected $config = [];
 
