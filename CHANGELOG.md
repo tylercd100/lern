@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 2.2.1
+- Changed dependancy from `tylercd100/monolog-plivo` to `tylercd100/monolog-sms` which is the same package with a different name
+
 ### 2.2.0
 - Added support for [Plivo](https://www.plivo.com/) an SMS messaging service.
 
