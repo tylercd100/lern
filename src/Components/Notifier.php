@@ -102,7 +102,7 @@ class Notifier {
     /**
      * Triggers the Monolog Logger instance to log an error to all handlers
      * @param  Exception $e The exception to use
-     * @return Notifier     Returns this
+     * @return Notifier|false Returns this
      */
     public function send(Exception $e) {
         $factory = new MonologHandlerFactory();
@@ -119,9 +119,10 @@ class Notifier {
         try{
             $this->log->addCritical($message);
         } catch (Exception $e) {
-            dd("LERN notifier failed. Message: {$e->getMessage()}.".PHP_EOL.$e->getTraceAsString());
+            echo "LERN notifier failed. Message: {$e->getMessage()}.".PHP_EOL.$e->getTraceAsString();
+            return false;
         }
-        
+
         return $this;
     }
 }

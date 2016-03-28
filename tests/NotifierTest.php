@@ -68,4 +68,21 @@ class NotifierTest extends TestCase
         $this->assertEquals($result,"This is a test");
     }
 
+    public function testItDumpsErrorMessageWhenMonologThrowsException(){
+
+        $handler = (new MonologHandlerFactory())->create('slack');
+
+        $observer = $this->getMock('Monolog\Logger',['addCritical'],['channelName']);
+
+        $observer->expects($this->once())
+                 ->method('addCritical');
+                 ->will($this->throwException(new Exception));
+        
+        $this->expectOutputRegex("/LERN notifier failed/");
+
+        $subject = new Notifier($observer);
+        $subject->pushHandler($handler);
+        $subject->send(new Exception);
+    }
+
 }
