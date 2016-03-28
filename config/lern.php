@@ -43,7 +43,7 @@ return [
         'pushover'=>[
             'token' => env('PUSHOVER_APP_TOKEN'),
             'user'  => env('PUSHOVER_USER_KEY'),
-            'sound' => 'siren',
+            'sound' => 'siren', // https://pushover.net/api#sounds
         ],
 
         /**
