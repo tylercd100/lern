@@ -30,6 +30,7 @@ class TestCase extends Orchestra
         $this->app['config']->set('lern.notify.mail', [
             'to'=>'to@address.com',
             'from'=>'from@address.com',
+            'smtp'=>true,
         ]);
 
         $this->app['config']->set('lern.notify.pushover', [
@@ -122,6 +123,7 @@ class TestCase extends Orchestra
             'mail'=>[
                 'to'=>'test@mailinator.com',
                 'from'=>'from@mailinator.com',
+                'smtp'=>true,
             ],
             'pushover'=>[
                 'token' => 'token',

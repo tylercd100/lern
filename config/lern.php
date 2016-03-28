@@ -35,6 +35,7 @@ return [
         'mail'=>[
             'to'  =>'to@address.com',
             'from'=>'from@address.com',
+            'smtp'=>true,
         ],
 
         /**
