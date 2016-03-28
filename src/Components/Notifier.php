@@ -116,8 +116,12 @@ class Notifier {
             $this->log->pushHandler($handler);
         }
 
-        $this->log->addCritical($message);
-
+        try{
+            $this->log->addCritical($message);
+        } catch (Exception $e) {
+            dd("LERN notifier failed. Message: {$e->getMessage()}.".PHP_EOL.$e->getTraceAsString());
+        }
+        
         return $this;
     }
 }
