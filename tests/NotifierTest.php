@@ -75,7 +75,7 @@ class NotifierTest extends TestCase
         $observer = $this->getMock('Monolog\Logger',['addCritical'],['channelName']);
 
         $observer->expects($this->once())
-                 ->method('addCritical');
+                 ->method('addCritical')
                  ->will($this->throwException(new Exception));
         
         $this->expectOutputRegex("/LERN notifier failed/");
