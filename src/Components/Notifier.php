@@ -121,8 +121,6 @@ class Notifier {
 
         $context = $this->buildContext($context);
 
-        var_dump($context);
-
         $this->log->addCritical($message, $context);
 
         return $this;
