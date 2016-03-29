@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class AddUserDataAndUrlToLERNTables extends Migration {
+class AddUserDataAndUrlToLernTables extends Migration {
 
     /**
      * Run the migrations.
@@ -32,7 +32,7 @@ class AddUserDataAndUrlToLERNTables extends Migration {
             $table->dropColumn('data');
             $table->dropColumn('url');
             $table->dropColumn('method');
-        });    
+        });
     }
 
 }
