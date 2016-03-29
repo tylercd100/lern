@@ -15,21 +15,12 @@ abstract class Component {
      * @var array
      */
     private $absolutelyDontHandle = [
-        Tylercd100\LERN\Exceptions\LERNExceptionInterface::class,
+        \Tylercd100\LERN\Exceptions\RecorderFailedException::class,
+        \Tylercd100\LERN\Exceptions\NotifierFailedException::class,
     ];
 
     /**
-     * Determine if the exception is in the "do not report" list.
-     *
-     * @param  \Exception  $e
-     * @return bool
-     */
-    protected function shouldHandle(Exception $e){
-        return !$this->shouldHandle($e);
-    }
-
-    /**
-     * Determine if the exception is in the "do not report" list.
+     * Determine if the exception is in the "do not handle" list.
      *
      * @param  \Exception  $e
      * @return bool

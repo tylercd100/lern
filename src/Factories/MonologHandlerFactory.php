@@ -84,7 +84,7 @@ class MonologHandlerFactory {
     /**
      * Creates Mail Monolog Handler
      * @param  string $subject Title or Subject line for the notification
-     * @return \Monolog\Handler\NativeMailerHandler A handler to use with a Monolog\Logger instance
+     * @return \Monolog\Handler\NativeMailerHandler|Monolog\Handler\SwiftMailerHandler A handler to use with a Monolog\Logger instance
      */
     protected function mail($subject)
     {

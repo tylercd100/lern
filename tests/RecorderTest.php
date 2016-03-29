@@ -3,6 +3,7 @@
 namespace Tylercd100\LERN\Tests;
 
 use Tylercd100\LERN\Components\Recorder;
+use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Exception;
 
 class RecorderTest extends TestCase
@@ -33,8 +34,15 @@ class RecorderTest extends TestCase
                  ->method('collect')
                  ->will($this->throwException(new Exception));
         
-        $this->setExpectedException('Tylercd100\LERN\Exceptions\RecorderFailedException');
+        $this->setExpectedException(RecorderFailedException::class);
 
         $mock->record(new Exception);
     }
+
+    public function testRecordShouldReturnFalseWhenPassedRecorderFailedException(){
+        $recorder = new Recorder;
+        $result = $recorder->record(new RecorderFailedException);
+        $this->assertEquals(false,$result);
+    }
+
 }

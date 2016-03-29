@@ -2,6 +2,6 @@
 
 namespace Tylercd100\LERN\Exceptions;
 
-class RecorderFailedException extends \Exception implements LERNExceptionInterface{
+class RecorderFailedException extends \Exception{
 
 }
