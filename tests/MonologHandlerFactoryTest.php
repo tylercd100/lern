@@ -52,4 +52,24 @@ class MonologHandlerFactoryTest extends TestCase
         $this->setExpectedException(Exception::class);
         $this->factoryInstance->create('mail',1234);
     }
+
+    public function testItShouldReturnInstanceOfNativeMailerHandler(){
+        $this->app['config']->set('lern.notify.mail', [
+            'to'=>'to@address.com',
+            'from'=>'from@address.com',
+            'smtp'=>false,
+        ]);
+        $handler = $this->factoryInstance->create('mail','Test Subject');
+        $this->assertInstanceOf('\Monolog\Handler\NativeMailerHandler', $handler);
+    }
+
+    public function testItShouldReturnInstanceOfSwiftMailerHandler(){
+        $this->app['config']->set('lern.notify.mail', [
+            'to'=>'to@address.com',
+            'from'=>'from@address.com',
+            'smtp'=>true,
+        ]);
+        $handler = $this->factoryInstance->create('mail','Test Subject');
+        $this->assertInstanceOf('\Monolog\Handler\SwiftMailerHandler', $handler);
+    }
 }
