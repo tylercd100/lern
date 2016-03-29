@@ -68,7 +68,7 @@ class NotifierTest extends TestCase
         $this->assertEquals($result,"This is a test");
     }
 
-    public function testItDumpsErrorMessageWhenMonologThrowsException(){
+    public function testItThrowsNotifierFailedExceptionWhenMonologThrowsException(){
 
         $handler = (new MonologHandlerFactory())->create('slack');
 
