@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.1.1
+- Added Try/Catch statements to prevent infinite loops
+
 ### 3.1.0
 - Added SMTP support
 
