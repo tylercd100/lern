@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.0.2
+- Fixed issue with rolling back migration files
+
 ### 3.0.1
 - Fixed Pushover sounds
 
