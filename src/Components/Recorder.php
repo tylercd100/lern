@@ -31,23 +31,23 @@ class Recorder extends Component{
      */
     public function record(Exception $e)
     {
+        if($this->shouldntHandle($e)){
+            return false;
+        }
+
+        $opts = [
+            'class'       => get_class($e),
+            'file'        => $e->getFile(),
+            'line'        => $e->getLine(),
+            'code'        => $e->getCode(),
+            'message'     => $e->getMessage(),
+            'trace'       => $e->getTraceAsString(),
+        ];
+
+
+        $configDependant = ['user_id', 'status_code', 'method', 'data', 'url'];
+
         try {
-            if($this->shouldntHandle($e)){
-                return false;
-            }
-
-            $opts = [
-                'class'       => get_class($e),
-                'file'        => $e->getFile(),
-                'line'        => $e->getLine(),
-                'code'        => $e->getCode(),
-                'message'     => $e->getMessage(),
-                'trace'       => $e->getTraceAsString(),
-            ];
-
-
-            $configDependant = ['user_id', 'status_code', 'method', 'data', 'url'];
-
             foreach ($configDependant as $key) {
                 if ($this->canCollect($key)) {
                     $opts[$key] = $this->collect($key, $e);
@@ -81,12 +81,14 @@ class Recorder extends Component{
                 return $this->getUserId();
             case 'method':
                 return $this->getMethod();
-            case 'status_code':
-                return $this->getStatusCode($e);
             case 'url':
                 return $this->getUrl();
             case 'data':
                 return $this->getData();
+            case 'status_code':
+                if($e===null)
+                    return 0;
+                return $this->getStatusCode($e);
             default:
                 throw new Exception("{$key} is not supported! Therefore it cannot be collected!");
         }

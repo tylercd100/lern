@@ -59,7 +59,7 @@ class LERN
     /**
      * Stores the exception in the database
      * @param  Exception $e   The exception to use
-     * @return \Tylercd100\LERN\Models\ExceptionModel The recorded Exception as an Eloquent Model
+     * @return \Tylercd100\LERN\Models\ExceptionModel|false The recorded Exception as an Eloquent Model
      */
     public function record(Exception $e)
     {

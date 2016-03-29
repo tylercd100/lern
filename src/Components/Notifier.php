@@ -109,17 +109,18 @@ class Notifier extends Component {
      * @return bool
      */
     public function send(Exception $e, array $context = []) {
+        
+        if($this->shouldntHandle($e)){
+            return false;
+        }
+
+        $factory = new MonologHandlerFactory();
+        $drivers = $this->drivers;
+
+        $message = $this->getMessage($e);
+        $subject = $this->getSubject($e);
+        
         try{
-            if($this->shouldntHandle($e)){
-                return false;
-            }
-
-            $factory = new MonologHandlerFactory();
-            $drivers = $this->drivers;
-
-            $message = $this->getMessage($e);
-            $subject = $this->getSubject($e);
-            
             foreach ($drivers as $driver) {
                 $handler = $factory->create($driver, $subject);
                 $this->log->pushHandler($handler);
