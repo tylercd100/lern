@@ -6,8 +6,9 @@ use Exception;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
 use Tylercd100\LERN\Factories\MonologHandlerFactory;
+use Tylercd100\LERN\Exceptions\NotifierFailedException;
 
-class Notifier {
+class Notifier extends Component {
     protected $config;
     protected $log;
     protected $messageCb;
@@ -105,25 +106,34 @@ class Notifier {
      * Triggers the Monolog Logger instance to log an error to all handlers
      * @param  Exception $e The exception to use
      * @param  array $context Additional information that you would like to pass to Monolog
-     * @return Notifier Returns this
+     * @return bool
      */
     public function send(Exception $e, array $context = []) {
+        
+        if($this->shouldntHandle($e)){
+            return false;
+        }
+
         $factory = new MonologHandlerFactory();
         $drivers = $this->drivers;
 
         $message = $this->getMessage($e);
         $subject = $this->getSubject($e);
         
-        foreach ($drivers as $driver) {
-            $handler = $factory->create($driver, $subject);
-            $this->log->pushHandler($handler);
+        try{
+            foreach ($drivers as $driver) {
+                $handler = $factory->create($driver, $subject);
+                $this->log->pushHandler($handler);
+            }
+
+            $context = $this->buildContext($context);
+
+            $this->log->addCritical($message, $context);
+
+            return true;
+        } catch (Exception $e) {
+            throw new NotifierFailedException($e->getMessage(), $e->getCode(), $e);
         }
-
-        $context = $this->buildContext($context);
-
-        $this->log->addCritical($message, $context);
-
-        return $this;
     }
 
     /**

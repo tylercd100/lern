@@ -7,9 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\LERN\Models\ExceptionModel;
 
-class Recorder {
+class Recorder extends Component{
 
     /**
      * @var mixed
@@ -26,10 +27,14 @@ class Recorder {
     /**
      * Records an Exception to the database
      * @param  Exception $e The exception you want to record
-     * @return ExceptionModel
+     * @return ExceptionModel|false
      */
     public function record(Exception $e)
     {
+        if($this->shouldntHandle($e)){
+            return false;
+        }
+
         $opts = [
             'class'       => get_class($e),
             'file'        => $e->getFile(),
@@ -42,13 +47,17 @@ class Recorder {
 
         $configDependant = ['user_id', 'status_code', 'method', 'data', 'url'];
 
-        foreach ($configDependant as $key) {
-            if ($this->canCollect($key)) {
-                $opts[$key] = $this->collect($key, $e);
+        try {
+            foreach ($configDependant as $key) {
+                if ($this->canCollect($key)) {
+                    $opts[$key] = $this->collect($key, $e);
+                }
             }
-        }
 
-        return ExceptionModel::create($opts);
+            return ExceptionModel::create($opts);
+        } catch (Exception $e) {
+            throw new RecorderFailedException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     /**
@@ -72,12 +81,14 @@ class Recorder {
                 return $this->getUserId();
             case 'method':
                 return $this->getMethod();
-            case 'status_code':
-                return $this->getStatusCode($e);
             case 'url':
                 return $this->getUrl();
             case 'data':
                 return $this->getData();
+            case 'status_code':
+                if($e===null)
+                    return 0;
+                return $this->getStatusCode($e);
             default:
                 throw new Exception("{$key} is not supported! Therefore it cannot be collected!");
         }

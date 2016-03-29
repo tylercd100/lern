@@ -5,6 +5,7 @@ namespace Tylercd100\LERN\Tests;
 use Tylercd100\LERN\LERN;
 use Tylercd100\LERN\Factories\MonologHandlerFactory;
 use Tylercd100\LERN\Components\Notifier;
+use Tylercd100\LERN\Components\Recorder;
 use Exception;
 
 class LERNTest extends TestCase
@@ -84,5 +85,13 @@ class LERNTest extends TestCase
         $lern->setNotifier($orig_notifier);
         $new_notifier = $lern->getNotifier();
         $this->assertEquals($new_notifier,$orig_notifier);
+    }
+
+    public function testSettingAndGettingACustomRecorderInstance(){
+        $lern = new LERN;
+        $orig_recorder = new Recorder;
+        $lern->setRecorder($orig_recorder);
+        $new_recorder = $lern->getRecorder();
+        $this->assertEquals($new_recorder,$orig_recorder);
     }
 }

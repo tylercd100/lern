@@ -5,6 +5,7 @@ namespace Tylercd100\LERN\Tests;
 use Exception;
 use Tylercd100\LERN\Components\Notifier;
 use Tylercd100\LERN\Factories\MonologHandlerFactory;
+use Tylercd100\LERN\Exceptions\NotifierFailedException;
 
 class NotifierTest extends TestCase
 {
@@ -68,4 +69,26 @@ class NotifierTest extends TestCase
         $this->assertEquals($result,"This is a test");
     }
 
+    public function testItThrowsNotifierFailedExceptionWhenMonologThrowsException(){
+
+        $handler = (new MonologHandlerFactory())->create('slack');
+
+        $observer = $this->getMock('Monolog\Logger',['addCritical'],['channelName']);
+
+        $observer->expects($this->once())
+                 ->method('addCritical')
+                 ->will($this->throwException(new Exception));
+        
+        $this->setExpectedException('Tylercd100\LERN\Exceptions\NotifierFailedException');
+
+        $subject = new Notifier($observer);
+        $subject->pushHandler($handler);
+        $subject->send(new Exception);
+    }
+
+    public function testSendShouldReturnFalseWhenPassedNotifierFailedException(){
+        $notifier = new Notifier;
+        $result = $notifier->send(new NotifierFailedException);
+        $this->assertEquals(false,$result);
+    }
 }
