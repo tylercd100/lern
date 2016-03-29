@@ -89,7 +89,7 @@ class MonologHandlerFactory {
     protected function mail($subject)
     {
         $this->checkSubject($subject);
-        if ($this->config['smtp']) {
+        if (isset($this->config['smtp']) && $this->config['smtp']) {
             return new \Monolog\Handler\SwiftMailerHandler(
                 Mail::getSwiftMailer(),
                 Swift_Message::newInstance($subject)->setFrom($this->config['from'])->setTo($this->config['to'])
