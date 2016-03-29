@@ -78,7 +78,7 @@ class NotifierTest extends TestCase
                  ->method('addCritical')
                  ->will($this->throwException(new Exception));
         
-        $this->expectOutputRegex("/LERN notifier failed/");
+        $this->setExpectedException('Tylercd100\LERN\Exceptions\NotifierFailedException');
 
         $subject = new Notifier($observer);
         $subject->pushHandler($handler);

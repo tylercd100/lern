@@ -7,9 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\LERN\Models\ExceptionModel;
 
-class Recorder {
+class Recorder extends Component{
 
     /**
      * @var mixed
@@ -26,29 +27,37 @@ class Recorder {
     /**
      * Records an Exception to the database
      * @param  Exception $e The exception you want to record
-     * @return ExceptionModel
+     * @return ExceptionModel|false
      */
     public function record(Exception $e)
     {
-        $opts = [
-            'class'       => get_class($e),
-            'file'        => $e->getFile(),
-            'line'        => $e->getLine(),
-            'code'        => $e->getCode(),
-            'message'     => $e->getMessage(),
-            'trace'       => $e->getTraceAsString(),
-        ];
-
-
-        $configDependant = ['user_id', 'status_code', 'method', 'data', 'url'];
-
-        foreach ($configDependant as $key) {
-            if ($this->canCollect($key)) {
-                $opts[$key] = $this->collect($key, $e);
+        try {
+            if($this->shouldntHandle($e)){
+                return false;
             }
-        }
 
-        return ExceptionModel::create($opts);
+            $opts = [
+                'class'       => get_class($e),
+                'file'        => $e->getFile(),
+                'line'        => $e->getLine(),
+                'code'        => $e->getCode(),
+                'message'     => $e->getMessage(),
+                'trace'       => $e->getTraceAsString(),
+            ];
+
+
+            $configDependant = ['user_id', 'status_code', 'method', 'data', 'url'];
+
+            foreach ($configDependant as $key) {
+                if ($this->canCollect($key)) {
+                    $opts[$key] = $this->collect($key, $e);
+                }
+            }
+
+            return ExceptionModel::create($opts);
+        } catch (Exception $e) {
+            throw new RecorderFailedException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     /**
