@@ -12,6 +12,7 @@ class Notifier {
     protected $log;
     protected $messageCb;
     protected $subjectCb;
+    protected $drivers;
 
     /**
      * You can provide a Monolog Logger instance to use in the constructor 
@@ -24,6 +25,7 @@ class Notifier {
 
         $this->log = $log;
         $this->config = config('lern.notify');
+        $this->drivers = $this->config['drivers'];
     }
 
     /**
@@ -102,11 +104,12 @@ class Notifier {
     /**
      * Triggers the Monolog Logger instance to log an error to all handlers
      * @param  Exception $e The exception to use
-     * @return Notifier|false Returns this
+     * @param  array $context Additional information that you would like to pass to Monolog
+     * @return boolean Returns if successful returns true else false
      */
-    public function send(Exception $e) {
+    public function send(Exception $e, array $context = []) {
         $factory = new MonologHandlerFactory();
-        $drivers = $this->config['drivers'];
+        $drivers = $this->drivers;
 
         $message = $this->getMessage($e);
         $subject = $this->getSubject($e);
@@ -116,13 +119,27 @@ class Notifier {
             $this->log->pushHandler($handler);
         }
 
+        $context = $this->buildContext($context);
+
         try{
-            $this->log->addCritical($message);
+            $this->log->addCritical($message, $context);
         } catch (Exception $e) {
             echo "LERN notifier failed. Message: {$e->getMessage()}.".PHP_EOL.$e->getTraceAsString();
             return false;
         }
 
-        return $this;
+        return true;
+    }
+
+    /**
+     * Builds a context array to pass to Monolog
+     * @param  array  $context Additional information that you would like to pass to Monolog
+     * @return array           The modified context array
+     */
+    protected function buildContext(array $context = []){
+        if(in_array('pushover', $this->drivers)){
+            $context['sound'] = $this->config['pushover']['sound'];
+        }
+        return $context;
     }
 }

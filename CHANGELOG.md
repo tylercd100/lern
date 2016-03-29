@@ -2,6 +2,12 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.0.2
+- Fixed issue with rolling back migration files
+
+### 3.0.1
+- Fixed Pushover sounds
+
 ### 3.0.0
 - When enabled in the config file you can now collect:
     - user_id - The id of the currently logged in user.
