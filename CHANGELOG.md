@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.1.3
+- Use Attribute Casting in Exception Model
+
 ### 3.1.2
 - Check to make sure 'smtp' config value is set before checking its value
 
