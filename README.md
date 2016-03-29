@@ -86,7 +86,7 @@ use Tylercd100\LERN\Facades\LERN;
 You can call `LERN::record($exception);` to record an Exception to the database.
 To query any Exception that has been recorded you can use `ExceptionModel` which is an Eloquent Model
 ```php
-use Tylercd100\LERN\Model\ExceptionModel;
+use Tylercd100\LERN\Models\ExceptionModel;
 $mostRecentException = ExceptionModel::orderBy('created_at','DESC')->first();
 ```
 
