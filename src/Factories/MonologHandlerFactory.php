@@ -4,6 +4,8 @@ namespace Tylercd100\LERN\Factories;
 
 use Exception;
 use Monolog\Logger;
+use Mail;
+use Swift_Message;
 
 class MonologHandlerFactory {
 
@@ -87,11 +89,18 @@ class MonologHandlerFactory {
     protected function mail($subject)
     {
         $this->checkSubject($subject);
-        return new \Monolog\Handler\NativeMailerHandler(
-            $this->config['to'],
-            $subject,
-            $this->config['from']
-        );
+        if ($this->config['smtp']) {
+            return new \Monolog\Handler\SwiftMailerHandler(
+                Mail::getSwiftMailer(),
+                Swift_Message::newInstance($subject)->setFrom($this->config['from'])->setTo($this->config['to'])
+            );
+        } else {
+            return new \Monolog\Handler\NativeMailerHandler(
+                $this->config['to'],
+                $subject,
+                $this->config['from']
+            );
+        }
     }
 
     /**
