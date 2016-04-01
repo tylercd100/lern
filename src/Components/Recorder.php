@@ -56,7 +56,8 @@ class Recorder extends Component{
 
             return ExceptionModel::create($opts);
         } catch (Exception $e) {
-            throw new RecorderFailedException($e->getMessage(), $e->getCode(), $e);
+            $code = (is_int($e->getCode()) ? $e->getCode() : 0);
+            throw new RecorderFailedException($e->getMessage(), $code, $e);
         }
     }
 

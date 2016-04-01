@@ -132,7 +132,8 @@ class Notifier extends Component {
 
             return true;
         } catch (Exception $e) {
-            throw new NotifierFailedException($e->getMessage(), $e->getCode(), $e);
+            $code = (is_int($e->getCode()) ? $e->getCode() : 0);
+            throw new NotifierFailedException($e->getMessage(), $code, $e);
         }
     }
 

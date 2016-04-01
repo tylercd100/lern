@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.1.4
+- Check if the exception code is an integer
+
 ### 3.1.3
 - Use Attribute Casting in Exception Model
 
