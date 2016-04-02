@@ -11,6 +11,13 @@ return [
             'user_id'=>false,
             'url'=>false,
         ],
+
+        /**
+         * When record.collect.data is true, this will exclude certain data keys recursively
+         */
+        'excludeKeys' => [
+            'password'
+        ]
     ],
 
     'notify'=>[

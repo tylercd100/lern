@@ -127,6 +127,7 @@ class Recorder extends Component{
      */
     protected function getData() {
         $data = Input::all();
+        $this->excludeKeys($data);
         if (is_array($data)) {
             return $data;
         } else {
@@ -158,5 +159,23 @@ class Recorder extends Component{
         } else {
             return 0;
         }
+    }
+
+    /**
+     * [excludeKeys description]
+     * @param  array  &$data [description]
+     * @return void
+     */
+    protected function excludeKeys(array $data){
+        $keys = $this->config['excludeKeys'];
+        foreach ($data as $key => &$value) {
+            if(in_array($key,$keys)){
+                unset($data[$key]);
+            } else if(is_array($value)){
+                $value = $this->excludeKeys($value);
+            }
+        }
+
+        return $data;
     }
 }
