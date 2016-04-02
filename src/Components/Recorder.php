@@ -127,8 +127,8 @@ class Recorder extends Component{
      */
     protected function getData() {
         $data = Input::all();
-        $this->excludeKeys($data);
         if (is_array($data)) {
+            $this->excludeKeys($data);
             return $data;
         } else {
             return null;
