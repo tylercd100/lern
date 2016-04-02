@@ -128,6 +128,7 @@ class Recorder extends Component{
     protected function getData() {
         $data = Input::all();
         if (is_array($data)) {
+            $this->excludeKeys($data);
             return $data;
         } else {
             return null;
@@ -158,5 +159,23 @@ class Recorder extends Component{
         } else {
             return 0;
         }
+    }
+
+    /**
+     * This function will remove all keys from an array recursively as defined in the config file
+     * @param  array $data The array to remove keys from
+     * @return void
+     */
+    protected function excludeKeys(array $data){
+        $keys = $this->config['excludeKeys'];
+        foreach ($data as $key => &$value) {
+            if(in_array($key,$keys)){
+                unset($data[$key]);
+            } else if(is_array($value)){
+                $value = $this->excludeKeys($value);
+            }
+        }
+
+        return $data;
     }
 }
