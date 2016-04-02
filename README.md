@@ -156,6 +156,9 @@ LERN::notify($e); //Notify the Exception
 
 ```
 
+## Further Reading and How-Tos
+- [Creating relationships between Exceptions and Users](https://github.com/tylercd100/lern/wiki/Creating-relationships-between-exceptions-and-users)
+
 ## Roadmap
 - Support more Monolog Handlers
 - Exception report page or command to easily identify your application's issues.
