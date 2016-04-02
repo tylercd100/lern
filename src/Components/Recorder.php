@@ -167,7 +167,7 @@ class Recorder extends Component{
      * @return void
      */
     protected function excludeKeys(array $data){
-        $keys = $this->config['excludeKeys'];
+        $keys = isset($this->config['excludeKeys']) ? $this->config['excludeKeys'] : [];
         foreach ($data as $key => &$value) {
             if(in_array($key,$keys)){
                 unset($data[$key]);
