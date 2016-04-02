@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.2.0
+- Added option to remove certain keys from the input data
+
 ### 3.1.4
 - Check if the exception code is an integer
 
