@@ -114,6 +114,9 @@ class TestCase extends Orchestra
                 'user_id'=>true,
                 'url'=>true,
             ],
+            'excludeKeys'=>[
+                'password'
+            ]
         ]);
 
         $app['config']->set('lern.notify', [

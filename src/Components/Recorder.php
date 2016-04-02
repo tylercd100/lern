@@ -162,8 +162,8 @@ class Recorder extends Component{
     }
 
     /**
-     * [excludeKeys description]
-     * @param  array  &$data [description]
+     * This function will remove all keys from an array recursively as defined in the config file
+     * @param  array $data The array to remove keys from
      * @return void
      */
     protected function excludeKeys(array $data){
