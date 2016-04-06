@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.2.1
+- Fixed issue when trying to store an exception code that is not an integer
+
 ### 3.2.0
 - Added option to remove certain keys from the input data. Please look at the excludeKeys options in the new [config file](https://github.com/tylercd100/lern/blob/3.2.0/config/lern.php)
 
