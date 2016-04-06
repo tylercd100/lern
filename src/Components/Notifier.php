@@ -5,8 +5,8 @@ namespace Tylercd100\LERN\Components;
 use Exception;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
-use Tylercd100\LERN\Factories\MonologHandlerFactory;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
+use Tylercd100\LERN\Factories\MonologHandlerFactory;
 
 class Notifier extends Component {
     protected $config;
@@ -110,7 +110,7 @@ class Notifier extends Component {
      */
     public function send(Exception $e, array $context = []) {
         
-        if($this->shouldntHandle($e)){
+        if ($this->shouldntHandle($e)) {
             return false;
         }
 
@@ -120,7 +120,7 @@ class Notifier extends Component {
         $message = $this->getMessage($e);
         $subject = $this->getSubject($e);
         
-        try{
+        try {
             foreach ($drivers as $driver) {
                 $handler = $factory->create($driver, $subject);
                 $this->log->pushHandler($handler);
@@ -142,8 +142,8 @@ class Notifier extends Component {
      * @param  array  $context Additional information that you would like to pass to Monolog
      * @return array           The modified context array
      */
-    protected function buildContext(array $context = []){
-        if(in_array('pushover', $this->drivers)){
+    protected function buildContext(array $context = []) {
+        if (in_array('pushover', $this->drivers)) {
             $context['sound'] = $this->config['pushover']['sound'];
         }
         return $context;

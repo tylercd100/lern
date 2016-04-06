@@ -145,7 +145,7 @@ class MonologHandlerFactory {
     }
     /**
      * Validates that the subject is an unempty string
-     * @param  mixed $subject The value to check
+     * @param  string $subject The value to check
      * @return void
      */
     private function checkSubject($subject) {

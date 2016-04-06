@@ -25,8 +25,8 @@ abstract class Component {
      * @param  \Exception  $e
      * @return bool
      */
-    protected function shouldntHandle(Exception $e){
-        $dontHandle = array_merge($this->dontHandle,$this->absolutelyDontHandle);
+    protected function shouldntHandle(Exception $e) {
+        $dontHandle = array_merge($this->dontHandle, $this->absolutelyDontHandle);
 
         foreach ($dontHandle as $type) {
             if ($e instanceof $type) {
