@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\LERN\Models\ExceptionModel;
 
-class Recorder extends Component{
+class Recorder extends Component {
 
     /**
      * @var mixed
@@ -31,7 +31,7 @@ class Recorder extends Component{
      */
     public function record(Exception $e)
     {
-        if($this->shouldntHandle($e)){
+        if ($this->shouldntHandle($e)) {
             return false;
         }
 
@@ -76,7 +76,7 @@ class Recorder extends Component{
     /**
      * @param string $key
      */
-    protected function collect($key,Exception $e = null){
+    protected function collect($key, Exception $e = null) {
         switch ($key) {
             case 'user_id':
                 return $this->getUserId();
@@ -87,8 +87,9 @@ class Recorder extends Component{
             case 'data':
                 return $this->getData();
             case 'status_code':
-                if($e===null)
-                    return 0;
+                if($e===null) {
+                                    return 0;
+                }
                 return $this->getStatusCode($e);
             default:
                 throw new Exception("{$key} is not supported! Therefore it cannot be collected!");
