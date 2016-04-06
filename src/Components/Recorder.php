@@ -39,7 +39,7 @@ class Recorder extends Component{
             'class'       => get_class($e),
             'file'        => $e->getFile(),
             'line'        => $e->getLine(),
-            'code'        => $e->getCode(),
+            'code'        => (is_int($e->getCode()) ? $e->getCode() : 0),
             'message'     => $e->getMessage(),
             'trace'       => $e->getTraceAsString(),
         ];
