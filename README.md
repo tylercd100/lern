@@ -11,7 +11,7 @@
 
 LERN is a Laravel 5 package that will record exceptions into a database and will send you a notification.
 
-Currently supported notification channels via [tylercd100/laravel-notify](https://github.com/tylercd100/laravel-notify)
+Currently supported notification channels via [Monolog](https://github.com/Seldaek/monolog)
 - Email
 - [Pushover](https://pushover.net/)
 - [Slack](https://slack.com/)
