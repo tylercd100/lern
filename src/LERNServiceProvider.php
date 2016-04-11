@@ -12,8 +12,6 @@ class LERNServiceProvider extends ServiceProvider
 
         $this->handleDeprecatedConfigValues();
 
-        $this->app->register(NotifyServiceProvider::class);
-
         $this->app->singleton('lern', function() {
             return new LERN;
         });
