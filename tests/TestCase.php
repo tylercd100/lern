@@ -54,9 +54,9 @@ class TestCase extends Orchestra
         ]);
 
         $this->app['config']->set('lern.notify.hipchat', [
-            'token' => 'token',
-            'room'  => 'room',
-            'name'  => 'name',
+            'token' => 'test-token',
+            'room'  => 'test-room',
+            'name'  => 'test-name',
             'notify'  => false,
         ]);
 
