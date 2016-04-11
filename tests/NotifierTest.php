@@ -21,6 +21,18 @@ class NotifierTest extends TestCase
         parent::tearDown();        
     }
 
+    public function testAllSupportedDrivers()
+    {
+        $this->app['config']->set('lern.notify.drivers', $this->supportedDrivers);
+
+        $observer = $this->getMock('Monolog\Logger',['critical'],['channelName']);
+        $observer->expects($this->once())
+                 ->method('critical');
+
+        $subject = new Notifier($observer);
+        $subject->send(new Exception);
+    }
+
     public function testLoggerCallsAddsError()
     {
         $this->app['config']->set('lern.notify.drivers', ['slack','pushover']);
