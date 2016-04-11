@@ -33,7 +33,8 @@
         "php": "^5.4|^7.0",
         "illuminate/support": "^5.0.0",
         "monolog/monolog": "~1.11",
-        "tylercd100/monolog-sms":"^1.1.0"
+        "tylercd100/monolog-sms":"^1.1.0",
+        "tylercd100/laravel-notify": "^1.0"
     },
     "require-dev": {
         "orchestra/testbench": "^3.1.0",

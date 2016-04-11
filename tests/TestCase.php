@@ -35,7 +35,7 @@ class TestCase extends Orchestra
 
         $this->app['config']->set('lern.notify.pushover', [
             'token' => 'token',
-            'user'  => 'user',
+            'users'  => 'user',
             'sound' => 'siren',
         ]);
 
@@ -130,7 +130,7 @@ class TestCase extends Orchestra
             ],
             'pushover'=>[
                 'token' => 'token',
-                'user'  => 'user',
+                'users'  => 'user',
                 'sound'=>'siren',
             ],
             'slack'=>[
