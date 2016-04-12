@@ -90,6 +90,16 @@ class TestCase extends Orchestra
     }
 
     /**
+     * @param \Illuminate\Foundation\Application $app
+     */
+    protected function getPackageAliases($app)
+    {
+        return [
+            'Tylercd100\LERN\Facades\LERN',
+        ];
+    }
+
+    /**
      * Define environment setup.
      *
      * @param  \Illuminate\Foundation\Application  $app

@@ -6,7 +6,6 @@ use Exception;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
-use Tylercd100\LERN\Factories\MonologHandlerFactory;
 use Tylercd100\Notify\Drivers\FromConfig as Notify;
 
 class Notifier extends Component {

@@ -3,6 +3,7 @@
 namespace Tylercd100\LERN\Tests;
 
 use Tylercd100\LERN\LERN;
+use Tylercd100\LERN\Facades\LERN as LERNFacade;
 use Tylercd100\LERN\Components\Notifier;
 use Tylercd100\LERN\Components\Recorder;
 use Tylercd100\Notify\Factories\MonologHandlerFactory;
@@ -18,6 +19,11 @@ class LERNTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();        
+    }
+
+    public function testLERNFacade(){
+        $obj = LERNFacade::getFacadeRoot();
+        $this->assertInstanceOf(LERN::class,$obj);
     }
 
     public function testItCallsNotifyAndRecord() {
