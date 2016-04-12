@@ -3,7 +3,6 @@
 namespace Tylercd100\LERN;
 
 use Illuminate\Support\ServiceProvider;
-use Tylercd100\Notify\Providers\NotifyServiceProvider;
 
 class LERNServiceProvider extends ServiceProvider
 {
@@ -29,10 +28,6 @@ class LERNServiceProvider extends ServiceProvider
     protected function handleDeprecatedConfigValues()
     {
         $renamedConfigValues = [
-
-            /*
-             * Earlier versions of the package used filesystems instead of disks
-             */
             [
                 'oldName' => 'lern.notify.pushover.user',
                 'newName' => 'lern.notify.pushover.users',

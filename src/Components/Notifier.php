@@ -14,7 +14,6 @@ class Notifier extends Component {
     protected $log;
     protected $messageCb;
     protected $subjectCb;
-    protected $drivers;
 
     /**
      * You can provide a Monolog Logger instance to use in the constructor 
