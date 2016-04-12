@@ -6,14 +6,13 @@ use Exception;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
-use Tylercd100\LERN\Factories\MonologHandlerFactory;
+use Tylercd100\Notify\Drivers\FromConfig as Notify;
 
 class Notifier extends Component {
     protected $config;
     protected $log;
     protected $messageCb;
     protected $subjectCb;
-    protected $drivers;
 
     /**
      * You can provide a Monolog Logger instance to use in the constructor 
@@ -24,9 +23,8 @@ class Notifier extends Component {
             $log = new Logger(config('lern.notify.channel'));
         }
 
-        $this->log = $log;
         $this->config = config('lern.notify');
-        $this->drivers = $this->config['drivers'];
+        $this->log = $log;
     }
 
     /**
@@ -114,21 +112,15 @@ class Notifier extends Component {
             return false;
         }
 
-        $factory = new MonologHandlerFactory();
-        $drivers = $this->drivers;
-
         $message = $this->getMessage($e);
         $subject = $this->getSubject($e);
         
         try {
-            foreach ($drivers as $driver) {
-                $handler = $factory->create($driver, $subject);
-                $this->log->pushHandler($handler);
-            }
-
             $context = $this->buildContext($context);
 
-            $this->log->addCritical($message, $context);
+            $notify = new Notify($this->config, $this->log, $subject);
+
+            $notify->critical($message, $context);
 
             return true;
         } catch (Exception $e) {
@@ -143,7 +135,7 @@ class Notifier extends Component {
      * @return array           The modified context array
      */
     protected function buildContext(array $context = []) {
-        if (in_array('pushover', $this->drivers)) {
+        if (in_array('pushover', $this->config['drivers'])) {
             $context['sound'] = $this->config['pushover']['sound'];
         }
         return $context;

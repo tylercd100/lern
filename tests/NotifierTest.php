@@ -4,8 +4,8 @@ namespace Tylercd100\LERN\Tests;
 
 use Exception;
 use Tylercd100\LERN\Components\Notifier;
-use Tylercd100\LERN\Factories\MonologHandlerFactory;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
+use Tylercd100\Notify\Factories\MonologHandlerFactory;
 
 class NotifierTest extends TestCase
 {
@@ -21,13 +21,25 @@ class NotifierTest extends TestCase
         parent::tearDown();        
     }
 
+    public function testAllSupportedDrivers()
+    {
+        $this->app['config']->set('lern.notify.drivers', $this->supportedDrivers);
+
+        $observer = $this->getMock('Monolog\Logger',['critical'],['channelName']);
+        $observer->expects($this->once())
+                 ->method('critical');
+
+        $subject = new Notifier($observer);
+        $subject->send(new Exception);
+    }
+
     public function testLoggerCallsAddsError()
     {
         $this->app['config']->set('lern.notify.drivers', ['slack','pushover']);
 
-        $observer = $this->getMock('Monolog\Logger',['addCritical'],['channelName']);
+        $observer = $this->getMock('Monolog\Logger',['critical'],['channelName']);
         $observer->expects($this->once())
-                 ->method('addCritical');
+                 ->method('critical');
 
         $subject = new Notifier($observer);
         $subject->send(new Exception);
@@ -35,7 +47,7 @@ class NotifierTest extends TestCase
 
     public function testLoggerCallsPushesHandler()
     {
-        $handler = (new MonologHandlerFactory())->create('slack');
+        $handler = (new MonologHandlerFactory())->create('slack',config('lern.notify.slack'));
 
         $observer = $this->getMock('Monolog\Logger',['pushHandler'],['channelName']);
         $observer->expects($this->once())
@@ -71,12 +83,12 @@ class NotifierTest extends TestCase
 
     public function testItThrowsNotifierFailedExceptionWhenMonologThrowsException(){
 
-        $handler = (new MonologHandlerFactory())->create('slack');
+        $handler = (new MonologHandlerFactory())->create('slack',config('lern.notify.slack'));
 
-        $observer = $this->getMock('Monolog\Logger',['addCritical'],['channelName']);
+        $observer = $this->getMock('Monolog\Logger',['critical'],['channelName']);
 
         $observer->expects($this->once())
-                 ->method('addCritical')
+                 ->method('critical')
                  ->will($this->throwException(new Exception));
         
         $this->setExpectedException('Tylercd100\LERN\Exceptions\NotifierFailedException');
