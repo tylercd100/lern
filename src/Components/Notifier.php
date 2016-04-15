@@ -3,6 +3,7 @@
 namespace Tylercd100\LERN\Components;
 
 use Exception;
+use Illuminate\Container\Container;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
@@ -116,7 +117,7 @@ class Notifier extends Component {
         $subject = $this->getSubject($e);
         
         try {
-            $context = $this->buildContext($context);
+            $context = $this->buildContext($context, $e);
 
             $notify = new Notify($this->config, $this->log, $subject);
 
@@ -131,13 +132,110 @@ class Notifier extends Component {
 
     /**
      * Builds a context array to pass to Monolog
-     * @param  array  $context Additional information that you would like to pass to Monolog
-     * @return array           The modified context array
+     *
+     * @param  array $context Additional information that you would like to pass to Monolog
+     * @param \Exception $e
+     *
+     * @return array The modified context array
      */
-    protected function buildContext(array $context = []) {
-        if (in_array('pushover', $this->config['drivers'])) {
+    protected function buildContext(array $context = [], Exception $e)
+    {
+        $app = app();
+
+        // Add sound ro pushover
+        if(in_array('pushover', $this->config['drivers']))
+        {
             $context['sound'] = $this->config['pushover']['sound'];
         }
+
+        // Add exception context for raven for better handling in Sentry
+        if(in_array('raven', $this->config['drivers']))
+        {
+            $context['exception'] = $e;
+        }
+
+        // Add auth data if available.
+        if(isset($app['auth']) && $user = $app['auth']->user())
+        {
+            if(empty($context['user']) or !is_array($context['user']))
+            {
+                $context['user'] = [];
+            }
+
+            if(!isset($context['user']['id']) && method_exists($user, 'getAuthIdentifier'))
+            {
+                $context['user']['id'] = $user->getAuthIdentifier();
+            }
+
+            if(!isset($context['user']['id']) && method_exists($user, 'getKey'))
+            {
+                $context['user']['id'] = $user->getKey();
+            }
+
+            if(!isset($context['user']['id']) && isset($user->id))
+            {
+                $context['user']['id'] = $user->id;
+            }
+        }
+
+        // Add session data if available.
+        if(isset($app['session']) && $session = $app['session']->all())
+        {
+            if(empty($context['user']) or !is_array($context['user']))
+            {
+                $context['user'] = [];
+            }
+
+            if(!isset($context['user']['id']))
+            {
+                $context['user']['id'] = $app->session->getId();
+            }
+
+            if(isset($context['user']['data']))
+            {
+                $context['user']['data'] = array_merge($session, $context['user']['data']);
+            } else
+            {
+                $context['user']['data'] = $session;
+            }
+        }
+        // Automatic tags
+        $tags = [
+            'environment' => $app->environment(),
+            'server'      => $app->request->server('HTTP_HOST'),
+            'php_version' => phpversion(),
+        ];
+
+        // Add tags to context.
+        if(isset($context['tags']))
+        {
+            $context['tags'] = array_merge($tags, $context['tags']);
+        } else
+        {
+            $context['tags'] = $tags;
+        }
+
+        // Automatic extra data.
+        $extra = [
+            'ip' => $app->request->getClientIp(),
+        ];
+
+        // Everything that is not 'user', 'tags' or 'level' is automatically considered
+        // as additonal 'extra' context data.
+        $extra = array_merge($extra, array_except($context, ['user', 'tags', 'level', 'extra']));
+
+        // Add extra to context.
+        if(isset($context['extra']))
+        {
+            $context['extra'] = array_merge($extra, $context['extra']);
+        } else
+        {
+            $context['extra'] = $extra;
+        }
+
+        // Clean out other values from context.
+        $context = array_only($context, ['user', 'tags', 'level', 'extra', 'exception']);
+
         return $context;
     }
 }
