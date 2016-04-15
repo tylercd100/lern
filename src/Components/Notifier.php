@@ -13,6 +13,7 @@ class Notifier extends Component {
     protected $log;
     protected $messageCb;
     protected $subjectCb;
+    protected $contextCb;
 
     /**
      * You can provide a Monolog Logger instance to use in the constructor 
@@ -59,9 +60,9 @@ class Notifier extends Component {
         if (is_callable($this->messageCb)) {
             return $this->messageCb->__invoke($e);
         } else {
-            $msg = get_class($e) . " was thrown! \n" . $e->getMessage();
+            $msg = get_class($e)." was thrown! \n".$e->getMessage();
             if ($this->config['includeExceptionStackTrace'] === true) {
-                $msg .= "\n\n" . $e->getTraceAsString();
+                $msg .= "\n\n".$e->getTraceAsString();
             }
             return $msg;
         }
@@ -91,6 +92,36 @@ class Notifier extends Component {
     }
 
     /**
+     * Set an array or a closure to be called that will generate the context array for the notification
+     * @param callable|array $cb A closure or array that will be set for the context
+     */
+    public function setContext($cb)
+    {
+        $this->contextCb = $this->wrapValueInClosure($cb);
+        return $this;
+    }
+
+    /**
+     * Returns the result of the context closure
+     * @param  Exception $e The Exception instance that you want to build the context around
+     * @return array        The context array
+     */
+    public function getContext(Exception $e, $context = []) {
+
+        //This needs a better solution. How do I specific context needs for different drivers?
+        if (in_array('pushover', $this->config['drivers'])) {
+            $context['sound'] = $this->config['pushover']['sound'];
+        }
+
+        // Call the callback or return the default
+        if (is_callable($this->contextCb)) {
+            return $this->contextCb->__invoke($e, $context);
+        } else {
+            return $context;
+        }
+    }
+
+    /**
      * Pushes on another Monolog Handler
      * @param  HandlerInterface $handler The handler instance to add on
      * @return Notifier                  Returns this
@@ -114,10 +145,9 @@ class Notifier extends Component {
 
         $message = $this->getMessage($e);
         $subject = $this->getSubject($e);
+        $context = $this->getContext($e, $context);
         
         try {
-            $context = $this->buildContext($context);
-
             $notify = new Notify($this->config, $this->log, $subject);
 
             $notify->critical($message, $context);
@@ -127,17 +157,5 @@ class Notifier extends Component {
             $code = (is_int($e->getCode()) ? $e->getCode() : 0);
             throw new NotifierFailedException($e->getMessage(), $code, $e);
         }
-    }
-
-    /**
-     * Builds a context array to pass to Monolog
-     * @param  array  $context Additional information that you would like to pass to Monolog
-     * @return array           The modified context array
-     */
-    protected function buildContext(array $context = []) {
-        if (in_array('pushover', $this->config['drivers'])) {
-            $context['sound'] = $this->config['pushover']['sound'];
-        }
-        return $context;
     }
 }

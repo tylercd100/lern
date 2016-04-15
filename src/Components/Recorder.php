@@ -87,7 +87,7 @@ class Recorder extends Component {
             case 'data':
                 return $this->getData();
             case 'status_code':
-                if($e===null) {
+                if ($e === null) {
                                     return 0;
                 }
                 return $this->getStatusCode($e);
@@ -167,12 +167,12 @@ class Recorder extends Component {
      * @param  array $data The array to remove keys from
      * @return void
      */
-    protected function excludeKeys(array $data){
+    protected function excludeKeys(array $data) {
         $keys = isset($this->config['excludeKeys']) ? $this->config['excludeKeys'] : [];
         foreach ($data as $key => &$value) {
-            if(in_array($key,$keys)){
+            if (in_array($key, $keys)) {
                 unset($data[$key]);
-            } else if(is_array($value)){
+            } else if (is_array($value)) {
                 $value = $this->excludeKeys($value);
             }
         }
