@@ -31,13 +31,13 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^5.4|^7.0",
-        "illuminate/support": "^5.0.0",
+        "illuminate/support": "^5.0",
         "monolog/monolog": "~1.11",
-        "tylercd100/monolog-sms":"^1.1.0",
-        "tylercd100/laravel-notify": "^1.4.2"
+        "tylercd100/monolog-sms":"^1.1",
+        "tylercd100/laravel-notify": "^1.6"
     },
     "require-dev": {
-        "orchestra/testbench": "^3.1.0",
+        "orchestra/testbench": "^3.1",
         "phpunit/phpunit": "^4.8 || ^5.0",
         "doctrine/dbal": "~2.3"
     },

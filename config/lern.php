@@ -1,5 +1,7 @@
 <?php
 
+use Monolog\Logger;
+
 return [
 
     'record'=>[
@@ -105,6 +107,13 @@ return [
             'secret' => env('TWILIO_AUTH_SECRET'),
             'to'     => env('TWILIO_TO'),
             'from'   => env('TWILIO_FROM'),
+        ],
+
+        /**
+         * Raven settings
+         */
+        'raven'=>[
+            'dsn'   => env('RAVEN_DSN'),
         ]
     ],
     
