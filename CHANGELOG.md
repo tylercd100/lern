@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.4.0
+- Set context using a callback/closure (Thanks to [@qodeboy](https://github.com/qodeboy) for suggestion)
+
 ### 3.3.1
 - Added default config values for Raven/Sentry
 
