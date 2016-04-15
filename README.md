@@ -20,6 +20,7 @@ Currently supported notification channels via [Monolog](https://github.com/Selda
 - [Flowdock](https://www.flowdock.com/)
 - [Plivo](https://www.plivo.com/) an SMS messaging service.
 - [Twilio](https://www.twilio.com/) an SMS messaging service.
+- [Sentry](https://getsentry.com) via [Raven](https://github.com/getsentry/raven-php)
 
 ## Migrating from `2.x` to `3.x`
 Version 3.x introduces the ability to collect more information from the error such as the user_id, url, method, and input data. In order to use 3.x you will need to copy over the new [config file](https://github.com/tylercd100/lern/blob/master/config/lern.php), the migration file and then migrate it.
