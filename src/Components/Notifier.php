@@ -60,9 +60,9 @@ class Notifier extends Component {
         if (is_callable($this->messageCb)) {
             return $this->messageCb->__invoke($e);
         } else {
-            $msg = get_class($e) . " was thrown! \n" . $e->getMessage();
+            $msg = get_class($e)." was thrown! \n".$e->getMessage();
             if ($this->config['includeExceptionStackTrace'] === true) {
-                $msg .= "\n\n" . $e->getTraceAsString();
+                $msg .= "\n\n".$e->getTraceAsString();
             }
             return $msg;
         }
