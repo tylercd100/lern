@@ -1,7 +1,5 @@
 <?php
 
-use Monolog\Logger;
-
 return [
 
     'record'=>[
