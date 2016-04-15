@@ -92,8 +92,8 @@ class Notifier extends Component {
     }
 
     /**
-     * Set a string or a closure to be called that will generate the context array for the notification
-     * @param callable|string $cb A closure or string that will be set for the subject line
+     * Set an array or a closure to be called that will generate the context array for the notification
+     * @param callable|array $cb A closure or array that will be set for the context
      */
     public function setContext($cb)
     {
