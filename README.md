@@ -157,6 +157,35 @@ LERN::notify($e); //Notify the Exception
 
 ```
 
+#### Changing the context
+
+This function lets you change the context that is passed on to the Monolog handlers
+```php
+LERN::setContext(function(Exception $e, $context = []){
+
+    $context['exception'] = $e;
+
+    $app = app();
+    
+    if(isset($app['auth']) && $user = $app['auth']->user())
+    {
+        if(empty($context['user']) or !is_array($context['user']))
+        {
+            $context['user'] = [];
+        }
+
+        if(!isset($context['user']['id']) && method_exists($user, 'getAuthIdentifier'))
+        {
+            $context['user']['id'] = $user->getAuthIdentifier();
+        }
+    }
+
+    return $context;
+});
+
+LERN::handle($exception);
+```
+
 ## Further Reading and How-Tos
 - [Creating relationships between Exceptions and Users](https://github.com/tylercd100/lern/wiki/Creating-relationships-between-exceptions-and-users)
 
