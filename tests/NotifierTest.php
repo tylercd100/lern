@@ -63,6 +63,12 @@ class NotifierTest extends TestCase
         $this->assertEquals($result,"This is a test");
     }
 
+    public function testNotifierReturnsTheCorrectContextWhenUsingClosure(){
+        $this->notifier->setContext(function($e,$context){return ["text"=>"This is a test"];});
+        $result = $this->notifier->getContext(new Exception);
+        $this->assertEquals($result,["text"=>"This is a test"]);
+    }
+
     public function testNotifierReturnsTheCorrectMessageWhenUsingString(){
         $this->notifier->setMessage("This is a test");
         $result = $this->notifier->getMessage(new Exception);
