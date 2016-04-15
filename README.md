@@ -165,6 +165,8 @@ LERN::setContext(function(Exception $e, $context = []){
 
     $context['exception'] = $e;
 
+    $app = app();
+    
     if(isset($app['auth']) && $user = $app['auth']->user())
     {
         if(empty($context['user']) or !is_array($context['user']))
