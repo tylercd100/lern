@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.3.1
+- Added default config values for Raven/Sentry
+
 ### 3.3.0
 - Extracted notification functions into its [own package](https://github.com/tylercd100/laravel-notify)
 
