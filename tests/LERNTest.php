@@ -3,9 +3,10 @@
 namespace Tylercd100\LERN\Tests;
 
 use Tylercd100\LERN\LERN;
-use Tylercd100\LERN\Factories\MonologHandlerFactory;
+use Tylercd100\LERN\Facades\LERN as LERNFacade;
 use Tylercd100\LERN\Components\Notifier;
 use Tylercd100\LERN\Components\Recorder;
+use Tylercd100\Notify\Factories\MonologHandlerFactory;
 use Exception;
 
 class LERNTest extends TestCase
@@ -18,6 +19,11 @@ class LERNTest extends TestCase
     public function tearDown()
     {
         parent::tearDown();        
+    }
+
+    public function testLERNFacade(){
+        $obj = LERNFacade::getFacadeRoot();
+        $this->assertInstanceOf(LERN::class,$obj);
     }
 
     public function testItCallsNotifyAndRecord() {
@@ -55,7 +61,7 @@ class LERNTest extends TestCase
         $mock->expects($this->once())
              ->method('pushHandler');
         $lern = new LERN($mock);
-        $handler = (new MonologHandlerFactory)->create('mail','Test Subject');
+        $handler = (new MonologHandlerFactory)->create('mail',config('lern.notify.mail'),'Test Subject');
         $lern->pushHandler($handler);
     }
 

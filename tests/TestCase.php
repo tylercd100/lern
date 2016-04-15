@@ -35,7 +35,7 @@ class TestCase extends Orchestra
 
         $this->app['config']->set('lern.notify.pushover', [
             'token' => 'token',
-            'user'  => 'user',
+            'users'  => 'user',
             'sound' => 'siren',
         ]);
 
@@ -54,9 +54,9 @@ class TestCase extends Orchestra
         ]);
 
         $this->app['config']->set('lern.notify.hipchat', [
-            'token' => 'token',
-            'room'  => 'room',
-            'name'  => 'name',
+            'token' => 'test-token',
+            'room'  => 'test-room',
+            'name'  => 'test-name',
             'notify'  => false,
         ]);
 
@@ -87,6 +87,16 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return ['Tylercd100\LERN\LERNServiceProvider'];
+    }
+
+    /**
+     * @param \Illuminate\Foundation\Application $app
+     */
+    protected function getPackageAliases($app)
+    {
+        return [
+            'Tylercd100\LERN\Facades\LERN',
+        ];
     }
 
     /**
@@ -130,7 +140,7 @@ class TestCase extends Orchestra
             ],
             'pushover'=>[
                 'token' => 'token',
-                'user'  => 'user',
+                'users'  => 'user',
                 'sound'=>'siren',
             ],
             'slack'=>[

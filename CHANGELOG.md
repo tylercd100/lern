@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.3.0
+- Extracted notification functions into its [own package](https://github.com/tylercd100/laravel-notify)
+
 ### 3.2.2
 - Accidently forgot to merge PR for 3.2.1, this release has the 3.2.1 fixes
 
