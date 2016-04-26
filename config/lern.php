@@ -46,6 +46,16 @@ return [
         ],
 
         /**
+         * Mailgun settings
+         */
+        'mailgun'=>[
+            'to'    => env('MAILGUN_TO'),
+            'from'  => env('MAILGUN_FROM'),
+            'token' => env('MAILGUN_APP_TOKEN'),
+            'domain'=> env('MAILGUN_DOMAIN'),
+        ],
+
+        /**
          * Pushover settings
          */
         'pushover'=>[

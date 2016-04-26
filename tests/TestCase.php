@@ -14,7 +14,7 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->supportedDrivers = ['slack','mail','pushover','plivo','twilio','hipchat','flowdock','fleephook'];
+        $this->supportedDrivers = ['slack','mail','pushover','plivo','twilio','hipchat','flowdock','fleephook','mailgun'];
 
         $this->app['config']->set('lern.notify.slack', [
             'token'=>'token',
@@ -31,6 +31,13 @@ class TestCase extends Orchestra
             'to'=>'to@address.com',
             'from'=>'from@address.com',
             'smtp'=>true,
+        ]);
+
+        $this->app['config']->set('lern.notify.mailgun', [
+            'to'=>'to@address.com',
+            'from'=>'from@address.com',
+            'token' => 'token',
+            'domain' => 'test.com',
         ]);
 
         $this->app['config']->set('lern.notify.pushover', [
