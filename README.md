@@ -63,16 +63,19 @@ To use LERN modify the report method in the `app/Exceptions/Handler.php` file
 ```php
 public function report(Exception $e)
 {
-	if ($this->shouldReport($e)) {
-	    LERN::handle($e); //Record and Notify the Exception
-	    /*
-	    OR...
-	    LERN::record($e); //Record the Exception to the database
-	    LERN::notify($e); //Notify the Exception
-	    */
-	}
+    if ($this->shouldReport($e)) {
+        if (app()->bound("lern")) {
+            app()->make("lern")->handle($e); //Record and Notify the Exception
+
+            /*
+            OR...
+            app()->make("lern")->record($e); //Record the Exception to the database
+            app()->make("lern")->notify($e); //Notify the Exception
+            */
+        }
+    }
 	
-	return parent::report($e);
+    return parent::report($e);
 }
 ```
 
