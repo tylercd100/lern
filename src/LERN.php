@@ -81,6 +81,7 @@ class LERN
     /**
      * Pushes on another Monolog Handler
      * @param  HandlerInterface $handler The handler instance to add on
+     * @return $this
      */
     public function pushHandler(HandlerInterface $handler) {
         $this->notifier->pushHandler($handler);
@@ -130,6 +131,7 @@ class LERN
     /**
      * Set a string or a closure to be called that will generate the message body for the notification
      * @param function|string $cb This closure function will be passed an Exception and must return a string
+     * @return $this
      */
     public function setMessage($cb)
     {
@@ -140,6 +142,7 @@ class LERN
     /**
      * Set a string or a closure to be called that will generate the subject line for the notification
      * @param function|string $cb This closure function will be passed an Exception and must return a string
+     * @return $this
      */
     public function setSubject($cb)
     {

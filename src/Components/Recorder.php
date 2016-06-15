@@ -27,7 +27,8 @@ class Recorder extends Component {
     /**
      * Records an Exception to the database
      * @param  Exception $e The exception you want to record
-     * @return ExceptionModel|false
+     * @return false|ExceptionModel
+     * @throws RecorderFailedException
      */
     public function record(Exception $e)
     {
@@ -75,6 +76,9 @@ class Recorder extends Component {
 
     /**
      * @param string $key
+     * @param Exception $e
+     * @return array|int|null|string
+     * @throws Exception
      */
     protected function collect($key, Exception $e = null) {
         switch ($key) {
