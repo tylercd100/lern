@@ -64,6 +64,8 @@ To use LERN modify the report method in the `app/Exceptions/Handler.php` file
 public function report(Exception $e)
 {
     if ($this->shouldReport($e)) {
+    
+    	//Check to see if LERN is installed otherwise you will not get an exception.
         if (app()->bound("lern")) {
             app()->make("lern")->handle($e); //Record and Notify the Exception
 
