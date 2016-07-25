@@ -37,8 +37,10 @@ class NotifierTest extends TestCase
     {
         $logLevels = ['debug', 'info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency'];
 
+        $this->app['config']->set('lern.notify.drivers', ['slack']);
+
         foreach($logLevels as $logLevel){
-            $this->app['config']->set('lern.log_level', $logLevel);
+            $this->app['config']->set('lern.notify.log_level', $logLevel);
 
             $observer = $this->getMock('Monolog\Logger',[$logLevel],['channelName']);
             $observer->expects($this->once())
