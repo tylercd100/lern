@@ -2,6 +2,7 @@
 
 return [
 
+
     'record'=>[
         'table'=>'vendor_tylercd100_lern_exceptions',
         'collect'=>[
@@ -26,6 +27,11 @@ return [
          */
         'channel'=>'Tylercd100\LERN',
 
+        /**
+         * The log level to use when notifying
+         */
+        'log_level' => 'critical', //Options are: debug, info, notice, warning, error, critical, alert, emergency.
+        
         /**
          * When using the default message body this will also include the stack trace
          */

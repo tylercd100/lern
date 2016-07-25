@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.6.0
+- Added a log_level option in the config to set the desired log level
+
 ### 3.5.0
 - Added Mailgun support
 
