@@ -108,7 +108,7 @@ class Notifier extends Component {
      */
     public function getContext(Exception $e, $context = []) {
 
-        //This needs a better solution. How do I specific context needs for different drivers?
+        //This needs a better solution. How do I set specific context needs for different drivers?
         if (in_array('pushover', $this->config['drivers'])) {
             $context['sound'] = $this->config['pushover']['sound'];
         }
@@ -150,7 +150,10 @@ class Notifier extends Component {
         try {
             $notify = new Notify($this->config, $this->log, $subject);
 
-            $level = $this->config['log_level'] ?: 'critical';
+            $level = array_key_exists('log_level', $this->config) 
+                ? $this->config['log_level'] 
+                : 'critical';
+            
             $notify->{$level}($message, $context);
 
             return true;
