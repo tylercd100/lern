@@ -150,10 +150,10 @@ class Notifier extends Component {
         try {
             $notify = new Notify($this->config, $this->log, $subject);
 
-            $level = array_key_exists('log_level', $this->config) 
+            $level = (array_key_exists('log_level', $this->config) && !empty($this->config['log_level']))
                 ? $this->config['log_level'] 
                 : 'critical';
-            
+
             $notify->{$level}($message, $context);
 
             return true;
