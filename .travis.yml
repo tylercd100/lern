@@ -5,15 +5,14 @@ php:
     - 5.6
     - 7.0
 
-cache:
-  timeout: 900 # 15 minutes
-  directories:
-    - vendor
-    - composer.lock
+env:
+    matrix:
+        - COMPOSER_FLAGS="--prefer-lowest"
+        - COMPOSER_FLAGS=""
 
 before_script:
-  - travis_retry composer self-update
-  - travis_retry composer install --no-interaction
+- travis_retry composer self-update
+- travis_retry composer update ${COMPOSER_FLAGS} --no-interaction --prefer-source
 
 script:
   - vendor/bin/phpunit
