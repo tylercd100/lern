@@ -150,7 +150,8 @@ class Notifier extends Component {
         try {
             $notify = new Notify($this->config, $this->log, $subject);
 
-            $notify->critical($message, $context);
+            $level = $this->config['log_level'] ?: 'critical';
+            $notify->{$level}($message, $context);
 
             return true;
         } catch (Exception $e) {

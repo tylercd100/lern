@@ -2,6 +2,8 @@
 
 return [
 
+    'log_level' => 'critical', //Options are: debug, info, notice, warning, error, critical, alert, emergency.
+
     'record'=>[
         'table'=>'vendor_tylercd100_lern_exceptions',
         'collect'=>[
