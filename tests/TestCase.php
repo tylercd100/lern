@@ -77,15 +77,29 @@ class TestCase extends Orchestra
         parent::tearDown();        
     }
 
-    protected function migrate(){
+    protected function migrate()
+    {
         $this->artisan('migrate', [
             '--database' => 'testbench',
             '--realpath' => realpath(__DIR__.'/migrations'),
         ]);
     }
 
-    protected function migrateReset(){
-        $this->artisan('migrate:reset');
+    protected function migrateReset()
+    {
+        $version = $this->app->version();
+        $version = explode(".", $version);
+
+        if (intval($version[0]) >= 5 && intval($version[1]) >= 3) {
+            $this->artisan('migrate:reset', [
+                '--database' => 'testbench',
+                '--realpath' => realpath(__DIR__.'/migrations'),
+            ]);
+        } else {
+            $this->artisan('migrate:reset', [
+                '--database' => 'testbench'
+            ]);
+        }
     }
 
     /**
