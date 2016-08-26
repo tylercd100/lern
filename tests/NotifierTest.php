@@ -25,7 +25,7 @@ class NotifierTest extends TestCase
     {
         $this->app['config']->set('lern.notify.drivers', $this->supportedDrivers);
 
-        $observer = $this->createMock('Monolog\Logger',['critical'],['channelName']);
+        $observer = $this->getMock('Monolog\Logger',['critical'],['channelName']);
         $observer->expects($this->once())
                  ->method('critical');
 
@@ -55,7 +55,7 @@ class NotifierTest extends TestCase
     {
         $this->app['config']->set('lern.notify.drivers', ['slack','pushover']);
 
-        $observer = $this->createMock('Monolog\Logger',['critical'],['channelName']);
+        $observer = $this->getMock('Monolog\Logger',['critical'],['channelName']);
         $observer->expects($this->once())
                  ->method('critical');
 
@@ -67,7 +67,7 @@ class NotifierTest extends TestCase
     {
         $handler = (new MonologHandlerFactory())->create('slack',config('lern.notify.slack'));
 
-        $observer = $this->createMock('Monolog\Logger',['pushHandler'],['channelName']);
+        $observer = $this->getMock('Monolog\Logger',['pushHandler'],['channelName']);
         $observer->expects($this->once())
                  ->method('pushHandler');
 
@@ -109,7 +109,7 @@ class NotifierTest extends TestCase
 
         $handler = (new MonologHandlerFactory())->create('slack',config('lern.notify.slack'));
 
-        $observer = $this->createMock('Monolog\Logger',['critical'],['channelName']);
+        $observer = $this->getMock('Monolog\Logger',['critical'],['channelName']);
 
         $observer->expects($this->once())
                  ->method('critical')

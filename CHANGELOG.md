@@ -2,6 +2,12 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.6.2
+- Fixed Tests for Laravel 5.2
+
+### 3.6.1
+- Fixed Tests for Laravel 5.3
+
 ### 3.6.0
 - Added a log_level option in the config to set the desired log level
 
