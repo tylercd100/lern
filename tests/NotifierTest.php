@@ -33,6 +33,24 @@ class NotifierTest extends TestCase
         $subject->send(new Exception);
     }
 
+    public function testSendsDifferentLogLevels()
+    {
+        $logLevels = ['debug', 'info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency'];
+
+        $this->app['config']->set('lern.notify.drivers', ['slack']);
+
+        foreach($logLevels as $logLevel){
+            $this->app['config']->set('lern.notify.log_level', $logLevel);
+
+            $observer = $this->getMock('Monolog\Logger',[$logLevel],['channelName']);
+            $observer->expects($this->once())
+                     ->method($logLevel);
+
+            $subject = new Notifier($observer);
+            $subject->send(new Exception);
+        }
+    }
+
     public function testLoggerCallsAddsError()
     {
         $this->app['config']->set('lern.notify.drivers', ['slack','pushover']);

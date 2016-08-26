@@ -44,6 +44,7 @@ class Notifier extends Component {
     /**
      * Set a string or a closure to be called that will generate the message body for the notification
      * @param callable|string $cb A closure or string that will be set for the message
+     * @return $this
      */
     public function setMessage($cb)
     {
@@ -71,6 +72,7 @@ class Notifier extends Component {
     /**
      * Set a string or a closure to be called that will generate the subject line for the notification
      * @param callable|string $cb A closure or string that will be set for the subject line
+     * @return $this
      */
     public function setSubject($cb)
     {
@@ -94,6 +96,7 @@ class Notifier extends Component {
     /**
      * Set an array or a closure to be called that will generate the context array for the notification
      * @param callable|array $cb A closure or array that will be set for the context
+     * @return $this
      */
     public function setContext($cb)
     {
@@ -108,7 +111,7 @@ class Notifier extends Component {
      */
     public function getContext(Exception $e, $context = []) {
 
-        //This needs a better solution. How do I specific context needs for different drivers?
+        //This needs a better solution. How do I set specific context needs for different drivers?
         if (in_array('pushover', $this->config['drivers'])) {
             $context['sound'] = $this->config['pushover']['sound'];
         }
@@ -136,6 +139,7 @@ class Notifier extends Component {
      * @param  Exception $e The exception to use
      * @param  array $context Additional information that you would like to pass to Monolog
      * @return bool
+     * @throws NotifierFailedException
      */
     public function send(Exception $e, array $context = []) {
         
@@ -150,7 +154,11 @@ class Notifier extends Component {
         try {
             $notify = new Notify($this->config, $this->log, $subject);
 
-            $notify->critical($message, $context);
+            $level = (array_key_exists('log_level', $this->config) && !empty($this->config['log_level']))
+                ? $this->config['log_level'] 
+                : 'critical';
+
+            $notify->{$level}($message, $context);
 
             return true;
         } catch (Exception $e) {
