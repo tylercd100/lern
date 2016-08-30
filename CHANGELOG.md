@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.6.4
+- Updated to tylercd100/laravel-notify@^1.8.1 which allows newline characters in emails
+
 ### 3.6.3
 - Ignore columns that are null
 
