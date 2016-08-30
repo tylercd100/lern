@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.6.5
+- Updated to tylercd100/laravel-notify@^1.8.2 which sets the content type of emails to text/html instead of text/plain
+
 ### 3.6.4
 - Updated to tylercd100/laravel-notify@^1.8.1 which allows newline characters in emails
 
