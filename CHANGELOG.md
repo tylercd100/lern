@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.6.3
+- Ignore columns that are null
+
 ### 3.6.2
 - Fixed Tests for Laravel 5.2
 
