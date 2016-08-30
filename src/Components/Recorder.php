@@ -45,7 +45,6 @@ class Recorder extends Component {
             'trace'       => $e->getTraceAsString(),
         ];
 
-
         $configDependant = ['user_id', 'status_code', 'method', 'data', 'url'];
 
         try {
