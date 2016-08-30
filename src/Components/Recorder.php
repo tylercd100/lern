@@ -45,13 +45,15 @@ class Recorder extends Component {
             'trace'       => $e->getTraceAsString(),
         ];
 
-
         $configDependant = ['user_id', 'status_code', 'method', 'data', 'url'];
 
         try {
             foreach ($configDependant as $key) {
                 if ($this->canCollect($key)) {
-                    $opts[$key] = $this->collect($key, $e);
+                    $value = $this->collect($key, $e);
+                    if ($value !== null) {
+                        $opts[$key] = $value;
+                    }
                 }
             }
 
@@ -106,7 +108,7 @@ class Recorder extends Component {
      */
     protected function getUserId() {
         $user = Auth::user();
-        if (is_object($user)) {
+        if (is_object($user) && !empty($user->id)) {
             return $user->id;
         } else {
             return null;
