@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/tylercd100/lern.svg?branch=master)](https://travis-ci.org/tylercd100/lern)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tylercd100/lern/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tylercd100/lern/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/tylercd100/lern/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/tylercd100/lern/?branch=master)
+[![HHVM Status](http://hhvm.h4cc.de/badge/tylercd100/lern.svg?style=flat-square)](http://hhvm.h4cc.de/package/tylercd100/lern)
 [![Dependency Status](https://www.versioneye.com/user/projects/56f3252c35630e0029db0187/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56f3252c35630e0029db0187)
 [![Total Downloads](https://img.shields.io/packagist/dt/tylercd100/lern.svg?style=flat-square)](https://packagist.org/packages/tylercd100/lern)
 
