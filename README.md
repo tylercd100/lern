@@ -1,12 +1,12 @@
 # LERN (Laravel Exception Recorder and Notifier)
-[![Latest Version](https://img.shields.io/github/release/tylercd100/lern.svg?style=flat-square)](https://github.com/tylercd100/lern/releases)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![HHVM Status](http://hhvm.h4cc.de/badge/tylercd100/lern.svg?style=flat-square)](http://hhvm.h4cc.de/package/tylercd100/lern)
-[![Build Status](https://travis-ci.org/tylercd100/lern.svg?style=flat-square&branch=master)](https://travis-ci.org/tylercd100/lern)
+[![Latest Stable Version](https://poser.pugx.org/tylercd100/lern/v/stable)](https://packagist.org/packages/tylercd100/lern)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
+[![HHVM Status](http://hhvm.h4cc.de/badge/tylercd100/lern.svg)](http://hhvm.h4cc.de/package/tylercd100/lern)
+[![Build Status](https://travis-ci.org/tylercd100/lern.svg&branch=master)](https://travis-ci.org/tylercd100/lern)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tylercd100/lern/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tylercd100/lern/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/tylercd100/lern/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/tylercd100/lern/?branch=master)
-[![Dependency Status](https://www.versioneye.com/user/projects/56f3252c35630e0029db0187/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56f3252c35630e0029db0187)
-[![Total Downloads](https://img.shields.io/packagist/dt/tylercd100/lern.svg?style=flat-square)](https://packagist.org/packages/tylercd100/lern)
+[![Dependency Status](https://www.versioneye.com/user/projects/56f3252c35630e0029db0187/badge.svg)](https://www.versioneye.com/user/projects/56f3252c35630e0029db0187)
+[![Total Downloads](https://img.shields.io/packagist/dt/tylercd100/lern.svg)](https://packagist.org/packages/tylercd100/lern)
 
 **_LERN from your mistakes_**
 
