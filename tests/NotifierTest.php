@@ -84,6 +84,14 @@ class NotifierTest extends TestCase
         $this->assertContains('Exception was thrown!', $result);
     }
 
+    public function testNotifierReturnsTheCorrectMessageWhenUsingTheDefaultView()
+    {
+        config(['lern.notify.view' => "exceptions.default"]);
+        $this->notifier = new Notifier;
+        $result = $this->notifier->getMessage(new Exception);
+        $this->assertContains('Exception:/vagrant/tylercd100/lern/tests/NotifierTest.php', $result);
+    }
+
     public function testNotifierReturnsTheCorrectMessageWhenUsingClosure()
     {
         config(['lern.notify.view' => null]);

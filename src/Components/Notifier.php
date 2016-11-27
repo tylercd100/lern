@@ -2,9 +2,12 @@
 
 namespace Tylercd100\LERN\Components;
 
+use Auth;
 use Exception;
+use Illuminate\Support\Facades\Input;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
+use Request;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
 use Tylercd100\Notify\Drivers\FromConfig as Notify;
 use View;
@@ -65,7 +68,13 @@ class Notifier extends Component
     {
         $view = $this->config["view"];
         if (!empty($view) && View::exists($view)) {
-            return View::make($this->config["view"], ["exception" => $e])->render();
+            return View::make($this->config["view"], [
+                "exception" => $e,
+                "url" => Request::url(),
+                "method" => Request::method(),
+                "input" => Input::all(),
+                "user" => Auth::user(),
+            ])->render();
         } elseif (is_callable($this->messageCb)) {
             return $this->messageCb->__invoke($e);
         } else {

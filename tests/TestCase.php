@@ -187,6 +187,11 @@ class TestCase extends Orchestra
         ]);
         
         copy(__DIR__ . "/views/test.blade.php", __DIR__ . "/../vendor/orchestra/testbench/fixture/resources/views/test.blade.php");
+        $dir = __DIR__ . "/../vendor/orchestra/testbench/fixture/resources/views/exceptions";
+        if (!is_dir($dir)) {
+            mkdir($dir);
+        }
+        copy(__DIR__ . "/../views/exceptions/default.blade.php", $dir . "/default.blade.php");
     }
 
     /**
