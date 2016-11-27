@@ -66,24 +66,64 @@ class Notifier extends Component
      */
     public function getMessage(Exception $e)
     {
-        $view = $this->config["view"];
-        if (!empty($view) && View::exists($view)) {
-            return View::make($this->config["view"], [
+        $msg = $this->getMessageViaView($e);
+
+        if ($msg === false) {
+            $msg = $this->getMessageViaCallback($e);
+        }
+
+        if ($msg === false) {
+            $msg = $this->getMessageViaDefault($e);
+        }
+        
+        return $msg;
+    }
+
+    /**
+     * Gets a basic Exception message
+     * @param  Exception $e The Exception instance that you want to build the message around
+     * @return String       Returns the message string
+     */
+    public function getMessageViaDefault(Exception $e)
+    {
+        $msg = get_class($e)." was thrown! \n".$e->getMessage();
+        if ($this->config['includeExceptionStackTrace'] === true) {
+            $msg .= "\n\n".$e->getTraceAsString();
+        }
+        return $msg;
+    }
+
+    /**
+     * Gets the Exception message using a callback if it is set
+     * @param  Exception    $e The Exception instance that you want to build the message around
+     * @return String|false    Returns the message string or false
+     */
+    public function getMessageViaCallback(Exception $e)
+    {
+        if (is_callable($this->messageCb)) {
+            return $this->messageCb->__invoke($e);
+        }
+        return false;
+    }
+
+    /**
+     * Gets the Exception message using a Laravel view file
+     * @param  Exception    $e The Exception instance that you want to build the message around
+     * @return String|false    Returns the message string or false
+     */
+    public function getMessageViaView(Exception $e)
+    {
+        $path = $this->config["view"];
+        if (!empty($path) && View::exists($path)) {
+            return View::make($path, [
                 "exception" => $e,
                 "url" => Request::url(),
                 "method" => Request::method(),
                 "input" => Input::all(),
                 "user" => Auth::user(),
             ])->render();
-        } elseif (is_callable($this->messageCb)) {
-            return $this->messageCb->__invoke($e);
-        } else {
-            $msg = get_class($e)." was thrown! \n".$e->getMessage();
-            if ($this->config['includeExceptionStackTrace'] === true) {
-                $msg .= "\n\n".$e->getTraceAsString();
-            }
-            return $msg;
         }
+        return false;
     }
 
     /**
