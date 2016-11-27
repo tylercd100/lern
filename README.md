@@ -45,7 +45,7 @@ Tylercd100\LERN\LERNServiceProvider::class
 
 and this to the `aliases` array in `config/app.php`
 ```php
-"LERN" => "Tylercd100\LERN\Facades\LERN",
+"LERN" => Tylercd100\LERN\Facades\LERN::class,
 ```
 
 Then you will need to run these commands in the terminal in order to copy the config and migration files
