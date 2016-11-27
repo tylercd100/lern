@@ -18,18 +18,20 @@ class LERNTest extends TestCase
 
     public function tearDown()
     {
-        parent::tearDown();        
+        parent::tearDown();
     }
 
-    public function testLERNFacade(){
+    public function testLERNFacade()
+    {
         $obj = LERNFacade::getFacadeRoot();
-        $this->assertInstanceOf(LERN::class,$obj);
+        $this->assertInstanceOf(LERN::class, $obj);
     }
 
-    public function testItCallsNotifyAndRecord() {
+    public function testItCallsNotifyAndRecord()
+    {
         $this->migrate();
         $mock = $this->getMock('Tylercd100\LERN\LERN', array('notify','record'));
-        
+
         $mock->expects($this->once())
              ->method('notify');
 
@@ -40,7 +42,8 @@ class LERNTest extends TestCase
         $this->migrateReset();
     }
 
-    public function testRecordReturnsCorrectInstance() {
+    public function testRecordReturnsCorrectInstance()
+    {
         $this->migrate();
         $lern = new LERN;
         $data = $lern->record(new Exception);
@@ -48,7 +51,8 @@ class LERNTest extends TestCase
         $this->migrateReset();
     }
 
-    public function testItCallsNotifierSendMethod() {
+    public function testItCallsNotifierSendMethod()
+    {
         $mock = $this->getMock('Tylercd100\LERN\Components\Notifier', array('send'));
         $mock->expects($this->once())
              ->method('send');
@@ -56,18 +60,20 @@ class LERNTest extends TestCase
         $lern->notify(new Exception);
     }
 
-    public function testItCallsNotifierPushHandlerMethod() {
+    public function testItCallsNotifierPushHandlerMethod()
+    {
         $mock = $this->getMock('Tylercd100\LERN\Components\Notifier', array('pushHandler'));
         $mock->expects($this->once())
              ->method('pushHandler');
         $lern = new LERN($mock);
-        $handler = (new MonologHandlerFactory)->create('mail',config('lern.notify.mail'),'Test Subject');
+        $handler = (new MonologHandlerFactory)->create('mail', config('lern.notify.mail'), 'Test Subject');
         $lern->pushHandler($handler);
     }
 
-    public function testItCallsNotifierSetSubjectMethod() {
+    public function testItCallsNotifierSetSubjectMethod()
+    {
         $mock = $this->getMock('Tylercd100\LERN\Components\Notifier', array('setSubject'));
-        
+
         $mock->expects($this->once())
              ->method('setSubject');
 
@@ -75,9 +81,10 @@ class LERNTest extends TestCase
         $lern->setSubject("Test Subject");
     }
 
-    public function testItCallsNotifierSetMessageMethod() {
+    public function testItCallsNotifierSetMessageMethod()
+    {
         $mock = $this->getMock('Tylercd100\LERN\Components\Notifier', array('setMessage'));
-        
+
         $mock->expects($this->once())
              ->method('setMessage');
 
@@ -85,19 +92,21 @@ class LERNTest extends TestCase
         $lern->setMessage("Test Message");
     }
 
-    public function testSettingAndGettingACustomNotifierInstance(){
+    public function testSettingAndGettingACustomNotifierInstance()
+    {
         $lern = new LERN;
         $orig_notifier = new Notifier;
         $lern->setNotifier($orig_notifier);
         $new_notifier = $lern->getNotifier();
-        $this->assertEquals($new_notifier,$orig_notifier);
+        $this->assertEquals($new_notifier, $orig_notifier);
     }
 
-    public function testSettingAndGettingACustomRecorderInstance(){
+    public function testSettingAndGettingACustomRecorderInstance()
+    {
         $lern = new LERN;
         $orig_recorder = new Recorder;
         $lern->setRecorder($orig_recorder);
         $new_recorder = $lern->getRecorder();
-        $this->assertEquals($new_recorder,$orig_recorder);
+        $this->assertEquals($new_recorder, $orig_recorder);
     }
 }

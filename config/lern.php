@@ -23,6 +23,11 @@ return [
 
     'notify'=>[
         /**
+         * The view file to use
+         */
+        'view' => 'test',
+
+        /**
          * The default name of the monolog logger channel
          */
         'channel'=>'Tylercd100\LERN',

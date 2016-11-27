@@ -14,23 +14,37 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->supportedDrivers = ['slack','mail','pushover','plivo','twilio','hipchat','flowdock','fleephook','mailgun'];
+        copy(__DIR__ . "/views/test.blade.php", __DIR__ . "/../vendor/orchestra/testbench/fixture/resources/views/test.blade.php");
+
+        $this->supportedDrivers = [
+            'slack',
+            'mail',
+            'pushover',
+            'plivo',
+            'twilio',
+            'hipchat',
+            'flowdock',
+            'fleephook',
+            'mailgun'
+        ];
+
+        $this->app['config']->set('lern.notify.view', 'test');
 
         $this->app['config']->set('lern.notify.slack', [
-            'token'=>'token',
-            'username'=>'username',
-            'icon'=>'icon',
-            'channel'=>'channel',
+            'token' => 'token',
+            'username' => 'username',
+            'icon' => 'icon',
+            'channel' => 'channel',
         ]);
 
         $this->app['config']->set('lern.notify.fleephook', [
-            'token'=>'token',
+            'token' => 'token',
         ]);
 
         $this->app['config']->set('lern.notify.mail', [
-            'to'=>'to@address.com',
-            'from'=>'from@address.com',
-            'smtp'=>true,
+            'to' => 'to@address.com',
+            'from' => 'from@address.com',
+            'smtp' => true,
         ]);
 
         $this->app['config']->set('lern.notify.mailgun', [
@@ -74,7 +88,7 @@ class TestCase extends Orchestra
 
     public function tearDown()
     {
-        parent::tearDown();        
+        parent::tearDown();
     }
 
     protected function migrate()
