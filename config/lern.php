@@ -25,7 +25,7 @@ return [
         /**
          * The view file to use
          */
-        'view' => 'test',
+        'view' => 'exceptions.default',
 
         /**
          * The default name of the monolog logger channel

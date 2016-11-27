@@ -63,7 +63,8 @@ class Notifier extends Component
      */
     public function getMessage(Exception $e)
     {
-        if (!empty($this->config["view"])) {
+        $view = $this->config["view"];
+        if (!empty($view) && View::exists($view)) {
             return View::make($this->config["view"], ["exception" => $e])->render();
         } elseif (is_callable($this->messageCb)) {
             return $this->messageCb->__invoke($e);
