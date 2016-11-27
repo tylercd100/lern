@@ -2,6 +2,10 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.7.0
+- Added the ability to use a blade template
+- Blade templates are now the default way to style your exception notification
+
 ### 3.6.6
 - Updated to tylercd100/laravel-notify@^1.8.4 which allows newline characters in Fleephook, Hipchat, Pushover, Raven, and Slack.
 
