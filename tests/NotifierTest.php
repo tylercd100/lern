@@ -75,6 +75,15 @@ class NotifierTest extends TestCase
         $subject->pushHandler($handler);
     }
 
+
+    public function testNotifierReturnsTheCorrectMessageWhenUsingNoCallbackAndNoView()
+    {
+        config(['lern.notify.view' => null]);
+        $this->notifier = new Notifier;
+        $result = $this->notifier->getMessage(new Exception);
+        $this->assertContains('Exception was thrown!', $result);
+    }
+
     public function testNotifierReturnsTheCorrectMessageWhenUsingClosure()
     {
         config(['lern.notify.view' => null]);
