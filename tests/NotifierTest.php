@@ -18,14 +18,14 @@ class NotifierTest extends TestCase
     public function tearDown()
     {
         unset($this->notifier);
-        parent::tearDown();        
+        parent::tearDown();
     }
 
     public function testAllSupportedDrivers()
     {
         $this->app['config']->set('lern.notify.drivers', $this->supportedDrivers);
 
-        $observer = $this->getMock('Monolog\Logger',['critical'],['channelName']);
+        $observer = $this->getMock('Monolog\Logger', ['critical'], ['channelName']);
         $observer->expects($this->once())
                  ->method('critical');
 
@@ -39,10 +39,10 @@ class NotifierTest extends TestCase
 
         $this->app['config']->set('lern.notify.drivers', ['slack']);
 
-        foreach($logLevels as $logLevel){
+        foreach ($logLevels as $logLevel) {
             $this->app['config']->set('lern.notify.log_level', $logLevel);
 
-            $observer = $this->getMock('Monolog\Logger',[$logLevel],['channelName']);
+            $observer = $this->getMock('Monolog\Logger', [$logLevel], ['channelName']);
             $observer->expects($this->once())
                      ->method($logLevel);
 
@@ -55,7 +55,7 @@ class NotifierTest extends TestCase
     {
         $this->app['config']->set('lern.notify.drivers', ['slack','pushover']);
 
-        $observer = $this->getMock('Monolog\Logger',['critical'],['channelName']);
+        $observer = $this->getMock('Monolog\Logger', ['critical'], ['channelName']);
         $observer->expects($this->once())
                  ->method('critical');
 
@@ -65,9 +65,9 @@ class NotifierTest extends TestCase
 
     public function testLoggerCallsPushesHandler()
     {
-        $handler = (new MonologHandlerFactory())->create('slack',config('lern.notify.slack'));
+        $handler = (new MonologHandlerFactory())->create('slack', config('lern.notify.slack'));
 
-        $observer = $this->getMock('Monolog\Logger',['pushHandler'],['channelName']);
+        $observer = $this->getMock('Monolog\Logger', ['pushHandler'], ['channelName']);
         $observer->expects($this->once())
                  ->method('pushHandler');
 
@@ -75,46 +75,85 @@ class NotifierTest extends TestCase
         $subject->pushHandler($handler);
     }
 
-    public function testNotifierReturnsTheCorrectMessageWhenUsingClosure(){
-        $this->notifier->setMessage(function($e){return "This is a test";});
+
+    public function testNotifierReturnsTheCorrectMessageWhenUsingNoCallbackAndNoView()
+    {
+        config(['lern.notify.view' => null]);
+        $this->notifier = new Notifier;
         $result = $this->notifier->getMessage(new Exception);
-        $this->assertEquals($result,"This is a test");
+        $this->assertContains('Exception was thrown!', $result);
     }
 
-    public function testNotifierReturnsTheCorrectContextWhenUsingClosure(){
-        $this->notifier->setContext(function($e,$context){return ["text"=>"This is a test"];});
+    public function testNotifierReturnsTheCorrectMessageWhenUsingTheDefaultView()
+    {
+        config(['lern.notify.view' => "exceptions.default"]);
+        $this->notifier = new Notifier;
+        $result = $this->notifier->getMessage(new Exception);
+        $this->assertContains('Exception:/vagrant/tylercd100/lern/tests/NotifierTest.php', $result);
+    }
+
+    public function testNotifierReturnsTheCorrectMessageWhenUsingClosure()
+    {
+        config(['lern.notify.view' => null]);
+        $this->notifier = new Notifier;
+        $this->notifier->setMessage(function ($e) {
+            return "This is a test";
+        });
+        $result = $this->notifier->getMessage(new Exception);
+        $this->assertEquals($result, "This is a test");
+    }
+
+    public function testNotifierReturnsTheCorrectMessageWhenUsingView()
+    {
+        $result = $this->notifier->getMessage(new Exception);
+        $this->assertEquals($result, "<h1>Hello</h1>");
+    }
+
+    public function testNotifierReturnsTheCorrectContextWhenUsingClosure()
+    {
+        $this->notifier->setContext(function ($e, $context) {
+            return ["text"=>"This is a test"];
+        });
         $result = $this->notifier->getContext(new Exception);
-        $this->assertEquals($result,["text"=>"This is a test"]);
+        $this->assertEquals($result, ["text"=>"This is a test"]);
     }
 
-    public function testNotifierReturnsTheCorrectMessageWhenUsingString(){
+    public function testNotifierReturnsTheCorrectMessageWhenUsingString()
+    {
+        config(['lern.notify.view' => null]);
+        $this->notifier = new Notifier;
         $this->notifier->setMessage("This is a test");
         $result = $this->notifier->getMessage(new Exception);
-        $this->assertEquals($result,"This is a test");
+        $this->assertEquals($result, "This is a test");
     }
 
-    public function testNotifierReturnsTheCorrectSubjectWhenUsingClosure(){
-        $this->notifier->setSubject(function($e){return "This is a test";});
+    public function testNotifierReturnsTheCorrectSubjectWhenUsingClosure()
+    {
+        $this->notifier->setSubject(function ($e) {
+            return "This is a test";
+        });
         $result = $this->notifier->getSubject(new Exception);
-        $this->assertEquals($result,"This is a test");
+        $this->assertEquals($result, "This is a test");
     }
 
-    public function testItReturnsTheCorrectSubjectWhenUsingString(){
+    public function testItReturnsTheCorrectSubjectWhenUsingString()
+    {
         $this->notifier->setSubject("This is a test");
         $result = $this->notifier->getSubject(new Exception);
-        $this->assertEquals($result,"This is a test");
+        $this->assertEquals($result, "This is a test");
     }
 
-    public function testItThrowsNotifierFailedExceptionWhenMonologThrowsException(){
+    public function testItThrowsNotifierFailedExceptionWhenMonologThrowsException()
+    {
 
-        $handler = (new MonologHandlerFactory())->create('slack',config('lern.notify.slack'));
+        $handler = (new MonologHandlerFactory())->create('slack', config('lern.notify.slack'));
 
-        $observer = $this->getMock('Monolog\Logger',['critical'],['channelName']);
+        $observer = $this->getMock('Monolog\Logger', ['critical'], ['channelName']);
 
         $observer->expects($this->once())
                  ->method('critical')
                  ->will($this->throwException(new Exception));
-        
+
         $this->setExpectedException('Tylercd100\LERN\Exceptions\NotifierFailedException');
 
         $subject = new Notifier($observer);
@@ -122,9 +161,10 @@ class NotifierTest extends TestCase
         $subject->send(new Exception);
     }
 
-    public function testSendShouldReturnFalseWhenPassedNotifierFailedException(){
+    public function testSendShouldReturnFalseWhenPassedNotifierFailedException()
+    {
         $notifier = new Notifier;
         $result = $notifier->send(new NotifierFailedException);
-        $this->assertEquals(false,$result);
+        $this->assertEquals(false, $result);
     }
 }

@@ -2,13 +2,18 @@
 
 namespace Tylercd100\LERN\Components;
 
+use Auth;
 use Exception;
+use Illuminate\Support\Facades\Input;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
+use Request;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
 use Tylercd100\Notify\Drivers\FromConfig as Notify;
+use View;
 
-class Notifier extends Component {
+class Notifier extends Component
+{
     protected $config;
     protected $log;
     protected $messageCb;
@@ -16,10 +21,11 @@ class Notifier extends Component {
     protected $contextCb;
 
     /**
-     * You can provide a Monolog Logger instance to use in the constructor 
+     * You can provide a Monolog Logger instance to use in the constructor
      * @param Logger|null $log Logger instance to use
      */
-    public function __construct(Logger $log = null) {
+    public function __construct(Logger $log = null)
+    {
         if ($log === null) {
             $log = new Logger(config('lern.notify.channel'));
         }
@@ -33,11 +39,12 @@ class Notifier extends Component {
      * @param  callable|string $cb The value that you want to wrap in a closure
      * @return callable
      */
-    private function wrapValueInClosure($cb) {
+    private function wrapValueInClosure($cb)
+    {
         if (is_callable($cb)) {
             return $cb;
         } else {
-            return function() use ($cb) { return $cb; };
+            return function () use ($cb) { return $cb; };
         }
     }
 
@@ -57,16 +64,66 @@ class Notifier extends Component {
      * @param  Exception $e The Exception instance that you want to build the message around
      * @return string       The message string
      */
-    public function getMessage(Exception $e) {
+    public function getMessage(Exception $e)
+    {
+        $msg = $this->getMessageViaView($e);
+
+        if ($msg === false) {
+            $msg = $this->getMessageViaCallback($e);
+        }
+
+        if ($msg === false) {
+            $msg = $this->getMessageViaDefault($e);
+        }
+        
+        return $msg;
+    }
+
+    /**
+     * Gets a basic Exception message
+     * @param  Exception $e The Exception instance that you want to build the message around
+     * @return String       Returns the message string
+     */
+    public function getMessageViaDefault(Exception $e)
+    {
+        $msg = get_class($e)." was thrown! \n".$e->getMessage();
+        if ($this->config['includeExceptionStackTrace'] === true) {
+            $msg .= "\n\n".$e->getTraceAsString();
+        }
+        return $msg;
+    }
+
+    /**
+     * Gets the Exception message using a callback if it is set
+     * @param  Exception    $e The Exception instance that you want to build the message around
+     * @return String|false    Returns the message string or false
+     */
+    public function getMessageViaCallback(Exception $e)
+    {
         if (is_callable($this->messageCb)) {
             return $this->messageCb->__invoke($e);
-        } else {
-            $msg = get_class($e)." was thrown! \n".$e->getMessage();
-            if ($this->config['includeExceptionStackTrace'] === true) {
-                $msg .= "\n\n".$e->getTraceAsString();
-            }
-            return $msg;
         }
+        return false;
+    }
+
+    /**
+     * Gets the Exception message using a Laravel view file
+     * @param  Exception    $e The Exception instance that you want to build the message around
+     * @return String|false    Returns the message string or false
+     */
+    public function getMessageViaView(Exception $e)
+    {
+        $path = $this->config["view"];
+        if (!empty($path) && View::exists($path)) {
+            return View::make($path, [
+                "exception" => $e,
+                "url" => Request::url(),
+                "method" => Request::method(),
+                "input" => Input::all(),
+                "user" => Auth::user(),
+            ])->render();
+        }
+        return false;
     }
 
     /**
@@ -85,7 +142,8 @@ class Notifier extends Component {
      * @param  Exception $e The Exception instance that you want to build the subject around
      * @return string       The subject string
      */
-    public function getSubject(Exception $e) {
+    public function getSubject(Exception $e)
+    {
         if (is_callable($this->subjectCb)) {
             return $this->subjectCb->__invoke($e);
         } else {
@@ -109,8 +167,8 @@ class Notifier extends Component {
      * @param  Exception $e The Exception instance that you want to build the context around
      * @return array        The context array
      */
-    public function getContext(Exception $e, $context = []) {
-
+    public function getContext(Exception $e, $context = [])
+    {
         //This needs a better solution. How do I set specific context needs for different drivers?
         if (in_array('pushover', $this->config['drivers'])) {
             $context['sound'] = $this->config['pushover']['sound'];
@@ -141,8 +199,8 @@ class Notifier extends Component {
      * @return bool
      * @throws NotifierFailedException
      */
-    public function send(Exception $e, array $context = []) {
-        
+    public function send(Exception $e, array $context = [])
+    {
         if ($this->shouldntHandle($e)) {
             return false;
         }
@@ -150,12 +208,12 @@ class Notifier extends Component {
         $message = $this->getMessage($e);
         $subject = $this->getSubject($e);
         $context = $this->getContext($e, $context);
-        
+
         try {
             $notify = new Notify($this->config, $this->log, $subject);
 
             $level = (array_key_exists('log_level', $this->config) && !empty($this->config['log_level']))
-                ? $this->config['log_level'] 
+                ? $this->config['log_level']
                 : 'critical';
 
             $notify->{$level}($message, $context);

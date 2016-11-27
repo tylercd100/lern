@@ -6,12 +6,13 @@ use Illuminate\Support\ServiceProvider;
 
 class LERNServiceProvider extends ServiceProvider
 {
-    public function register() {
+    public function register()
+    {
         $this->mergeConfigFrom(__DIR__.'/../config/lern.php', 'lern');
 
         $this->handleDeprecatedConfigValues();
 
-        $this->app->singleton('lern', function() {
+        $this->app->singleton('lern', function () {
             return new LERN;
         });
     }
@@ -19,10 +20,11 @@ class LERNServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
+            __DIR__.'/../views/exceptions/default.blade.php' => base_path('resources/views/exceptions/default.blade.php'),
             __DIR__.'/../migrations/2016_03_17_000000_create_lern_tables.php' => base_path('database/migrations/2016_03_17_000000_create_lern_tables.php'),
             __DIR__.'/../migrations/2016_03_27_000000_add_user_data_and_url_to_lern_tables.php' => base_path('database/migrations/2016_03_27_000000_add_user_data_and_url_to_lern_tables.php'),
             __DIR__.'/../config/lern.php' => base_path('config/lern.php'),
-        ]);   
+        ]);
     }
 
     protected function handleDeprecatedConfigValues()

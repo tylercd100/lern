@@ -114,6 +114,23 @@ To change what is recorded in to the database take a look at `config/lern.php`
 ### Notifications
 LERN uses the Monolog library to send notifications. If you need more than the supported notification channels, then you can add your own custom Monolog handlers. To start using any of the supported handlers just edit the provided config file `config/lern.php`.
 
+#### Changing the subject line
+Some notification services support a subject line, this is how you change it.
+```php
+//Change the subject
+LERN::setSubject("An Exception was thrown!");
+```
+
+#### Changing the body of the notification
+LERN publishes a default blade template file that you can find at `resources/views/exceptions/default.blade.php`.
+The blade template file is compiled with these values: `$exception` `$url` `$method` `$data` `$user`.
+To specify a different blade template file, just edit the config file
+```php
+'notify'=>[
+    'view'=>'exceptions.default',
+],
+```
+
 #### Custom Monolog Handlers
 To use a custom Monolog Handler call the `pushHandler` method
 ```php
@@ -121,75 +138,6 @@ use Monolog\Handler\HipChatHandler;
 $handler = new HipChatHandler($token,$room);
 LERN::pushHandler($handler);
 LERN::notify($exception);
-```
-
-#### Changing the text
-```php
-//Change the subject
-LERN::setSubject("An Exception was thrown!");
-
-//Change the message body
-LERN::setMessage(function($exception){
-    $msg = "";
-
-    //Get the route
-    $url = Request::url();
-    $method = Request::method();
-    if($url) {
-        $msg.="URL: {$method}@{$url}".PHP_EOL;
-    }
-
-    //Get the User
-    $user = Auth::user();
-    if($user) {
-        $msg.="User: #{$user->id} {$user->first_name} {$user->last_name}".PHP_EOL;
-    }
-
-    //Exception
-    $msg.=get_class($exception).":{$exception->getFile()}:{$exception->getLine()} {$exception->getMessage()}".PHP_EOL;
-
-    //Input
-    $input = Input::all();
-    if(!empty($input)){
-        $msg.="Data: ".json_encode($input).PHP_EOL;
-    }
-
-    //Trace
-    $msg.=PHP_EOL."Trace: {$exception->getTraceAsString()}";
-    return $msg;
-});
-
-LERN::notify($e); //Notify the Exception
-
-```
-
-#### Changing the context
-
-This function lets you change the context that is passed on to the Monolog handlers
-```php
-LERN::setContext(function(Exception $e, $context = []){
-
-    $context['exception'] = $e;
-
-    $app = app();
-    
-    if(isset($app['auth']) && $user = $app['auth']->user())
-    {
-        if(empty($context['user']) or !is_array($context['user']))
-        {
-            $context['user'] = [];
-        }
-
-        if(!isset($context['user']['id']) && method_exists($user, 'getAuthIdentifier'))
-        {
-            $context['user']['id'] = $user->getAuthIdentifier();
-        }
-    }
-
-    return $context;
-});
-
-LERN::handle($exception);
 ```
 
 ## Further Reading and How-Tos

@@ -23,6 +23,11 @@ return [
 
     'notify'=>[
         /**
+         * The view file to use
+         */
+        'view' => 'exceptions.default',
+
+        /**
          * The default name of the monolog logger channel
          */
         'channel'=>'Tylercd100\LERN',
@@ -35,7 +40,7 @@ return [
         /**
          * When using the default message body this will also include the stack trace
          */
-        'includeExceptionStackTrace'=>true,
+        'includeExceptionStackTrace' => true,
         
         /**
          * mail, pushover, slack, etc...
@@ -46,9 +51,9 @@ return [
          * Mail settings
          */
         'mail'=>[
-            'to'  =>'to@address.com',
-            'from'=>'from@address.com',
-            'smtp'=>true,
+            'to'   => 'to@address.com',
+            'from' => 'from@address.com',
+            'smtp' => true,
         ],
 
         /**

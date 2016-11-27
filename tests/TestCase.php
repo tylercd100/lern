@@ -14,67 +14,22 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->supportedDrivers = ['slack','mail','pushover','plivo','twilio','hipchat','flowdock','fleephook','mailgun'];
-
-        $this->app['config']->set('lern.notify.slack', [
-            'token'=>'token',
-            'username'=>'username',
-            'icon'=>'icon',
-            'channel'=>'channel',
-        ]);
-
-        $this->app['config']->set('lern.notify.fleephook', [
-            'token'=>'token',
-        ]);
-
-        $this->app['config']->set('lern.notify.mail', [
-            'to'=>'to@address.com',
-            'from'=>'from@address.com',
-            'smtp'=>true,
-        ]);
-
-        $this->app['config']->set('lern.notify.mailgun', [
-            'to'=>'to@address.com',
-            'from'=>'from@address.com',
-            'token' => 'token',
-            'domain' => 'test.com',
-        ]);
-
-        $this->app['config']->set('lern.notify.pushover', [
-            'token' => 'token',
-            'users'  => 'user',
-            'sound' => 'siren',
-        ]);
-
-        $this->app['config']->set('lern.notify.plivo', [
-            'token'   => 'token',
-            'auth_id' => 'auth_id',
-            'to'      => '+15555555555',
-            'from'    => '+16666666666',
-        ]);
-
-        $this->app['config']->set('lern.notify.twilio', [
-            'secret'  => 'secret',
-            'sid'     => 'sid',
-            'to'      => '+15555555555',
-            'from'    => '+16666666666',
-        ]);
-
-        $this->app['config']->set('lern.notify.hipchat', [
-            'token' => 'test-token',
-            'room'  => 'test-room',
-            'name'  => 'test-name',
-            'notify'  => false,
-        ]);
-
-        $this->app['config']->set('lern.notify.flowdock', [
-            'token' => 'token',
-        ]);
+        $this->supportedDrivers = [
+            'slack',
+            'mail',
+            'pushover',
+            'plivo',
+            'twilio',
+            'hipchat',
+            'flowdock',
+            'fleephook',
+            'mailgun'
+        ];
     }
 
     public function tearDown()
     {
-        parent::tearDown();        
+        parent::tearDown();
     }
 
     protected function migrate()
@@ -107,7 +62,9 @@ class TestCase extends Orchestra
      */
     protected function getPackageProviders($app)
     {
-        return ['Tylercd100\LERN\LERNServiceProvider'];
+        return [
+            \Tylercd100\LERN\LERNServiceProvider::class
+        ];
     }
 
     /**
@@ -116,7 +73,7 @@ class TestCase extends Orchestra
     protected function getPackageAliases($app)
     {
         return [
-            'Tylercd100\LERN\Facades\LERN',
+            \Tylercd100\LERN\Facades\LERN::class,
         ];
     }
 
@@ -136,7 +93,7 @@ class TestCase extends Orchestra
             'prefix'   => '',
         ]);
 
-        $app['config']->set('lern.record', [
+        $app['config']->set('lern.record', array_merge($app['config']->get('lern.record'), [
             'table'=>'vendor_tylercd100_lern_exceptions',
             'collect'=>[
                 'method'=>true,//When true it will collect GET, POST, DELETE, PUT, etc...
@@ -148,10 +105,10 @@ class TestCase extends Orchestra
             'excludeKeys'=>[
                 'password'
             ]
-        ]);
+        ]));
 
-        $app['config']->set('lern.notify', [
-            'channel'=>'Tylercd100\LERN',
+        $app['config']->set('lern.notify', array_merge($app['config']->get('lern.notify'), [
+            'channel'=>\Tylercd100\LERN::class,
             'includeExceptionStackTrace'=>true,
             'drivers'=>['pushover'],
             'mail'=>[
@@ -169,7 +126,72 @@ class TestCase extends Orchestra
                 'icon'=>'icon',
                 'channel'=>'channel',
             ]
+        ]));
+
+
+        $app['config']->set('lern.notify.view', 'test');
+
+        $app['config']->set('lern.notify.slack', [
+            'token' => 'token',
+            'username' => 'username',
+            'icon' => 'icon',
+            'channel' => 'channel',
         ]);
+
+        $app['config']->set('lern.notify.fleephook', [
+            'token' => 'token',
+        ]);
+
+        $app['config']->set('lern.notify.mail', [
+            'to' => 'to@address.com',
+            'from' => 'from@address.com',
+            'smtp' => true,
+        ]);
+
+        $app['config']->set('lern.notify.mailgun', [
+            'to'=>'to@address.com',
+            'from'=>'from@address.com',
+            'token' => 'token',
+            'domain' => 'test.com',
+        ]);
+
+        $app['config']->set('lern.notify.pushover', [
+            'token' => 'token',
+            'users'  => 'user',
+            'sound' => 'siren',
+        ]);
+
+        $app['config']->set('lern.notify.plivo', [
+            'token'   => 'token',
+            'auth_id' => 'auth_id',
+            'to'      => '+15555555555',
+            'from'    => '+16666666666',
+        ]);
+
+        $app['config']->set('lern.notify.twilio', [
+            'secret'  => 'secret',
+            'sid'     => 'sid',
+            'to'      => '+15555555555',
+            'from'    => '+16666666666',
+        ]);
+
+        $app['config']->set('lern.notify.hipchat', [
+            'token' => 'test-token',
+            'room'  => 'test-room',
+            'name'  => 'test-name',
+            'notify'  => false,
+        ]);
+
+        $app['config']->set('lern.notify.flowdock', [
+            'token' => 'token',
+        ]);
+        
+        copy(__DIR__ . "/views/test.blade.php", __DIR__ . "/../vendor/orchestra/testbench/fixture/resources/views/test.blade.php");
+        $dir = __DIR__ . "/../vendor/orchestra/testbench/fixture/resources/views/exceptions";
+        if (!is_dir($dir)) {
+            mkdir($dir);
+        }
+        copy(__DIR__ . "/../views/exceptions/default.blade.php", $dir . "/default.blade.php");
     }
 
     /**
