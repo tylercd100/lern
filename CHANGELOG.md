@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.7.1
+- Quick fix! The system would seize with no exception
+
 ### 3.7.0
 - Added the ability to use a blade template
 - Blade templates are now the default way to style your exception notification

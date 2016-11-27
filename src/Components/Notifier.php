@@ -113,7 +113,7 @@ class Notifier extends Component
      */
     public function getMessageViaView(Exception $e)
     {
-        $path = $this->config["view"];
+        $path = @$this->config["view"];
         if (!empty($path) && View::exists($path)) {
             return View::make($path, [
                 "exception" => $e,
