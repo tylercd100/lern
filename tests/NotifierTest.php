@@ -89,7 +89,7 @@ class NotifierTest extends TestCase
         config(['lern.notify.view' => "exceptions.default"]);
         $this->notifier = new Notifier;
         $result = $this->notifier->getMessage(new Exception);
-        $this->assertContains('Exception:/vagrant/tylercd100/lern/tests/NotifierTest.php', $result);
+        $this->assertContains('tylercd100/lern/tests/NotifierTest.php', $result);
     }
 
     public function testNotifierReturnsTheCorrectMessageWhenUsingClosure()
