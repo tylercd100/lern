@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.7.2
+- Fixed a typo in one of the unit tests
+
 ### 3.7.1
 - Quick fix! The system would seize with no exception
 
