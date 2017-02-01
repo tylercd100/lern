@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.7.5
+- Fixed [#42](https://github.com/tylercd100/lern/issues/42)
+
 ### 3.7.4
 - Updated to tylercd100/laravel-notify@^1.8.5 which sets the content type of SMTP emails to text/html instead of text/plain
 
