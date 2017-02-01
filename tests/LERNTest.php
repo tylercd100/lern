@@ -14,10 +14,12 @@ class LERNTest extends TestCase
     public function setUp()
     {
         parent::setUp();
+        $this->migrate();
     }
 
     public function tearDown()
     {
+        $this->migrateReset();
         parent::tearDown();
     }
 
@@ -29,7 +31,6 @@ class LERNTest extends TestCase
 
     public function testItCallsNotifyAndRecord()
     {
-        $this->migrate();
         $mock = $this->getMock('Tylercd100\LERN\LERN', array('notify','record'));
 
         $mock->expects($this->once())
@@ -39,16 +40,13 @@ class LERNTest extends TestCase
              ->method('record');
 
         $mock->handle(new Exception);
-        $this->migrateReset();
     }
 
     public function testRecordReturnsCorrectInstance()
     {
-        $this->migrate();
         $lern = new LERN;
         $data = $lern->record(new Exception);
         $this->assertInstanceOf('Tylercd100\LERN\Models\ExceptionModel', $data);
-        $this->migrateReset();
     }
 
     public function testItCallsNotifierSendMethod()

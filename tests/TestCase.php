@@ -34,11 +34,11 @@ class TestCase extends Orchestra
 
     protected function migrate()
     {
+        $path = "../../../../tests/migrations";
         $this->artisan('migrate', [
             '--database' => 'testbench',
-            '--path' => realpath(__DIR__.'/migrations'),
+            '--path' => $path,
         ]);
-
     }
 
     protected function migrateReset()
@@ -46,10 +46,12 @@ class TestCase extends Orchestra
         $version = $this->app->version();
         $version = floatval($version);
 
+        $path = "../../../../tests/migrations";
+
         if ($version >= 5.3) {
             $this->artisan('migrate:reset', [
                 '--database' => 'testbench',
-                '--path' => realpath(__DIR__.'/migrations'),
+                '--path' => $path,
             ]);
         } else {
             $this->artisan('migrate:reset', [
