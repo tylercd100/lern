@@ -47,7 +47,7 @@ class LERNTest extends TestCase
         $this->migrate();
         $lern = new LERN;
         $data = $lern->record(new Exception);
-        $this->assertInstanceOf('Tylercd100\LERN\Models\ExceptionModel',$data);
+        $this->assertInstanceOf('Tylercd100\LERN\Models\ExceptionModel', $data);
         $this->migrateReset();
     }
 

@@ -21,6 +21,7 @@ class RecorderTest extends TestCase
     }
 
     public function testExcludeKeysRemovesTheCorrectValues(){
+
         $data = ['email'=>'mail@test.com','password'=>'foobar','name'=>'Foo Bar'];
         $this->app['config']->set('lern.record.excludeKeys', ['password','email']);
         $recorder = new Recorder;

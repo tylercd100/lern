@@ -187,7 +187,8 @@ class Notifier extends Component
      * @param  HandlerInterface $handler The handler instance to add on
      * @return Notifier                  Returns this
      */
-    public function pushHandler(HandlerInterface $handler) {
+    public function pushHandler(HandlerInterface $handler)
+    {
         $this->log->pushHandler($handler);
         return $this;
     }
