@@ -2,6 +2,10 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.8.0
+- Fixes [#44](https://github.com/tylercd100/lern/issues/44)
+- Support for Laravel 5.1
+
 ### 3.7.5
 - Fixed [#42](https://github.com/tylercd100/lern/issues/42)
 
