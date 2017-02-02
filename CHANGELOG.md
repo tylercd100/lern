@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.8.1
+- Lowered version requirement for orchestra/testbench which was preventing laravel 5.1 from installing
+
 ### 3.8.0
 - Fixes [#44](https://github.com/tylercd100/lern/issues/44)
 - Support for Laravel 5.1
