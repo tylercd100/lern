@@ -28,10 +28,10 @@ class AddUserDataAndUrlToLernTables extends Migration {
     public function down()
     {
         Schema::table(config('lern.record.table'), function(Blueprint $table) {
-            $table->dropColumn('user_id');
-            $table->dropColumn('data');
-            $table->dropColumn('url');
-            $table->dropColumn('method');
+            // $table->dropColumn('user_id');
+            // $table->dropColumn('data');
+            // $table->dropColumn('url');
+            // $table->dropColumn('method');
         });
     }
 
