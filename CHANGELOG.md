@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 3.8.2
+- Lowered version requirement for php to 5.5.9
+
 ### 3.8.1
 - Lowered version requirement for orchestra/testbench which was preventing laravel 5.1 from installing
 
