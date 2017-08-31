@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 4.1.0
+- Auto Package Discovery
+
 ### 4.0.0
 - Added support for Laravel 5.5
 - Removed support for Laravel 5.4, 5.3, 5.2, 5.1 (Please use 3.x)
