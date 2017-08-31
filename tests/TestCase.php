@@ -55,13 +55,13 @@ class TestCase extends Orchestra
 
         if (empty($version) || $version < 5.3) {
             $this->artisan('migrate:reset', [
-                '--database' => 'testbench'
                 '--no-interaction' => '',
+                '--database' => 'testbench'
             ]);
         } else {
             $this->artisan('migrate:reset', [
-                '--database' => 'testbench',
                 '--no-interaction' => '',
+                '--database' => 'testbench',
                 '--path' => $path,
             ]);
         }
