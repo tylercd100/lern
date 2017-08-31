@@ -169,7 +169,7 @@ class NotifierTest extends TestCase
                  ->method('critical')
                  ->will($this->throwException(new Exception));
 
-        $this->setExpectedException('Tylercd100\LERN\Exceptions\NotifierFailedException');
+        $this->expectException('Tylercd100\LERN\Exceptions\NotifierFailedException');
 
         $subject = new Notifier($observer);
         $subject->pushHandler($handler);

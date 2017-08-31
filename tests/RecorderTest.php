@@ -68,7 +68,7 @@ class RecorderTest extends TestCase
                  ->method('collect')
                  ->will($this->throwException(new Exception));
 
-        $this->setExpectedException(RecorderFailedException::class);
+        $this->expectException(RecorderFailedException::class);
 
         $mock->record(new Exception);
     }
