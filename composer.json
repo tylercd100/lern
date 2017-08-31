@@ -41,5 +41,13 @@
         "doctrine/dbal": "~2.3"
     },
     "suggest": {
+    },
+    "extras": {
+        "providers": [
+            "Tylercd100\\LERN\\LERNServiceProvider"
+        ],
+        "aliases": {
+            "LERN": "Tylercd100\\LERN\\Facades\\LERN"
+        }
     }
 }

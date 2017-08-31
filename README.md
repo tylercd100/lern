@@ -43,19 +43,11 @@ php artisan migrate
 
 ## Installation
 
+Version 4.x uses [Package Discovery](https://laravel.com/docs/5.5/packages#package-discovery). If you are using 3.x you will need to follow these [instructions.](https://github.com/tylercd100/lern/tree/3.8.2)
+
 Install via [composer](https://getcomposer.org/) - In the terminal:
 ```bash
 composer require tylercd100/lern
-```
-
-Now add the following to the `providers` array in your `config/app.php`
-```php
-Tylercd100\LERN\LERNServiceProvider::class
-```
-
-and this to the `aliases` array in `config/app.php`
-```php
-"LERN" => Tylercd100\LERN\Facades\LERN::class,
 ```
 
 Then you will need to run these commands in the terminal in order to copy the config and migration files
