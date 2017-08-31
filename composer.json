@@ -42,7 +42,7 @@
     },
     "suggest": {
     },
-    "extras": {
+    "extra": {
         "providers": [
             "Tylercd100\\LERN\\LERNServiceProvider"
         ],

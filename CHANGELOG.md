@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 4.1.1
+- Small typo
+
 ### 4.1.0
 - Auto Package Discovery
 
