@@ -44,11 +44,11 @@ class TestCase extends Orchestra
 
     protected function migrateReset()
     {
-        try {
+        $version = 0;
+        
+        if($this->app) {
             $version = $this->app->version();
             $version = floatval($version);
-        } catch (\Symfony\Component\Debug\Exception\FatalErrorException $e) {
-            $version = 0;
         }
 
         $path = "../../../../tests/migrations";
