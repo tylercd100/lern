@@ -30,14 +30,14 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": "^5.6|^7.0",
-        "illuminate/support": "^5.1.41",
+        "php": "^7.0",
+        "illuminate/support": "^5.5",
         "monolog/monolog": "^1.22",
         "tylercd100/laravel-notify": "^2.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^3.1.10",
-        "phpunit/phpunit": "^5.7.21|^6.3.0",
+        "orchestra/testbench": "^3.5",
+        "phpunit/phpunit": "^6.3.0",
         "doctrine/dbal": "~2.3"
     },
     "suggest": {

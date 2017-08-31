@@ -36,7 +36,7 @@ class TestCase extends Orchestra
     protected function migrate()
     {
         $path = "../../../../tests/migrations";
-        $this->artisan('migrate', [
+        $this->artisan('migrate:fresh', [
             '--database' => 'testbench',
             '--path' => $path,
         ]);
@@ -44,27 +44,7 @@ class TestCase extends Orchestra
 
     protected function migrateReset()
     {
-        $version = 0;
-        
-        if($this->app) {
-            $version = $this->app->version();
-            $version = floatval($version);
-        }
 
-        $path = "../../../../tests/migrations";
-
-        if (empty($version) || $version < 5.3) {
-            $this->artisan('migrate:reset', [
-                '--no-interaction' => '',
-                '--database' => 'testbench'
-            ]);
-        } else {
-            $this->artisan('migrate:reset', [
-                '--no-interaction' => '',
-                '--database' => 'testbench',
-                '--path' => $path,
-            ]);
-        }
     }
 
     /**

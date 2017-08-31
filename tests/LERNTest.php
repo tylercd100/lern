@@ -19,8 +19,8 @@ class LERNTest extends TestCase
 
     public function tearDown()
     {
-        parent::tearDown();
         $this->migrateReset();
+        parent::tearDown();
     }
 
     public function testLERNFacade()
