@@ -4,6 +4,7 @@ namespace Tylercd100\LERN\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 use Tylercd100\LERN\Factories\MonologHandlerFactory;
+use Exception;
 
 class TestCase extends Orchestra
 {
@@ -188,9 +189,22 @@ class TestCase extends Orchestra
         $app['config']->set('lern.notify.flowdock', [
             'token' => 'token',
         ]);
+
+
+        // Copy stuff
+        $root = __DIR__ . "/../vendor/orchestra/testbench/fixture/resources/views";
+        if (!is_dir($root)) {
+            $root = __DIR__ . "/../vendor/orchestra/testbench-core/laravel/resources/views";
+            if(!is_dir($root)) {
+                throw new Exception("Could not find laravel inside of testbench. Is testbench installed?");
+            }
+        }
         
-        copy(__DIR__ . "/views/test.blade.php", __DIR__ . "/../vendor/orchestra/testbench/fixture/resources/views/test.blade.php");
-        $dir = __DIR__ . "/../vendor/orchestra/testbench/fixture/resources/views/exceptions";
+        // Test view
+        copy(__DIR__ . "/views/test.blade.php", "{$root}/test.blade.php");
+
+        // Exceptions
+        $dir = "{$root}/exceptions";
         if (!is_dir($dir)) {
             mkdir($dir);
         }

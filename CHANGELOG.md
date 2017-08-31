@@ -2,6 +2,10 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 4.0.0
+- Added support for Laravel 5.5
+- Removed support for php 5.5.9 (Please use ^3.8.2 for php 5.5.9)
+
 ### 3.8.2
 - Lowered version requirement for php to 5.5.9
 
