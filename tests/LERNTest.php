@@ -31,7 +31,7 @@ class LERNTest extends TestCase
 
     public function testItCallsNotifyAndRecord()
     {
-        $mock = $this->getMock('Tylercd100\LERN\LERN', array('notify','record'));
+        $mock = $this->createMock('Tylercd100\LERN\LERN', array('notify','record'));
 
         $mock->expects($this->once())
              ->method('notify');
@@ -51,7 +51,7 @@ class LERNTest extends TestCase
 
     public function testItCallsNotifierSendMethod()
     {
-        $mock = $this->getMock('Tylercd100\LERN\Components\Notifier', array('send'));
+        $mock = $this->createMock('Tylercd100\LERN\Components\Notifier', array('send'));
         $mock->expects($this->once())
              ->method('send');
         $lern = new LERN($mock);
@@ -60,7 +60,7 @@ class LERNTest extends TestCase
 
     public function testItCallsNotifierPushHandlerMethod()
     {
-        $mock = $this->getMock('Tylercd100\LERN\Components\Notifier', array('pushHandler'));
+        $mock = $this->createMock('Tylercd100\LERN\Components\Notifier', array('pushHandler'));
         $mock->expects($this->once())
              ->method('pushHandler');
         $lern = new LERN($mock);
@@ -70,7 +70,7 @@ class LERNTest extends TestCase
 
     public function testItCallsNotifierSetSubjectMethod()
     {
-        $mock = $this->getMock('Tylercd100\LERN\Components\Notifier', array('setSubject'));
+        $mock = $this->createMock('Tylercd100\LERN\Components\Notifier', array('setSubject'));
 
         $mock->expects($this->once())
              ->method('setSubject');
@@ -81,7 +81,7 @@ class LERNTest extends TestCase
 
     public function testItCallsNotifierSetMessageMethod()
     {
-        $mock = $this->getMock('Tylercd100\LERN\Components\Notifier', array('setMessage'));
+        $mock = $this->createMock('Tylercd100\LERN\Components\Notifier', array('setMessage'));
 
         $mock->expects($this->once())
              ->method('setMessage');
