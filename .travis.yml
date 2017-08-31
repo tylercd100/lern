@@ -3,6 +3,7 @@ language: php
 php:
     - 5.6
     - 7.0
+    - 7.1
 
 env:
     matrix:
@@ -14,7 +15,6 @@ before_script:
 - travis_retry composer update ${COMPOSER_FLAGS} --no-interaction
 
 script:
-  - vendor/bin/phpunit
   - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
