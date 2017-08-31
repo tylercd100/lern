@@ -62,10 +62,10 @@ class RecorderTest extends TestCase
 
     public function testItThrowsRecorderFailedExceptionWhenExceptionIsThrown()
     {
-        $mock = $this->createMock(Recorder::class, ['collect']);
+        $mock = $this->createMock(Recorder::class, ['record']);
 
         $mock->expects($this->once())
-                 ->method('collect')
+                 ->method('record')
                  ->will($this->throwException(new Exception));
 
         $this->expectException(RecorderFailedException::class);
