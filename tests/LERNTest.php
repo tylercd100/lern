@@ -31,7 +31,9 @@ class LERNTest extends TestCase
 
     public function testItCallsNotifyAndRecord()
     {
-        $mock = $this->createMock('Tylercd100\LERN\LERN', array('notify','record'));
+        $mock = $this->getMockBuilder(LERN::class)
+            ->setMethods(['notify','record'])
+            ->getMock();
 
         $mock->expects($this->once())
              ->method('notify');
@@ -51,7 +53,7 @@ class LERNTest extends TestCase
 
     public function testItCallsNotifierSendMethod()
     {
-        $mock = $this->createMock('Tylercd100\LERN\Components\Notifier', array('send'));
+        $mock = $this->getMockBuilder('Tylercd100\LERN\Components\Notifier')->setMethods(array('send'))->getMock();
         $mock->expects($this->once())
              ->method('send');
         $lern = new LERN($mock);
@@ -60,9 +62,11 @@ class LERNTest extends TestCase
 
     public function testItCallsNotifierPushHandlerMethod()
     {
-        $mock = $this->createMock('Tylercd100\LERN\Components\Notifier', array('pushHandler'));
+        $mock = $this->getMockBuilder('Tylercd100\LERN\Components\Notifier')->setMethods(array('pushHandler'))->getMock();
+        
         $mock->expects($this->once())
              ->method('pushHandler');
+             
         $lern = new LERN($mock);
         $handler = (new MonologHandlerFactory)->create('mail', config('lern.notify.mail'), 'Test Subject');
         $lern->pushHandler($handler);
@@ -70,7 +74,7 @@ class LERNTest extends TestCase
 
     public function testItCallsNotifierSetSubjectMethod()
     {
-        $mock = $this->createMock('Tylercd100\LERN\Components\Notifier', array('setSubject'));
+        $mock = $this->getMockBuilder('Tylercd100\LERN\Components\Notifier')->setMethods(array('setSubject'))->getMock();
 
         $mock->expects($this->once())
              ->method('setSubject');
@@ -81,7 +85,7 @@ class LERNTest extends TestCase
 
     public function testItCallsNotifierSetMessageMethod()
     {
-        $mock = $this->createMock('Tylercd100\LERN\Components\Notifier', array('setMessage'));
+        $mock = $this->getMockBuilder('Tylercd100\LERN\Components\Notifier')->setMethods(array('setMessage'))->getMock();
 
         $mock->expects($this->once())
              ->method('setMessage');
