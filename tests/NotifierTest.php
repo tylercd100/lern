@@ -25,7 +25,10 @@ class NotifierTest extends TestCase
     {
         $this->app['config']->set('lern.notify.drivers', $this->supportedDrivers);
 
-        $observer = $this->createMock('Monolog\Logger', ['critical'], ['channelName']);
+        $observer = $this->getMockBuilder('Monolog\Logger')
+            ->setMethods(['critical'])
+            ->setConstructorArgs(['channelName'])
+            ->getMock();
         $observer->expects($this->once())
                  ->method('critical');
 
@@ -42,7 +45,10 @@ class NotifierTest extends TestCase
         foreach ($logLevels as $logLevel) {
             $this->app['config']->set('lern.notify.log_level', $logLevel);
 
-            $observer = $this->createMock('Monolog\Logger', [$logLevel], ['channelName']);
+            $observer = $this->getMockBuilder('Monolog\Logger')
+                ->setMethods([$logLevel])
+                ->setConstructorArgs(['channelName'])
+                ->getMock();
             $observer->expects($this->once())
                      ->method($logLevel);
 
@@ -55,7 +61,10 @@ class NotifierTest extends TestCase
     {
         $this->app['config']->set('lern.notify.drivers', ['slack','pushover']);
 
-        $observer = $this->createMock('Monolog\Logger', ['critical'], ['channelName']);
+        $observer = $this->getMockBuilder('Monolog\Logger')
+            ->setMethods(['critical'])
+            ->setConstructorArgs(['channelName'])
+            ->getMock();
         $observer->expects($this->once())
                  ->method('critical');
 
@@ -67,7 +76,10 @@ class NotifierTest extends TestCase
     {
         $handler = (new MonologHandlerFactory())->create('slack', config('lern.notify.slack'));
 
-        $observer = $this->createMock('Monolog\Logger', ['pushHandler'], ['channelName']);
+        $observer = $this->getMockBuilder('Monolog\Logger')
+            ->setMethods(['pushHandler'])
+            ->setConstructorArgs(['channelName'])
+            ->getMock();
         $observer->expects($this->once())
                  ->method('pushHandler');
 
@@ -148,7 +160,10 @@ class NotifierTest extends TestCase
 
         $handler = (new MonologHandlerFactory())->create('slack', config('lern.notify.slack'));
 
-        $observer = $this->createMock('Monolog\Logger', ['critical'], ['channelName']);
+        $observer = $this->getMockBuilder('Monolog\Logger')
+            ->setMethods(['critical'])
+            ->setConstructorArgs(['channelName'])
+            ->getMock();
 
         $observer->expects($this->once())
                  ->method('critical')

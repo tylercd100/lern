@@ -44,19 +44,23 @@ class TestCase extends Orchestra
 
     protected function migrateReset()
     {
-        $version = $this->app->version();
-        $version = floatval($version);
+        try {
+            $version = $this->app->version();
+            $version = floatval($version);
+        } catch (\Symfony\Component\Debug\Exception\FatalErrorException $e) {
+            $version = 0;
+        }
 
         $path = "../../../../tests/migrations";
 
-        if ($version >= 5.3) {
+        if (empty($version) || $version < 5.3) {
             $this->artisan('migrate:reset', [
-                '--database' => 'testbench',
-                '--path' => $path,
+                '--database' => 'testbench'
             ]);
         } else {
             $this->artisan('migrate:reset', [
-                '--database' => 'testbench'
+                '--database' => 'testbench',
+                '--path' => $path,
             ]);
         }
     }
