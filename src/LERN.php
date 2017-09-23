@@ -6,6 +6,8 @@ use Exception;
 use Monolog\Handler\HandlerInterface;
 use Tylercd100\LERN\Components\Notifier;
 use Tylercd100\LERN\Components\Recorder;
+use Tylercd100\LERN\Exceptions\NotifierFailedException;
+use Tylercd100\LERN\Exceptions\RecorderFailedException;
 
 /**
 * The master class
@@ -18,30 +20,23 @@ class LERN
     private $exception;
 
     /**
-     * @var \Tylercd100\LERN\Components\Notifier
+     * @var Notifier
      */
     private $notifier;
 
     /**
-     * @var \Tylercd100\LERN\Components\Recorder
+     * @var Recorder
      */
     private $recorder;
     
     /**
-     * @param \Tylercd100\LERN\Components\Notifier|null $notifier Notifier instance
-     * @param \Tylercd100\LERN\Components\Recorder|null $recorder Recorder instance
+     * @param Notifier|null $notifier Notifier instance
+     * @param Recorder|null $recorder Recorder instance
      */
     public function __construct(Notifier $notifier = null, Recorder $recorder = null)
     {
-        if (empty($notifier)) {
-            $notifier = new Notifier();
-        }
-        $this->notifier = $notifier;
-
-        if (empty($recorder)) {
-            $recorder = new Recorder();
-        }
-        $this->recorder = $recorder;
+        $this->notifier = $this->buildNotifier($notifier);
+        $this->recorder = $this->buildRecorder($recorder);
     }
 
     /**
@@ -150,4 +145,41 @@ class LERN
         return $this;
     }
 
+    /**
+     * Constructs a Notifier
+     *
+     * @param Notifier $notifier
+     * @return Notifier
+     */
+    protected function buildNotifier(Notifier $notifier = null)
+    {
+        $class = config('lern.notify.class');
+        if (empty($notifier)) {
+            $notifier = new $class();
+        }
+        if ($notifier instanceof Notifier) {
+            return $notifier;
+        } else {
+            throw new NotifierFailedException("LERN was expecting an instance of ".Notifier::class);
+        }
+    }
+
+    /**
+     * Constructs a Recorder
+     *
+     * @param Recorder $recorder
+     * @return Recorder
+     */
+    protected function buildRecorder(Recorder $recorder = null)
+    {
+        $class = config('lern.record.class');
+        if (empty($recorder)) {
+            $recorder = new $class();
+        }
+        if ($recorder instanceof Recorder) {
+            return $recorder;
+        } else {
+            throw new RecorderFailedException("LERN was expecting an instance of ".Recorder::class);
+        }
+    }
 }

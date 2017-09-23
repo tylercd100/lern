@@ -45,7 +45,7 @@ class Recorder extends Component {
             'trace'       => $e->getTraceAsString(),
         ];
 
-        $configDependant = ['user_id', 'status_code', 'method', 'data', 'url'];
+        $configDependant = array_keys($this->config['collect']);
 
         try {
             foreach ($configDependant as $key) {
@@ -92,9 +92,11 @@ class Recorder extends Component {
                 return $this->getUrl();
             case 'data':
                 return $this->getData();
+            case 'ip':
+                return $this->getIp();
             case 'status_code':
                 if ($e === null) {
-                                    return 0;
+                    return 0;
                 }
                 return $this->getStatusCode($e);
             default:
@@ -152,6 +154,15 @@ class Recorder extends Component {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Returns the IP from the request
+     *
+     * @return string
+     */
+    protected function getIp() {
+        return Request::ip();
     }
 
     /**

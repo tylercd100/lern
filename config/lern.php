@@ -4,13 +4,20 @@ return [
 
 
     'record'=>[
+        /**
+         * The Recorder to use
+         */
+        'class' => \Tylercd100\LERN\Components\Recorder::class,
+
         'table'=>'vendor_tylercd100_lern_exceptions',
+        
         'collect'=>[
             'method'=>false, //When true it will collect GET, POST, DELETE, PUT, etc...
             'data'=>false, //When true it will collect Input data
             'status_code'=>true,
             'user_id'=>false,
             'url'=>false,
+            'ip'=>false,
         ],
 
         /**
@@ -22,6 +29,11 @@ return [
     ],
 
     'notify'=>[
+        /**
+         * The Notifier to use
+         */
+        'class' => \Tylercd100\LERN\Components\Notifier::class,
+
         /**
          * The view file to use
          */
