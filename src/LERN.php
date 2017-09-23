@@ -6,6 +6,8 @@ use Exception;
 use Monolog\Handler\HandlerInterface;
 use Tylercd100\LERN\Components\Notifier;
 use Tylercd100\LERN\Components\Recorder;
+use Tylercd100\LERN\Exceptions\NotifierFailedException;
+use Tylercd100\LERN\Exceptions\RecorderFailedException;
 
 /**
 * The master class
