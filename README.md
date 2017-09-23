@@ -109,6 +109,7 @@ To change what is recorded in to the database take a look at `config/lern.php`
 	    'status_code'=>true,
 	    'user_id'=>false,
 	    'url'=>false,
+        'ip'=>false,
 	],
 ],
 ```

@@ -2,6 +2,10 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 4.2.0
+- Added the ability to use Custom Recorder and Notifier classes
+- Added IP option to the config to collect IP addresses
+
 ### 4.1.1
 - Small typo
 
