@@ -43,11 +43,13 @@
     "suggest": {
     },
     "extra": {
-        "providers": [
-            "Tylercd100\\LERN\\LERNServiceProvider"
-        ],
-        "aliases": {
-            "LERN": "Tylercd100\\LERN\\Facades\\LERN"
+        "laravel": {
+            "providers": [
+                "Tylercd100\\LERN\\LERNServiceProvider"
+            ],
+            "aliases": {
+                "LERN": "Tylercd100\\LERN\\Facades\\LERN"
+            }
         }
     }
 }
