@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 4.2.2
+- Backwards compatibility fix for custom Recorder/Notifier classes
+
 ### 4.2.1
 - Fixed Auto Package Discovery
 
