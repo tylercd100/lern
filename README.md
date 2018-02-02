@@ -133,6 +133,13 @@ To specify a different blade template file, just edit the config file
     'view'=>'exceptions.default',
 ],
 ```
+##### (deprecated) Using the `LERN::setMessage()` function
+Make sure that you set the view config value to null or the `LERN::setMessage()` will not work
+```php
+'notify'=>[
+    'view'=>null,
+],
+```
 
 #### Custom Monolog Handlers
 To use a custom Monolog Handler call the `pushHandler` method
