@@ -154,6 +154,7 @@ class LERN
     protected function buildNotifier(Notifier $notifier = null)
     {
         $class = config('lern.notify.class');
+        $class = !empty($class) ? $class : Notifier::class;
         if (empty($notifier)) {
             $notifier = new $class();
         }
@@ -173,6 +174,7 @@ class LERN
     protected function buildRecorder(Recorder $recorder = null)
     {
         $class = config('lern.record.class');
+        $class = !empty($class) ? $class : Recorder::class;
         if (empty($recorder)) {
             $recorder = new $class();
         }
