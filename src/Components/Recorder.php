@@ -57,7 +57,16 @@ class Recorder extends Component {
                 }
             }
 
-            return ExceptionModel::create($opts);
+            $class = config('lern.recorder.model');
+            $class = !empty($class) ? $class : ExceptionModel::class;
+
+            $model = new $class();
+            foreach($opts as $key => $value) {
+                $model->{$key} = $value;
+            }
+
+            $model->save();
+            return $model;
         } catch (Exception $e) {
             $code = (is_int($e->getCode()) ? $e->getCode() : 0);
             throw new RecorderFailedException($e->getMessage(), $code, $e);

@@ -9,8 +9,24 @@ return [
          */
         'class' => \Tylercd100\LERN\Components\Recorder::class,
 
+        /**
+         * The Model to use
+         */
+        'model' => \Tylercd100\LERN\Models\ExceptionModel::class,
+
+        /**
+         * Database connection to use. Null is the default connection.
+         */
+        'connection'=>null,
+
+        /**
+         * Database table to use
+         */
         'table'=>'vendor_tylercd100_lern_exceptions',
         
+        /**
+         * Information to store
+         */
         'collect'=>[
             'method'=>false, //When true it will collect GET, POST, DELETE, PUT, etc...
             'data'=>false, //When true it will collect Input data
