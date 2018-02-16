@@ -2,6 +2,11 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 4.4.0
+- Added ability to use a custom Model
+- Added ability to change database connection for the default Model
+- Added `lern.recorder.model` and `lern.recorder.connection` to the config
+
 ### 4.3.0
 - Added setLogLevel and getLogLevel functions
 
