@@ -94,6 +94,17 @@ class LERNTest extends TestCase
         $lern->setMessage("Test Message");
     }
 
+    public function testItCallsNotifierSetLogLevelMethod()
+    {
+        $mock = $this->getMockBuilder('Tylercd100\LERN\Components\Notifier')->setMethods(array('setLogLevel'))->getMock();
+
+        $mock->expects($this->once())
+             ->method('setLogLevel');
+
+        $lern = new LERN($mock);
+        $lern->setLogLevel("debug");
+    }
+
     public function testSettingAndGettingACustomNotifierInstance()
     {
         $lern = new LERN;
@@ -110,5 +121,14 @@ class LERNTest extends TestCase
         $lern->setRecorder($orig_recorder);
         $new_recorder = $lern->getRecorder();
         $this->assertEquals($new_recorder, $orig_recorder);
+    }
+
+    public function testSettingAndGettingLogLevels()
+    {
+        $lern = new LERN;
+        $level = "debug";
+        $lern->setLogLevel($level);
+        $result = $lern->getLogLevel();
+        $this->assertEquals($result, $level);
     }
 }

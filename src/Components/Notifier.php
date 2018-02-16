@@ -183,6 +183,26 @@ class Notifier extends Component
     }
 
     /**
+     * Get the log level
+     * @return string 
+     */
+    public function getLogLevel()
+    {
+        return $this->config['log_level'];
+    }
+
+    /**
+     * Set the log level
+     * @param string $level The log level
+     * @return \Tylercd100\LERN\LERN
+     */
+    public function setLogLevel($level)
+    {
+        $this->config['log_level'] = $level;
+        return $this;
+    }
+
+    /**
      * Pushes on another Monolog Handler
      * @param  HandlerInterface $handler The handler instance to add on
      * @return Notifier                  Returns this

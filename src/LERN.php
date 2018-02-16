@@ -124,6 +124,26 @@ class LERN
     }
 
     /**
+     * Get the log level
+     * @return string 
+     */
+    public function getLogLevel()
+    {
+        return $this->notifier->getLogLevel();
+    }
+
+    /**
+     * Set the log level
+     * @param string $level The log level
+     * @return \Tylercd100\LERN\LERN
+     */
+    public function setLogLevel($level)
+    {
+        $this->notifier->setLogLevel($level);
+        return $this;
+    }
+
+    /**
      * Set a string or a closure to be called that will generate the message body for the notification
      * @param function|string $cb This closure function will be passed an Exception and must return a string
      * @return $this
