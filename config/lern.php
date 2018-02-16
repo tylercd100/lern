@@ -9,6 +9,11 @@ return [
          */
         'class' => \Tylercd100\LERN\Components\Recorder::class,
 
+        /**
+         * The Model to use
+         */
+        'model' => \Tylercd100\LERN\Models\ExceptionModel::class,
+
         'table'=>'vendor_tylercd100_lern_exceptions',
         
         'collect'=>[
