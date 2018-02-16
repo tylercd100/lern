@@ -120,6 +120,16 @@ To change what is recorded in to the database take a look at `config/lern.php`
 ### Notifications
 LERN uses the Monolog library to send notifications. If you need more than the supported notification channels, then you can add your own custom Monolog handlers. To start using any of the supported handlers just edit the provided config file `config/lern.php`.
 
+
+#### Changing the log level programmatically
+Some notification services support different log levels. If changing the config value `lern.notify.log_level` is not enough then try it this way:
+```php
+// Change the log level. 
+// Default is: critical
+// Options are: debug, info, notice, warning, error, critical, alert, emergency
+LERN::setLogLevel("emergency");
+```
+
 #### Changing the subject line
 Some notification services support a subject line, this is how you change it.
 ```php

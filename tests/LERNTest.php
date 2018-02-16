@@ -94,6 +94,19 @@ class LERNTest extends TestCase
         $lern->setMessage("Test Message");
     }
 
+    public function testItCallsNotifierSetLogLevelMethod()
+    {
+        $mock = $this->getMockBuilder('Tylercd100\LERN\Components\Notifier')->setMethods(array('setLogLevel'))->getMock();
+
+        $mock->expects($this->once())
+             ->method('setLogLevel');
+
+        $lern = new LERN($mock);
+        $lern->setLogLevel("debug");
+
+        $this->assertEquals($lern->getLogLevel(), "debug");
+    }
+
     public function testSettingAndGettingACustomNotifierInstance()
     {
         $lern = new LERN;
