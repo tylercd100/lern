@@ -103,8 +103,6 @@ class LERNTest extends TestCase
 
         $lern = new LERN($mock);
         $lern->setLogLevel("debug");
-
-        $this->assertEquals($lern->getLogLevel(), "debug");
     }
 
     public function testSettingAndGettingACustomNotifierInstance()
@@ -123,5 +121,14 @@ class LERNTest extends TestCase
         $lern->setRecorder($orig_recorder);
         $new_recorder = $lern->getRecorder();
         $this->assertEquals($new_recorder, $orig_recorder);
+    }
+
+    public function testSettingAndGettingLogLevels()
+    {
+        $lern = new LERN;
+        $level = "debug";
+        $lern->setLogLevel($level);
+        $result = $lern->getLogLevel();
+        $this->assertEquals($result, $level);
     }
 }
