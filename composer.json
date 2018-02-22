@@ -10,6 +10,7 @@
         "LERN",
         "tylercd100"
     ],
+    "type": "laravel-package",
     "homepage": "https://github.com/tylercd100/lern",
     "license": "MIT",
     "authors": [
