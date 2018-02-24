@@ -121,7 +121,7 @@ class Notifier extends Component
                 "method" => Request::method(),
                 "input" => Input::all(),
                 "user" => Auth::user(),
-            ])->render();
+            ])->renderContents();
         }
         return false;
     }
