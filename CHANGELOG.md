@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 4.4.1
+- Prevent view from being output to the console
+
 ### 4.4.0
 - Added ability to use a custom Model
 - Added ability to change database connection for the default Model
