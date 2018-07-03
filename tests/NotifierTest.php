@@ -7,6 +7,8 @@ use Tylercd100\LERN\Components\Notifier;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
 use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\Notify\Factories\MonologHandlerFactory;
+use Illuminate\Support\Facades\Cache;
+
 
 class NotifierTest extends TestCase
 {
@@ -44,6 +46,7 @@ class NotifierTest extends TestCase
         $this->app['config']->set('lern.notify.drivers', ['slack']);
 
         foreach ($logLevels as $logLevel) {
+            Cache::flush();
             $this->app['config']->set('lern.notify.log_level', $logLevel);
 
             $observer = $this->getMockBuilder('Monolog\Logger')
