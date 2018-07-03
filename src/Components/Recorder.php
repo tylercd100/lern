@@ -24,6 +24,7 @@ class Recorder extends Component {
      */
     protected $absolutelyDontHandle = [
         \Tylercd100\LERN\Exceptions\RecorderFailedException::class,
+        \Doctrine\DBAL\Driver\PDOException::class,
     ];
 
     /**
@@ -56,33 +57,28 @@ class Recorder extends Component {
 
         $configDependant = array_keys($this->config['collect']);
 
-        try {
-            foreach ($configDependant as $key) {
-                if ($this->canCollect($key)) {
-                    $value = $this->collect($key, $e);
-                    if ($value !== null) {
-                        $opts[$key] = $value;
-                    }
+        foreach ($configDependant as $key) {
+            if ($this->canCollect($key)) {
+                $value = $this->collect($key, $e);
+                if ($value !== null) {
+                    $opts[$key] = $value;
                 }
             }
-
-            $class = config('lern.recorder.model');
-            $class = !empty($class) ? $class : ExceptionModel::class;
-
-            $model = new $class();
-            foreach($opts as $key => $value) {
-                $model->{$key} = $value;
-            }
-
-            $model->save();
-
-            Cache::forever($this->getCacheKey($e), Carbon::now());
-
-            return $model;
-        } catch (Exception $e) {
-            $code = (is_int($e->getCode()) ? $e->getCode() : 0);
-            throw new RecorderFailedException($e->getMessage(), $code, $e);
         }
+
+        $class = config('lern.recorder.model');
+        $class = !empty($class) ? $class : ExceptionModel::class;
+
+        $model = new $class();
+        foreach($opts as $key => $value) {
+            $model->{$key} = $value;
+        }
+
+        $model->save();
+
+        Cache::forever($this->getCacheKey($e), Carbon::now());
+
+        return $model;
     }
 
     /**
