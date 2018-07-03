@@ -4,6 +4,7 @@ namespace Tylercd100\LERN\Tests;
 
 use Tylercd100\LERN\Components\Recorder;
 use Tylercd100\LERN\Exceptions\RecorderFailedException;
+use Tylercd100\LERN\Exceptions\NotifierFailedException;
 use Exception;
 use Illuminate\Support\Facades\Input;
 
@@ -78,6 +79,13 @@ class RecorderTest extends TestCase
         $recorder = new Recorder;
         $result = $recorder->record(new RecorderFailedException);
         $this->assertEquals(false, $result);
+    }
+
+    public function testRecordShouldReturnTrueWhenPassedNotifierFailedException()
+    {
+        $recorder = new Recorder;
+        $result = $recorder->record(new NotifierFailedException);
+        $this->assertEquals(true, $result);
     }
 
     public function testGetDataFunction()

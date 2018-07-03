@@ -5,6 +5,7 @@ namespace Tylercd100\LERN\Tests;
 use Exception;
 use Tylercd100\LERN\Components\Notifier;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
+use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\Notify\Factories\MonologHandlerFactory;
 
 class NotifierTest extends TestCase
@@ -181,5 +182,12 @@ class NotifierTest extends TestCase
         $notifier = new Notifier;
         $result = $notifier->send(new NotifierFailedException);
         $this->assertEquals(false, $result);
+    }
+
+    public function testSendShouldReturnTrueWhenPassedRecorderFailedException()
+    {
+        $notifier = new Notifier;
+        $result = $notifier->send(new RecorderFailedException);
+        $this->assertEquals(true, $result);
     }
 }
