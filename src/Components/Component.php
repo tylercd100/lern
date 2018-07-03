@@ -4,6 +4,7 @@ namespace Tylercd100\LERN\Components;
 
 use Exception;
 use Illuminate\Support\Facades\Cache;
+use Carbon\Carbon;
 
 abstract class Component {
 

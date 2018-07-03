@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\LERN\Models\ExceptionModel;
+use Carbon\Carbon;
 
 class Recorder extends Component {
 
