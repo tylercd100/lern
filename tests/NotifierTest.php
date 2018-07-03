@@ -203,7 +203,7 @@ class NotifierTest extends TestCase
         $result = $notifier->send(new Exception);
         $this->assertEquals(false, $result);
 
-        sleep(2);
+        sleep(config("lern.ratelimit")+2);
 
         $result = $notifier->send(new Exception);
         $this->assertEquals(true, $result);

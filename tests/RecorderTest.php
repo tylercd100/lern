@@ -108,7 +108,7 @@ class RecorderTest extends TestCase
         $result = $recorder->record(new Exception);
         $this->assertEquals(false, $result);
 
-        sleep(2);
+        sleep(config("lern.ratelimit")+2);
 
         $result = $recorder->record(new Exception);
         $this->assertInstanceOf(\Tylercd100\LERN\Models\ExceptionModel::class, $result);

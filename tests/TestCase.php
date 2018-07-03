@@ -78,6 +78,7 @@ class TestCase extends Orchestra
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('cache.default', 'file');
+        $app['config']->set('lern.ratelimit', 5);
 
         // Setup default database to use sqlite :memory:
         $app['config']->set('database.default', 'testbench');

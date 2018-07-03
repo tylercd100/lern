@@ -2,6 +2,13 @@
 
 return [
 
+    /** 
+     * To avoid infinite loops that generate thousands of records/notifications in an instant 
+     * Please make sure you use a Cache driver that is persistant such as redis, memcache, file, etc
+     * 
+     * Value is in seconds.
+     */
+    'ratelimit' => 1, 
 
     'record'=>[
         /**
