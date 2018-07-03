@@ -131,4 +131,15 @@ class LERNTest extends TestCase
         $result = $lern->getLogLevel();
         $this->assertEquals($result, $level);
     }
+
+    public function testCantConnectToDatabaseError()
+    {
+        $lern = new LERN;
+        
+        // Mysql should not work as we have not configured it properly.
+        // this should reproduce an error similar to having the database offline.
+        \Config::set("database.default", "mysql"); 
+        $lern->handle(new Exception);
+        
+    }
 }

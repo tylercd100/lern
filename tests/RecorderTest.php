@@ -85,7 +85,7 @@ class RecorderTest extends TestCase
     {
         $recorder = new Recorder;
         $result = $recorder->record(new NotifierFailedException);
-        $this->assertEquals(true, $result);
+        $this->assertInstanceOf(\Tylercd100\LERN\Models\ExceptionModel::class, $result);
     }
 
     public function testGetDataFunction()
