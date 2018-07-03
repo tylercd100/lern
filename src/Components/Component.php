@@ -37,8 +37,7 @@ abstract class Component {
 
         $sent_at = Cache::get($this->getCacheKey($e));
         if (empty($sent_at) || $sent_at->addSeconds(1)->lte(Carbon::now())) {
-            var_dump([$this->getCacheKey($e), $sent_at]);
-            return false; // The cache is empty or enough time has passed
+            return false; // The cache is empty or enough time has passed, so lets continue
         } else {
             return true;
         }
