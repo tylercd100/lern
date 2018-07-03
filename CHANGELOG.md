@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 4.5.1
+- Fixed issues with `PDOException`
+
 ### 4.5.0
 - Added rate limiting of 1 second per Exception class for recording in the database
 - Added rate limiting of 1 second per Exception class for sending a notification
