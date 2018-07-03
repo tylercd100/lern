@@ -16,7 +16,7 @@ abstract class Component {
      * 
      * @var array
      */
-    private $absolutelyDontHandle = [];
+    protected $absolutelyDontHandle = [];
 
     /**
      * Determine if the exception is in the "do not handle" list.

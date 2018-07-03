@@ -20,7 +20,7 @@ class Recorder extends Component {
     /**
      * @var array
      */
-    private $absolutelyDontHandle = [
+    protected $absolutelyDontHandle = [
         \Tylercd100\LERN\Exceptions\RecorderFailedException::class,
     ];
 

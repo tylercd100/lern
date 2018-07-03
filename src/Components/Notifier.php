@@ -23,7 +23,7 @@ class Notifier extends Component
     /**
      * @var array
      */
-    private $absolutelyDontHandle = [
+    protected $absolutelyDontHandle = [
         \Tylercd100\LERN\Exceptions\NotifierFailedException::class,
     ];
 
