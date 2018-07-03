@@ -188,4 +188,3 @@ LERN::notify($exception);
 ## Roadmap
 - Support more Monolog Handlers
 - Exception report page or command to easily identify your application's issues.
-- Notification rate limiting and/or grouping. 
