@@ -98,4 +98,19 @@ class RecorderTest extends TestCase
         $this->assertArrayNotHasKey('password', $result['user']);
         $this->assertArrayNotHasKey('email', $result['user']);
     }
+
+    public function testRateLimiting()
+    {
+        $recorder = new Recorder;
+        $result = $recorder->record(new Exception);
+        $this->assertInstanceOf(\Tylercd100\LERN\Models\ExceptionModel::class, $result);
+
+        $result = $recorder->record(new Exception);
+        $this->assertEquals(false, $result);
+
+        sleep(2);
+
+        $result = $recorder->record(new Exception);
+        $this->assertInstanceOf(\Tylercd100\LERN\Models\ExceptionModel::class, $result);
+    }
 }

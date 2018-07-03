@@ -190,4 +190,19 @@ class NotifierTest extends TestCase
         $result = $notifier->send(new RecorderFailedException);
         $this->assertEquals(true, $result);
     }
+
+    public function testRateLimiting()
+    {
+        $notifier = new Notifier;
+        $result = $notifier->send(new Exception);
+        $this->assertEquals(true, $result);
+
+        $result = $notifier->send(new Exception);
+        $this->assertEquals(false, $result);
+
+        sleep(2);
+
+        $result = $notifier->send(new Exception);
+        $this->assertEquals(true, $result);
+    }
 }
