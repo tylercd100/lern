@@ -140,9 +140,9 @@ class LERNTest extends TestCase
         // Mysql should not work as we have not configured it properly.
         // this should reproduce an error similar to having the database offline.
         \Config::set("database.default", "mysql"); 
+        $this->expectException(RecorderFailedException::class);
         $lern->handle(new Exception);
 
-        $this->expectException(RecorderFailedException::class);
         
     }
 }
