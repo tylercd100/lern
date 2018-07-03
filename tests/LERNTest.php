@@ -6,6 +6,7 @@ use Tylercd100\LERN\LERN;
 use Tylercd100\LERN\Facades\LERN as LERNFacade;
 use Tylercd100\LERN\Components\Notifier;
 use Tylercd100\LERN\Components\Recorder;
+use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\Notify\Factories\MonologHandlerFactory;
 use Exception;
 
@@ -135,11 +136,13 @@ class LERNTest extends TestCase
     public function testCantConnectToDatabaseError()
     {
         $lern = new LERN;
-        
+
         // Mysql should not work as we have not configured it properly.
         // this should reproduce an error similar to having the database offline.
         \Config::set("database.default", "mysql"); 
         $lern->handle(new Exception);
+
+        $this->expectException(RecorderFailedException::class);
         
     }
 }
