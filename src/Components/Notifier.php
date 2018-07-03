@@ -5,6 +5,7 @@ namespace Tylercd100\LERN\Components;
 use Auth;
 use Exception;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Cache;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
 use Request;

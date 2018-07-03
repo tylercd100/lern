@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\LERN\Models\ExceptionModel;
