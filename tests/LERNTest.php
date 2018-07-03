@@ -142,7 +142,5 @@ class LERNTest extends TestCase
         \Config::set("database.default", "mysql"); 
         $this->expectException(RecorderFailedException::class);
         $lern->handle(new Exception);
-
-        
     }
 }

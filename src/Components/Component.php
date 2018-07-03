@@ -3,6 +3,7 @@
 namespace Tylercd100\LERN\Components;
 
 use Exception;
+use Illuminate\Support\Facades\Cache;
 
 abstract class Component {
 
@@ -33,6 +34,23 @@ abstract class Component {
             }
         }
 
-        return false;
+        $sent_at = Cache::store('file')->get($this->getCacheKey($e));
+
+        if (empty($sent_at) || $sent_at->addSeconds(1)->lte(Carbon::now())) {
+            return false; // The cache is empty or enough time has passed
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Returns the cache key for the exception with the current component
+     * 
+     * @param \Exception $e
+     * @return string
+     */
+    protected function getCacheKey(Exception $e)
+    {
+        return "LERN::".static::class."::".get_class($e);
     }
 }
