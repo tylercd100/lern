@@ -76,7 +76,7 @@ class Recorder extends Component {
 
             $model->save();
 
-            Cache::store('file')->put($this->getCacheKey($e), Carbon::now());
+            Cache::store('file')->forever($this->getCacheKey($e), Carbon::now());
 
             return $model;
         } catch (Exception $e) {
