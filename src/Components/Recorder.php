@@ -18,6 +18,13 @@ class Recorder extends Component {
     protected $config = [];
 
     /**
+     * @var array
+     */
+    private $absolutelyDontHandle = [
+        \Tylercd100\LERN\Exceptions\RecorderFailedException::class,
+    ];
+
+    /**
      * The constructor
      */
     public function __construct() {

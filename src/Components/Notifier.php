@@ -21,6 +21,13 @@ class Notifier extends Component
     protected $contextCb;
 
     /**
+     * @var array
+     */
+    private $absolutelyDontHandle = [
+        \Tylercd100\LERN\Exceptions\NotifierFailedException::class,
+    ];
+
+    /**
      * You can provide a Monolog Logger instance to use in the constructor
      * @param Logger|null $log Logger instance to use
      */

@@ -8,7 +8,7 @@
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="false">
+         stopOnFailure="true">
     <php>
         <env name="APP_KEY" value="8bff3a6e61f548c0ecd9ad52e3cf3738"/>
     </php>

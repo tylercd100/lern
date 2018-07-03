@@ -12,12 +12,11 @@ abstract class Component {
     protected $dontHandle = [];
 
     /**
+     * This array is overwritten in each component
+     * 
      * @var array
      */
-    private $absolutelyDontHandle = [
-        \Tylercd100\LERN\Exceptions\RecorderFailedException::class,
-        \Tylercd100\LERN\Exceptions\NotifierFailedException::class,
-    ];
+    private $absolutelyDontHandle = [];
 
     /**
      * Determine if the exception is in the "do not handle" list.
