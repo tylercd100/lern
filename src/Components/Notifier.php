@@ -248,7 +248,7 @@ class Notifier extends Component
             
             $notify->{$level}($message, $context);
 
-            Cache::store('file')->forever($this->getCacheKey($e), Carbon::now());
+            Cache::forever($this->getCacheKey($e), Carbon::now());
             
             return true;
         } catch (Exception $e) {

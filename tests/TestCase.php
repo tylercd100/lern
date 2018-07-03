@@ -30,6 +30,7 @@ class TestCase extends Orchestra
 
     public function tearDown()
     {
+        Cache::flush();
         parent::tearDown();
     }
 
@@ -75,6 +76,8 @@ class TestCase extends Orchestra
      */
     protected function getEnvironmentSetUp($app)
     {
+        $app['config']->set('cache.default', 'file');
+
         // Setup default database to use sqlite :memory:
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [
