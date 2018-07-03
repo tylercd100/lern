@@ -3,6 +3,8 @@
 namespace Tylercd100\LERN\Components;
 
 use Exception;
+use Illuminate\Support\Facades\Cache;
+use Carbon\Carbon;
 
 abstract class Component {
 
@@ -12,12 +14,11 @@ abstract class Component {
     protected $dontHandle = [];
 
     /**
+     * This array is overwritten in each component
+     * 
      * @var array
      */
-    private $absolutelyDontHandle = [
-        \Tylercd100\LERN\Exceptions\RecorderFailedException::class,
-        \Tylercd100\LERN\Exceptions\NotifierFailedException::class,
-    ];
+    protected $absolutelyDontHandle = [];
 
     /**
      * Determine if the exception is in the "do not handle" list.
@@ -34,6 +35,22 @@ abstract class Component {
             }
         }
 
-        return false;
+        $sent_at = Cache::get($this->getCacheKey($e));
+        if (empty($sent_at) || $sent_at->addSeconds(config('lern.ratelimit', 1))->lte(Carbon::now())) {
+            return false; // The cache is empty or enough time has passed, so lets continue
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Returns the cache key for the exception with the current component
+     * 
+     * @param \Exception $e
+     * @return string
+     */
+    protected function getCacheKey(Exception $e)
+    {
+        return "LERN::".static::class."::".get_class($e);
     }
 }

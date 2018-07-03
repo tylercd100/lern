@@ -4,6 +4,7 @@ namespace Tylercd100\LERN\Tests;
 
 use Tylercd100\LERN\Components\Recorder;
 use Tylercd100\LERN\Exceptions\RecorderFailedException;
+use Tylercd100\LERN\Exceptions\NotifierFailedException;
 use Exception;
 use Illuminate\Support\Facades\Input;
 
@@ -80,6 +81,13 @@ class RecorderTest extends TestCase
         $this->assertEquals(false, $result);
     }
 
+    public function testRecordShouldReturnTrueWhenPassedNotifierFailedException()
+    {
+        $recorder = new Recorder;
+        $result = $recorder->record(new NotifierFailedException);
+        $this->assertInstanceOf(\Tylercd100\LERN\Models\ExceptionModel::class, $result);
+    }
+
     public function testGetDataFunction()
     {
         $data = ['user'=>['email','mail@test.com','password'=>'foobar','name'=>'Foo Bar'],'status'=>200];
@@ -89,5 +97,20 @@ class RecorderTest extends TestCase
         $result = $this->invokeMethod($recorder, 'getData', [$data]);
         $this->assertArrayNotHasKey('password', $result['user']);
         $this->assertArrayNotHasKey('email', $result['user']);
+    }
+
+    public function testRateLimiting()
+    {
+        $recorder = new Recorder;
+        $result = $recorder->record(new Exception);
+        $this->assertInstanceOf(\Tylercd100\LERN\Models\ExceptionModel::class, $result);
+
+        $result = $recorder->record(new Exception);
+        $this->assertEquals(false, $result);
+
+        sleep(config("lern.ratelimit")+2);
+
+        $result = $recorder->record(new Exception);
+        $this->assertInstanceOf(\Tylercd100\LERN\Models\ExceptionModel::class, $result);
     }
 }

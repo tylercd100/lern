@@ -6,9 +6,11 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\LERN\Models\ExceptionModel;
+use Carbon\Carbon;
 
 class Recorder extends Component {
 
@@ -16,6 +18,13 @@ class Recorder extends Component {
      * @var mixed
      */
     protected $config = [];
+
+    /**
+     * @var array
+     */
+    protected $absolutelyDontHandle = [
+        \Tylercd100\LERN\Exceptions\RecorderFailedException::class,
+    ];
 
     /**
      * The constructor
@@ -66,6 +75,9 @@ class Recorder extends Component {
             }
 
             $model->save();
+
+            Cache::forever($this->getCacheKey($e), Carbon::now());
+
             return $model;
         } catch (Exception $e) {
             $code = (is_int($e->getCode()) ? $e->getCode() : 0);

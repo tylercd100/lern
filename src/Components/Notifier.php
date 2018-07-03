@@ -5,12 +5,14 @@ namespace Tylercd100\LERN\Components;
 use Auth;
 use Exception;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Cache;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
 use Request;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
 use Tylercd100\Notify\Drivers\FromConfig as Notify;
 use View;
+use Carbon\Carbon;
 
 class Notifier extends Component
 {
@@ -19,6 +21,13 @@ class Notifier extends Component
     protected $messageCb;
     protected $subjectCb;
     protected $contextCb;
+
+    /**
+     * @var array
+     */
+    protected $absolutelyDontHandle = [
+        \Tylercd100\LERN\Exceptions\NotifierFailedException::class,
+    ];
 
     /**
      * You can provide a Monolog Logger instance to use in the constructor
@@ -229,16 +238,18 @@ class Notifier extends Component
         $message = $this->getMessage($e);
         $subject = $this->getSubject($e);
         $context = $this->getContext($e, $context);
-
+        
         try {
             $notify = new Notify($this->config, $this->log, $subject);
-
+            
             $level = (array_key_exists('log_level', $this->config) && !empty($this->config['log_level']))
-                ? $this->config['log_level']
-                : 'critical';
-
+            ? $this->config['log_level']
+            : 'critical';
+            
             $notify->{$level}($message, $context);
 
+            Cache::forever($this->getCacheKey($e), Carbon::now());
+            
             return true;
         } catch (Exception $e) {
             $code = (is_int($e->getCode()) ? $e->getCode() : 0);

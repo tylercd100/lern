@@ -5,6 +5,7 @@ namespace Tylercd100\LERN\Tests;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Tylercd100\LERN\Factories\MonologHandlerFactory;
 use Exception;
+use Illuminate\Support\Facades\Cache;
 
 class TestCase extends Orchestra
 {
@@ -30,6 +31,7 @@ class TestCase extends Orchestra
 
     public function tearDown()
     {
+        Cache::flush();
         parent::tearDown();
     }
 
@@ -75,6 +77,9 @@ class TestCase extends Orchestra
      */
     protected function getEnvironmentSetUp($app)
     {
+        $app['config']->set('cache.default', 'file');
+        $app['config']->set('lern.ratelimit', 5);
+
         // Setup default database to use sqlite :memory:
         $app['config']->set('database.default', 'testbench');
         $app['config']->set('database.connections.testbench', [

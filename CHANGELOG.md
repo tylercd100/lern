@@ -2,6 +2,12 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 4.5.0
+- Added rate limiting of 1 second per Exception class for recording in the database
+- Added rate limiting of 1 second per Exception class for sending a notification
+- Made internal exception `Tylercd100\LERN\Exceptions\RecorderFailedException` notifiable. (previously it would be ignored and not sent on any notification channels)
+- Made internal exception `Tylercd100\LERN\Exceptions\NotifierFailedException` recordable. (previously it would be ignored and not be recorded in the database)
+
 ### 4.4.0
 - Added ability to use a custom Model
 - Added ability to change database connection for the default Model

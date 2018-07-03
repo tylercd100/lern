@@ -5,7 +5,10 @@ namespace Tylercd100\LERN\Tests;
 use Exception;
 use Tylercd100\LERN\Components\Notifier;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
+use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\Notify\Factories\MonologHandlerFactory;
+use Illuminate\Support\Facades\Cache;
+
 
 class NotifierTest extends TestCase
 {
@@ -43,6 +46,7 @@ class NotifierTest extends TestCase
         $this->app['config']->set('lern.notify.drivers', ['slack']);
 
         foreach ($logLevels as $logLevel) {
+            Cache::flush();
             $this->app['config']->set('lern.notify.log_level', $logLevel);
 
             $observer = $this->getMockBuilder('Monolog\Logger')
@@ -181,5 +185,27 @@ class NotifierTest extends TestCase
         $notifier = new Notifier;
         $result = $notifier->send(new NotifierFailedException);
         $this->assertEquals(false, $result);
+    }
+
+    public function testSendShouldReturnTrueWhenPassedRecorderFailedException()
+    {
+        $notifier = new Notifier;
+        $result = $notifier->send(new RecorderFailedException);
+        $this->assertEquals(true, $result);
+    }
+
+    public function testRateLimiting()
+    {
+        $notifier = new Notifier;
+        $result = $notifier->send(new Exception);
+        $this->assertEquals(true, $result);
+
+        $result = $notifier->send(new Exception);
+        $this->assertEquals(false, $result);
+
+        sleep(config("lern.ratelimit")+2);
+
+        $result = $notifier->send(new Exception);
+        $this->assertEquals(true, $result);
     }
 }
