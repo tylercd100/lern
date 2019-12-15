@@ -31,8 +31,8 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": "^7.0",
-        "illuminate/support": "^6.0.4",
+        "php": "^7.1",
+        "illuminate/support": "^6.0",
         "monolog/monolog": "^1.22",
         "tylercd100/laravel-notify": "dev-master"
     },
