@@ -4,7 +4,6 @@ namespace Tylercd100\LERN\Components;
 
 use Exception;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
@@ -152,7 +151,7 @@ class Recorder extends Component {
      * @return array|null The Input data or null
      */
     protected function getData() {
-        $data = Input::all();
+        $data = Request::all();
         if (is_array($data)) {
             return $this->excludeKeys($data);
         } else {
