@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Cache;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
-use Request;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
 use Tylercd100\Notify\Drivers\FromConfig as Notify;
 use View;
