@@ -2,6 +2,9 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### 5.0.0
+- Updated for Laravel 6
+
 ### 4.5.1
 - Fixed issues with `PDOException`
 
