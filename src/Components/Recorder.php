@@ -65,7 +65,7 @@ class Recorder extends Component {
             }
         }
 
-        $class = config('lern.recorder.model');
+        $class = config('lern.record.model');
         $class = !empty($class) ? $class : ExceptionModel::class;
 
         $model = new $class();
