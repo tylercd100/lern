@@ -37,7 +37,7 @@
         "tylercd100/laravel-notify": "dev-master"
     },
     "require-dev": {
-        "orchestra/testbench": "4.*",
+        "orchestra/testbench": "^4.0",
         "phpunit/phpunit": "^8.0",
         "doctrine/dbal": "~2.3"
     },
