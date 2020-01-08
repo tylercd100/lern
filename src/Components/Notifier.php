@@ -4,11 +4,10 @@ namespace Tylercd100\LERN\Components;
 
 use Auth;
 use Exception;
-use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Cache;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Logger;
-use Request;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
 use Tylercd100\Notify\Drivers\FromConfig as Notify;
 use View;
@@ -128,7 +127,7 @@ class Notifier extends Component
                 "exception" => $e,
                 "url" => Request::url(),
                 "method" => Request::method(),
-                "input" => Input::all(),
+                "input" => Request::all(),
                 "user" => Auth::user(),
             ])->render();
         }

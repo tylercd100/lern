@@ -31,14 +31,14 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": "^7.0",
-        "illuminate/support": "^5.5",
+        "php": "^7.1",
+        "illuminate/support": "^6.0",
         "monolog/monolog": "^1.22",
-        "tylercd100/laravel-notify": "^2.0"
+        "tylercd100/laravel-notify": "dev-master"
     },
     "require-dev": {
-        "orchestra/testbench": "^3.5",
-        "phpunit/phpunit": "^6.3.0",
+        "orchestra/testbench": "4.*",
+        "phpunit/phpunit": "^8.0",
         "doctrine/dbal": "~2.3"
     },
     "suggest": {
@@ -52,5 +52,11 @@
                 "LERN": "Tylercd100\\LERN\\Facades\\LERN"
             }
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/robbielove/laravel-notify.git"
+        }
+    ]
 }

@@ -2,11 +2,11 @@
 
 namespace Tylercd100\LERN\Tests;
 
+use Illuminate\Support\Facades\Request;
 use Tylercd100\LERN\Components\Recorder;
 use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
 use Exception;
-use Illuminate\Support\Facades\Input;
 
 class RecorderTest extends TestCase
 {
@@ -91,7 +91,7 @@ class RecorderTest extends TestCase
     public function testGetDataFunction()
     {
         $data = ['user'=>['email','mail@test.com','password'=>'foobar','name'=>'Foo Bar'],'status'=>200];
-        Input::replace($data);
+        Request::replace($data);
         $this->app['config']->set('lern.record.excludeKeys', ['password','email']);
         $recorder = new Recorder;
         $result = $this->invokeMethod($recorder, 'getData', [$data]);
