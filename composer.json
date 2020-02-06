@@ -33,7 +33,7 @@
     "require": {
         "php": "^7.2",
         "illuminate/support": "^6.0",
-        "monolog/monolog": "^1.22",
+        "monolog/monolog": "^1.12 || ^2.0",
         "tylercd100/laravel-notify": "^3.0"
     },
     "require-dev": {
