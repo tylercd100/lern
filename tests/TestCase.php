@@ -12,7 +12,7 @@ class TestCase extends Orchestra
     /**
      * Setup the test environment.
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -29,7 +29,7 @@ class TestCase extends Orchestra
         ];
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Cache::flush();
         parent::tearDown();

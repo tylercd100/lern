@@ -10,13 +10,13 @@ use Exception;
 
 class RecorderTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->migrate();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->migrateReset();
         parent::tearDown();

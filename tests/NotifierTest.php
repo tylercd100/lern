@@ -12,13 +12,13 @@ use Illuminate\Support\Facades\Cache;
 
 class NotifierTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->notifier = new Notifier;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->notifier);
         parent::tearDown();
