@@ -32,7 +32,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^7.2",
-        "illuminate/support": "^6.0",
+        "illuminate/support": "^7.0",
         "monolog/monolog": "^1.22",
         "tylercd100/laravel-notify": "^3.0"
     },
