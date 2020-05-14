@@ -33,11 +33,11 @@
     "require": {
         "php": "^7.2",
         "illuminate/support": "^7.0",
-        "monolog/monolog": "^1.22",
-        "tylercd100/laravel-notify": "^3.0"
+        "monolog/monolog": "^2.0",
+        "tylercd100/laravel-notify": "dev-master"
     },
     "require-dev": {
-        "orchestra/testbench": "^4.0",
+        "orchestra/testbench": "^5.0",
         "phpunit/phpunit": "^8.0",
         "doctrine/dbal": "~2.3"
     },
@@ -54,6 +54,17 @@
         }
     },
     "repositories": [
-
+        {
+            "type": "vcs",
+            "url": "git@github.com:robbielove/laravel-notify.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:robbielove/monolog-mailgun.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:robbielove/monolog-sms.git"
+        }
     ]
 }
