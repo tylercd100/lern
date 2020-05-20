@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Request;
 use Tylercd100\LERN\Components\Recorder;
 use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
-use Exception;
+use Throwable;
 
 class RecorderTest extends TestCase
 {
@@ -57,7 +57,7 @@ class RecorderTest extends TestCase
             'url'=>false
         ]);
         $recorder = new Recorder;
-        $model = $recorder->record(new Exception);
+        $model = $recorder->record(new Throwable);
         $this->assertEquals($model->url, null);
     }
 
@@ -71,7 +71,7 @@ class RecorderTest extends TestCase
 
         $this->expectException(RecorderFailedException::class);
 
-        $mock->record(new Exception);
+        $mock->record(new Throwable);
     }
 
     public function testRecordShouldReturnFalseWhenPassedRecorderFailedException()
@@ -102,15 +102,15 @@ class RecorderTest extends TestCase
     public function testRateLimiting()
     {
         $recorder = new Recorder;
-        $result = $recorder->record(new Exception);
+        $result = $recorder->record(new Throwable);
         $this->assertInstanceOf(\Tylercd100\LERN\Models\ExceptionModel::class, $result);
 
-        $result = $recorder->record(new Exception);
+        $result = $recorder->record(new Throwable);
         $this->assertEquals(false, $result);
 
         sleep(config("lern.ratelimit")+2);
 
-        $result = $recorder->record(new Exception);
+        $result = $recorder->record(new Throwable);
         $this->assertInstanceOf(\Tylercd100\LERN\Models\ExceptionModel::class, $result);
     }
 }

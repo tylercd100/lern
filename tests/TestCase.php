@@ -187,7 +187,7 @@ class TestCase extends Orchestra
         if (!is_dir($root)) {
             $root = __DIR__ . "/../vendor/orchestra/testbench-core/laravel/resources/views";
             if(!is_dir($root)) {
-                throw new Exception("Could not find laravel inside of testbench. Is testbench installed?");
+                throw new Throwable("Could not find laravel inside of testbench. Is testbench installed?");
             }
         }
         

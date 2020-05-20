@@ -69,10 +69,10 @@ class Notifier extends Component
 
     /**
      * Returns the result of the message closure
-     * @param  Exception $e The Exception instance that you want to build the message around
+     * @param  Throwable $e The Throwable instance that you want to build the message around
      * @return string       The message string
      */
-    public function getMessage(Exception $e)
+    public function getMessage(Throwable $e)
     {
         $msg = $this->getMessageViaView($e);
 
@@ -88,11 +88,11 @@ class Notifier extends Component
     }
 
     /**
-     * Gets a basic Exception message
-     * @param  Exception $e The Exception instance that you want to build the message around
+     * Gets a basic Throwable message
+     * @param  Throwable $e The Throwable instance that you want to build the message around
      * @return String       Returns the message string
      */
-    public function getMessageViaDefault(Exception $e)
+    public function getMessageViaDefault(Throwable $e)
     {
         $msg = get_class($e)." was thrown! \n".$e->getMessage();
         if ($this->config['includeExceptionStackTrace'] === true) {
@@ -102,11 +102,11 @@ class Notifier extends Component
     }
 
     /**
-     * Gets the Exception message using a callback if it is set
-     * @param  Exception    $e The Exception instance that you want to build the message around
+     * Gets the Throwable message using a callback if it is set
+     * @param  Throwable    $e The Throwable instance that you want to build the message around
      * @return String|false    Returns the message string or false
      */
-    public function getMessageViaCallback(Exception $e)
+    public function getMessageViaCallback(Throwable $e)
     {
         if (is_callable($this->messageCb)) {
             return $this->messageCb->__invoke($e);
@@ -115,11 +115,11 @@ class Notifier extends Component
     }
 
     /**
-     * Gets the Exception message using a Laravel view file
-     * @param  Exception    $e The Exception instance that you want to build the message around
+     * Gets the Throwable message using a Laravel view file
+     * @param  Throwable    $e The Throwable instance that you want to build the message around
      * @return String|false    Returns the message string or false
      */
-    public function getMessageViaView(Exception $e)
+    public function getMessageViaView(Throwable $e)
     {
         $path = @$this->config["view"];
         if (!empty($path) && View::exists($path)) {
@@ -147,10 +147,10 @@ class Notifier extends Component
 
     /**
      * Returns the result of the subject closure
-     * @param  Exception $e The Exception instance that you want to build the subject around
+     * @param  Throwable $e The Throwable instance that you want to build the subject around
      * @return string       The subject string
      */
-    public function getSubject(Exception $e)
+    public function getSubject(Throwable $e)
     {
         if (is_callable($this->subjectCb)) {
             return $this->subjectCb->__invoke($e);
@@ -172,10 +172,10 @@ class Notifier extends Component
 
     /**
      * Returns the result of the context closure
-     * @param  Exception $e The Exception instance that you want to build the context around
+     * @param  Throwable $e The Throwable instance that you want to build the context around
      * @return array        The context array
      */
-    public function getContext(Exception $e, $context = [])
+    public function getContext(Throwable $e, $context = [])
     {
         //This needs a better solution. How do I set specific context needs for different drivers?
         if (in_array('pushover', $this->config['drivers'])) {
@@ -223,12 +223,12 @@ class Notifier extends Component
 
     /**
      * Triggers the Monolog Logger instance to log an error to all handlers
-     * @param  Exception $e The exception to use
+     * @param  Throwable $e The exception to use
      * @param  array $context Additional information that you would like to pass to Monolog
      * @return bool
      * @throws NotifierFailedException
      */
-    public function send(Exception $e, array $context = [])
+    public function send(Throwable $e, array $context = [])
     {
         if ($this->shouldntHandle($e)) {
             return false;
@@ -250,7 +250,7 @@ class Notifier extends Component
             Cache::forever($this->getCacheKey($e), Carbon::now());
             
             return true;
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $code = (is_int($e->getCode()) ? $e->getCode() : 0);
             throw new NotifierFailedException($e->getMessage(), $code, $e);
         }
