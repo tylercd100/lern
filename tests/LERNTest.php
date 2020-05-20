@@ -8,7 +8,7 @@ use Tylercd100\LERN\Components\Notifier;
 use Tylercd100\LERN\Components\Recorder;
 use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\Notify\Factories\MonologHandlerFactory;
-use Exception;
+use Throwable;
 
 class LERNTest extends TestCase
 {
@@ -42,13 +42,13 @@ class LERNTest extends TestCase
         $mock->expects($this->once())
              ->method('record');
 
-        $mock->handle(new Exception);
+        $mock->handle(new Throwable);
     }
 
     public function testRecordReturnsCorrectInstance()
     {
         $lern = new LERN;
-        $data = $lern->record(new Exception);
+        $data = $lern->record(new Throwable);
         $this->assertInstanceOf('Tylercd100\LERN\Models\ExceptionModel', $data);
     }
 
@@ -58,7 +58,7 @@ class LERNTest extends TestCase
         $mock->expects($this->once())
              ->method('send');
         $lern = new LERN($mock);
-        $lern->notify(new Exception);
+        $lern->notify(new Throwable);
     }
 
     public function testItCallsNotifierPushHandlerMethod()
@@ -141,6 +141,6 @@ class LERNTest extends TestCase
         // this should reproduce an error similar to having the database offline.
         \Config::set("database.default", "mysql"); 
         $this->expectException(\Illuminate\Database\QueryException::class);
-        $lern->handle(new Exception);
+        $lern->handle(new Throwable);
     }
 }

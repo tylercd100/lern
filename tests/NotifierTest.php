@@ -2,7 +2,7 @@
 
 namespace Tylercd100\LERN\Tests;
 
-use Exception;
+use Throwable;
 use Tylercd100\LERN\Components\Notifier;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
 use Tylercd100\LERN\Exceptions\RecorderFailedException;
@@ -36,7 +36,7 @@ class NotifierTest extends TestCase
                  ->method('critical');
 
         $subject = new Notifier($observer);
-        $subject->send(new Exception);
+        $subject->send(new Throwable);
     }
 
     public function testSendsDifferentLogLevels()
@@ -57,7 +57,7 @@ class NotifierTest extends TestCase
                      ->method($logLevel);
 
             $subject = new Notifier($observer);
-            $subject->send(new Exception);
+            $subject->send(new Throwable);
         }
     }
 
@@ -73,7 +73,7 @@ class NotifierTest extends TestCase
                  ->method('critical');
 
         $subject = new Notifier($observer);
-        $subject->send(new Exception);
+        $subject->send(new Throwable);
     }
 
     public function testLoggerCallsPushesHandler()
@@ -96,15 +96,15 @@ class NotifierTest extends TestCase
     {
         config(['lern.notify.view' => null]);
         $this->notifier = new Notifier;
-        $result = $this->notifier->getMessage(new Exception);
-        $this->assertContains('Exception was thrown!', $result);
+        $result = $this->notifier->getMessage(new Throwable);
+        $this->assertContains('Throwable was thrown!', $result);
     }
 
     public function testNotifierReturnsTheCorrectMessageWhenUsingTheDefaultView()
     {
         config(['lern.notify.view' => "exceptions.default"]);
         $this->notifier = new Notifier;
-        $result = $this->notifier->getMessage(new Exception);
+        $result = $this->notifier->getMessage(new Throwable);
         $this->assertNotEmpty($result);
     }
 
@@ -115,13 +115,13 @@ class NotifierTest extends TestCase
         $this->notifier->setMessage(function ($e) {
             return "This is a test";
         });
-        $result = $this->notifier->getMessage(new Exception);
+        $result = $this->notifier->getMessage(new Throwable);
         $this->assertEquals($result, "This is a test");
     }
 
     public function testNotifierReturnsTheCorrectMessageWhenUsingView()
     {
-        $result = $this->notifier->getMessage(new Exception);
+        $result = $this->notifier->getMessage(new Throwable);
         $this->assertEquals($result, "<h1>Hello</h1>");
     }
 
@@ -130,7 +130,7 @@ class NotifierTest extends TestCase
         $this->notifier->setContext(function ($e, $context) {
             return ["text"=>"This is a test"];
         });
-        $result = $this->notifier->getContext(new Exception);
+        $result = $this->notifier->getContext(new Throwable);
         $this->assertEquals($result, ["text"=>"This is a test"]);
     }
 
@@ -139,7 +139,7 @@ class NotifierTest extends TestCase
         config(['lern.notify.view' => null]);
         $this->notifier = new Notifier;
         $this->notifier->setMessage("This is a test");
-        $result = $this->notifier->getMessage(new Exception);
+        $result = $this->notifier->getMessage(new Throwable);
         $this->assertEquals($result, "This is a test");
     }
 
@@ -148,14 +148,14 @@ class NotifierTest extends TestCase
         $this->notifier->setSubject(function ($e) {
             return "This is a test";
         });
-        $result = $this->notifier->getSubject(new Exception);
+        $result = $this->notifier->getSubject(new Throwable);
         $this->assertEquals($result, "This is a test");
     }
 
     public function testItReturnsTheCorrectSubjectWhenUsingString()
     {
         $this->notifier->setSubject("This is a test");
-        $result = $this->notifier->getSubject(new Exception);
+        $result = $this->notifier->getSubject(new Throwable);
         $this->assertEquals($result, "This is a test");
     }
 
@@ -171,13 +171,13 @@ class NotifierTest extends TestCase
 
         $observer->expects($this->once())
                  ->method('critical')
-                 ->will($this->throwException(new Exception));
+                 ->will($this->throwException(new Throwable));
 
         $this->expectException('Tylercd100\LERN\Exceptions\NotifierFailedException');
 
         $subject = new Notifier($observer);
         $subject->pushHandler($handler);
-        $subject->send(new Exception);
+        $subject->send(new Throwable);
     }
 
     public function testSendShouldReturnFalseWhenPassedNotifierFailedException()
@@ -197,15 +197,15 @@ class NotifierTest extends TestCase
     public function testRateLimiting()
     {
         $notifier = new Notifier;
-        $result = $notifier->send(new Exception);
+        $result = $notifier->send(new Throwable);
         $this->assertEquals(true, $result);
 
-        $result = $notifier->send(new Exception);
+        $result = $notifier->send(new Throwable);
         $this->assertEquals(false, $result);
 
         sleep(config("lern.ratelimit")+2);
 
-        $result = $notifier->send(new Exception);
+        $result = $notifier->send(new Throwable);
         $this->assertEquals(true, $result);
     }
 }

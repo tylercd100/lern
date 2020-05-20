@@ -4,7 +4,7 @@ namespace Tylercd100\LERN\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 use Tylercd100\LERN\Factories\MonologHandlerFactory;
-use Exception;
+use Throwable;
 use Illuminate\Support\Facades\Cache;
 
 class TestCase extends Orchestra

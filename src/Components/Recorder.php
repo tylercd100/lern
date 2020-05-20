@@ -2,7 +2,7 @@
 
 namespace Tylercd100\LERN\Components;
 
-use Exception;
+use Throwable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Cache;
@@ -39,7 +39,7 @@ class Recorder extends Component {
      * @return false|ExceptionModel
      * @throws RecorderFailedException
      */
-    public function record(Exception $e)
+    public function record(Throwable $e)
     {
         if ($this->shouldntHandle($e)) {
             return false;
@@ -94,11 +94,11 @@ class Recorder extends Component {
 
     /**
      * @param string $key
-     * @param Exception $e
+     * @param Throwable $e
      * @return array|int|null|string
-     * @throws Exception
+     * @throws Throwable
      */
-    protected function collect($key, Exception $e = null) {
+    protected function collect($key, Throwable $e = null) {
         switch ($key) {
             case 'user_id':
                 return $this->getUserId();
@@ -116,7 +116,7 @@ class Recorder extends Component {
                 }
                 return $this->getStatusCode($e);
             default:
-                throw new Exception("{$key} is not supported! Therefore it cannot be collected!");
+                throw new Throwable("{$key} is not supported! Therefore it cannot be collected!");
         }
     }
 
@@ -182,8 +182,8 @@ class Recorder extends Component {
     }
 
     /**
-     * Gets the status code of the Exception
-     * @param  Exception $e The Exception to check
+     * Gets the status code of the Throwable
+     * @param  Throwable $e The Throwable to check
      * @return string|integer The status code value
      */
     protected function getStatusCode(Exception $e) {

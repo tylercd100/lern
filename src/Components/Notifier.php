@@ -3,7 +3,7 @@
 namespace Tylercd100\LERN\Components;
 
 use Auth;
-use Exception;
+use Throwable;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Cache;
 use Monolog\Handler\HandlerInterface;
