@@ -35,7 +35,7 @@ class Recorder extends Component {
 
     /**
      * Records an Exception to the database
-     * @param  Exception $e The exception you want to record
+     * @param  Throwable $e The exception you want to record
      * @return false|ExceptionModel
      * @throws RecorderFailedException
      */
@@ -116,7 +116,8 @@ class Recorder extends Component {
                 }
                 return $this->getStatusCode($e);
             default:
-                throw new Throwable("{$key} is not supported! Therefore it cannot be collected!");
+                ddd();// what to do here ??????????
+//                throw new Exception("{$key} is not supported! Therefore it cannot be collected!");
         }
     }
 
@@ -186,7 +187,7 @@ class Recorder extends Component {
      * @param  Throwable $e The Throwable to check
      * @return string|integer The status code value
      */
-    protected function getStatusCode(Exception $e) {
+    protected function getStatusCode(Throwable $e) {
         if ($e instanceof HttpExceptionInterface) {
             return $e->getStatusCode();
         } else {
@@ -197,7 +198,7 @@ class Recorder extends Component {
     /**
      * This function will remove all keys from an array recursively as defined in the config file
      * @param  array $data The array to remove keys from
-     * @return void
+     * @return array $data
      */
     protected function excludeKeys(array $data) {
         $keys = isset($this->config['excludeKeys']) ? $this->config['excludeKeys'] : [];
