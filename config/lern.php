@@ -2,13 +2,13 @@
 
 return [
 
-    /** 
-     * To avoid infinite loops that generate thousands of records/notifications in an instant 
+    /**
+     * To avoid infinite loops that generate thousands of records/notifications in an instant
      * Please make sure you use a Cache driver that is persistant such as redis, memcache, file, etc
-     * 
+     *
      * Value is in seconds.
      */
-    'ratelimit' => 1, 
+    'ratelimit' => 1,
 
     'record'=>[
         /**
@@ -30,7 +30,7 @@ return [
          * Database table to use
          */
         'table'=>'vendor_tylercd100_lern_exceptions',
-        
+
         /**
          * Information to store
          */
@@ -71,12 +71,12 @@ return [
          * The log level to use when notifying
          */
         'log_level' => 'critical', //Options are: debug, info, notice, warning, error, critical, alert, emergency.
-        
+
         /**
          * When using the default message body this will also include the stack trace
          */
         'includeExceptionStackTrace' => true,
-        
+
         /**
          * mail, pushover, slack, etc...
          */
@@ -120,16 +120,6 @@ return [
         ],
 
         /**
-         * HipChat settings
-         */
-        'hipchat'=>[
-            'token' => env('HIPCHAT_APP_TOKEN'),
-            'room'  => 'room',
-            'name'  => 'name',
-            'notify'=> true,
-        ],
-
-        /**
          * Flowdock settings
          */
         'flowdock'=>[
@@ -161,14 +151,7 @@ return [
             'secret' => env('TWILIO_AUTH_SECRET'),
             'to'     => env('TWILIO_TO'),
             'from'   => env('TWILIO_FROM'),
-        ],
-
-        /**
-         * Raven settings
-         */
-        'raven'=>[
-            'dsn'   => env('RAVEN_DSN'),
         ]
     ],
-    
+
 ];

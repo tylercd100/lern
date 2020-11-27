@@ -29,17 +29,18 @@
             "Tylercd100\\LERN\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": "^7.2",
-        "illuminate/support": "^7.0",
+        "illuminate/support": "^6.0|^7.0|^8.0",
         "monolog/monolog": "^2.0",
         "tylercd100/laravel-notify": "dev-master"
     },
     "require-dev": {
-        "orchestra/testbench": "^5.0",
-        "phpunit/phpunit": "^8.0",
-        "doctrine/dbal": "~2.3"
+        "orchestra/testbench": "^4.0|^5.0|^6.0",
+        "phpunit/phpunit": "~8.0|~9.3.0",
+        "doctrine/dbal": "^2.6|^3.0"
     },
     "suggest": {
     },
@@ -56,15 +57,15 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:robbielove/laravel-notify.git"
+            "url": "https://github.com/tortuetorche/laravel-notify"
         },
         {
             "type": "vcs",
-            "url": "git@github.com:robbielove/monolog-mailgun.git"
+            "url": "https://github.com/tortuetorche/monolog-mailgun"
         },
         {
             "type": "vcs",
-            "url": "git@github.com:robbielove/monolog-sms.git"
+            "url": "https://github.com/tortuetorche/monolog-sms"
         }
     ]
 }

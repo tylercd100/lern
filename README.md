@@ -14,12 +14,10 @@ Currently supported notification channels via [Monolog](https://github.com/Selda
 - Email
 - [Pushover](https://pushover.net/)
 - [Slack](https://slack.com/)
-- [Hipchat](https://www.hipchat.com/)
 - [Fleephook](https://fleep.io/)
 - [Flowdock](https://www.flowdock.com/)
 - [Plivo](https://www.plivo.com/) an SMS messaging service.
 - [Twilio](https://www.twilio.com/) an SMS messaging service.
-- [Sentry](https://getsentry.com) via [Raven](https://github.com/getsentry/raven-php)
 - [Mailgun](https://mailgun.com)
 
 ## Version Compatibility
@@ -40,7 +38,7 @@ Make sure that the config file now includes the new `lern.notify.class` and `ler
 ## Migrating from `2.x` to `3.x`
 Version 3.x introduces the ability to collect more information from the error such as the user_id, url, method, and input data. In order to use 3.x you will need to copy over the new [config file](https://github.com/tylercd100/lern/blob/master/config/lern.php), the migration file and then migrate it.
 ```php
-# This will only copy over the migration file. For the config file you can either include the --force flag (Which will overwrite it) or copy it manually from github 
+# This will only copy over the migration file. For the config file you can either include the --force flag (Which will overwrite it) or copy it manually from github
 php artisan vendor:publish --provider="Tylercd100\LERN\LERNServiceProvider"
 php artisan migrate
 ```
@@ -59,7 +57,7 @@ Then you will need to run these commands in the terminal in order to copy the co
 php artisan vendor:publish --provider="Tylercd100\LERN\LERNServiceProvider"
 ```
 
-Before you run the migration you may want to take a look at `config/lern.php` and change the `table` property to a table name that you would like to use. After that run the migration 
+Before you run the migration you may want to take a look at `config/lern.php` and change the `table` property to a table name that you would like to use. After that run the migration
 ```bash
 php artisan migrate
 ```
@@ -70,7 +68,7 @@ To use LERN modify the report method in the `app/Exceptions/Handler.php` file
 public function report(Exception $e)
 {
     if ($this->shouldReport($e)) {
-    
+
     	//Check to see if LERN is installed otherwise you will not get an exception.
         if (app()->bound("lern")) {
             app()->make("lern")->handle($e); //Record and Notify the Exception
@@ -82,12 +80,12 @@ public function report(Exception $e)
             */
         }
     }
-	
+
     return parent::report($e);
 }
 ```
 
-Dont forget to add this to the top of the file 
+Dont forget to add this to the top of the file
 ```php
 //If you updated your aliases array in "config/app.php"
 use LERN;
@@ -143,7 +141,7 @@ LERN uses the Monolog library to send notifications. If you need more than the s
 #### Changing the log level programmatically
 Some notification services support different log levels. If changing the config value `lern.notify.log_level` is not enough then try it this way:
 ```php
-// Change the log level. 
+// Change the log level.
 // Default is: critical
 // Options are: debug, info, notice, warning, error, critical, alert, emergency
 LERN::setLogLevel("emergency");
@@ -176,8 +174,8 @@ Make sure that you set the view config value to null or the `LERN::setMessage()`
 #### Custom Monolog Handlers
 To use a custom Monolog Handler call the `pushHandler` method
 ```php
-use Monolog\Handler\HipChatHandler;
-$handler = new HipChatHandler($token,$room);
+use Monolog\Handler\SlackHandler;
+$handler = new SlackHandler($token, $channel);
 LERN::pushHandler($handler);
 LERN::notify($exception);
 ```

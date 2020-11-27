@@ -4,6 +4,7 @@ namespace Tylercd100\LERN\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
 use Tylercd100\LERN\Factories\MonologHandlerFactory;
+use Exception;
 use Throwable;
 use Illuminate\Support\Facades\Cache;
 
@@ -22,7 +23,6 @@ class TestCase extends Orchestra
             'pushover',
             'plivo',
             'twilio',
-            'hipchat',
             'flowdock',
             'fleephook',
             'mailgun'
@@ -170,13 +170,6 @@ class TestCase extends Orchestra
             'from'    => '+16666666666',
         ]);
 
-        $app['config']->set('lern.notify.hipchat', [
-            'token' => 'test-token',
-            'room'  => 'test-room',
-            'name'  => 'test-name',
-            'notify'  => false,
-        ]);
-
         $app['config']->set('lern.notify.flowdock', [
             'token' => 'token',
         ]);
@@ -187,10 +180,10 @@ class TestCase extends Orchestra
         if (!is_dir($root)) {
             $root = __DIR__ . "/../vendor/orchestra/testbench-core/laravel/resources/views";
             if(!is_dir($root)) {
-                throw new Throwable("Could not find laravel inside of testbench. Is testbench installed?");
+                throw new Exception("Could not find laravel inside of testbench. Is testbench installed?");
             }
         }
-        
+
         // Test view
         copy(__DIR__ . "/views/test.blade.php", "{$root}/test.blade.php");
 
