@@ -65,7 +65,7 @@ php artisan migrate
 ## Usage
 To use LERN modify the report method in the `app/Exceptions/Handler.php` file
 ```php
-public function report(Exception $e)
+public function report(Throwable $e)
 {
     if ($this->shouldReport($e)) {
 
@@ -89,8 +89,10 @@ Dont forget to add this to the top of the file
 ```php
 //If you updated your aliases array in "config/app.php"
 use LERN;
+use Throwable;
 //or if you didnt...
 use Tylercd100\LERN\Facades\LERN;
+use Throwable;
 ```
 
 ### Recording
