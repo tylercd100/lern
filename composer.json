@@ -35,7 +35,7 @@
         "php": "^7.2",
         "illuminate/support": "^6.0|^7.0|^8.0",
         "monolog/monolog": "^2.0",
-        "tylercd100/laravel-notify": "dev-master"
+        "tylercd100/laravel-notify": "dev-next"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0|^5.0|^6.0",
