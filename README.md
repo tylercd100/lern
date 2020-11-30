@@ -31,7 +31,9 @@ Currently supported notification channels via [Monolog](https://github.com/Selda
  5.4.x    | 3.x
  5.5.x    | 4.x
  5.6.x    | 4.x
- 6.x      | 5.x
+ 6.x      | 5.x and 6.x
+ 7.x      | 6.x
+ 8.x      | 6.x
 
 ## Migrating from `3.x` to `4.x`
 Make sure that the config file now includes the new `lern.notify.class` and `lern.record.class` settings. Check the [config file](https://github.com/tylercd100/lern/blob/master/config/lern.php) to see how they are used.
