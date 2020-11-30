@@ -18,6 +18,7 @@ Currently supported notification channels via [Monolog](https://github.com/Selda
 - [Flowdock](https://www.flowdock.com/)
 - [Plivo](https://www.plivo.com/) an SMS messaging service.
 - [Twilio](https://www.twilio.com/) an SMS messaging service.
+- [Sentry](https://getsentry.com) via [Sentry SDK for PHP](https://github.com/getsentry/sentry-php)
 - [Mailgun](https://mailgun.com)
 
 ## Version Compatibility

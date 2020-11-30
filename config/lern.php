@@ -127,6 +127,13 @@ return [
         ],
 
         /**
+         * Sentry settings
+         */
+        'sentry'=>[
+            'dsn'   => env('SENTRY_DSN'),
+        ],
+
+        /**
          * Fleephook settings
          */
         'fleephook'=>[
