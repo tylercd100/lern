@@ -2,7 +2,7 @@
 
 namespace Tylercd100\LERN\Components;
 
-use Exception;
+use Throwable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Cache;
@@ -35,11 +35,11 @@ class Recorder extends Component {
 
     /**
      * Records an Exception to the database
-     * @param  Exception $e The exception you want to record
+     * @param  Throwable $e The exception you want to record
      * @return false|ExceptionModel
      * @throws RecorderFailedException
      */
-    public function record(Exception $e)
+    public function record(Throwable $e)
     {
         if ($this->shouldntHandle($e)) {
             return false;
@@ -94,11 +94,11 @@ class Recorder extends Component {
 
     /**
      * @param string $key
-     * @param Exception $e
+     * @param Throwable $e
      * @return array|int|null|string
-     * @throws Exception
+     * @throws Throwable
      */
-    protected function collect($key, Exception $e = null) {
+    protected function collect($key, Throwable $e = null) {
         switch ($key) {
             case 'user_id':
                 return $this->getUserId();
@@ -116,7 +116,8 @@ class Recorder extends Component {
                 }
                 return $this->getStatusCode($e);
             default:
-                throw new Exception("{$key} is not supported! Therefore it cannot be collected!");
+                ddd();// what to do here ??????????
+//                throw new Exception("{$key} is not supported! Therefore it cannot be collected!");
         }
     }
 
@@ -182,11 +183,11 @@ class Recorder extends Component {
     }
 
     /**
-     * Gets the status code of the Exception
-     * @param  Exception $e The Exception to check
+     * Gets the status code of the Throwable
+     * @param  Throwable $e The Throwable to check
      * @return string|integer The status code value
      */
-    protected function getStatusCode(Exception $e) {
+    protected function getStatusCode(Throwable $e) {
         if ($e instanceof HttpExceptionInterface) {
             return $e->getStatusCode();
         } else {
@@ -197,7 +198,7 @@ class Recorder extends Component {
     /**
      * This function will remove all keys from an array recursively as defined in the config file
      * @param  array $data The array to remove keys from
-     * @return void
+     * @return array $data
      */
     protected function excludeKeys(array $data) {
         $keys = isset($this->config['excludeKeys']) ? $this->config['excludeKeys'] : [];

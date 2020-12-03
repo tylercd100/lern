@@ -2,6 +2,14 @@
 
 All notable changes to `LERN` will be documented in this file.
 
+### Unreleased
+- Updated for Laravel 7 and 8
+- Add support for PHP 7.3, 7.4, 8.0
+- Removed support for Laravel 5.5, 5.6, 5.7, 5.8
+- Removed support for PHP 7.0, 7.1
+- Removed deprecated RavenHandler handler, use sentry/sentry 3.x and their Sentry\Monolog\Handler instead
+- Removed deprecated HipChat handler, migrate to Slack and use SlackWebhookHandler or SlackHandler instead
+
 ### 5.0.0
 - Updated for Laravel 6
 

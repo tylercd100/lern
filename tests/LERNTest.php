@@ -9,6 +9,7 @@ use Tylercd100\LERN\Components\Recorder;
 use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\Notify\Factories\MonologHandlerFactory;
 use Exception;
+use Throwable;
 
 class LERNTest extends TestCase
 {
@@ -64,10 +65,10 @@ class LERNTest extends TestCase
     public function testItCallsNotifierPushHandlerMethod()
     {
         $mock = $this->getMockBuilder('Tylercd100\LERN\Components\Notifier')->setMethods(array('pushHandler'))->getMock();
-        
+
         $mock->expects($this->once())
              ->method('pushHandler');
-             
+
         $lern = new LERN($mock);
         $handler = (new MonologHandlerFactory)->create('mail', config('lern.notify.mail'), 'Test Subject');
         $lern->pushHandler($handler);
@@ -139,7 +140,7 @@ class LERNTest extends TestCase
 
         // Mysql should not work as we have not configured it properly for testing.
         // this should reproduce an error similar to having the database offline.
-        \Config::set("database.default", "mysql"); 
+        \Config::set("database.default", "mysql");
         $this->expectException(\Illuminate\Database\QueryException::class);
         $lern->handle(new Exception);
     }

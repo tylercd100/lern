@@ -2,7 +2,7 @@
 
 namespace Tylercd100\LERN\Components;
 
-use Exception;
+use Throwable;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
 
@@ -23,10 +23,10 @@ abstract class Component {
     /**
      * Determine if the exception is in the "do not handle" list.
      *
-     * @param  \Exception  $e
+     * @param  \Throwable  $e
      * @return bool
      */
-    protected function shouldntHandle(Exception $e) {
+    protected function shouldntHandle(Throwable $e) {
         $dontHandle = array_merge($this->dontHandle, $this->absolutelyDontHandle);
 
         foreach ($dontHandle as $type) {
@@ -46,10 +46,10 @@ abstract class Component {
     /**
      * Returns the cache key for the exception with the current component
      * 
-     * @param \Exception $e
+     * @param \Throwable $e
      * @return string
      */
-    protected function getCacheKey(Exception $e)
+    protected function getCacheKey(Throwable $e)
     {
         return "LERN::".static::class."::".get_class($e);
     }

@@ -2,7 +2,7 @@
 
 namespace Tylercd100\LERN;
 
-use Exception;
+use Throwable;
 use Monolog\Handler\HandlerInterface;
 use Tylercd100\LERN\Components\Notifier;
 use Tylercd100\LERN\Components\Recorder;
@@ -15,7 +15,7 @@ use Tylercd100\LERN\Exceptions\RecorderFailedException;
 class LERN 
 {
     /**
-     * @var Exception
+     * @var Throwable
      */
     private $exception;
 
@@ -41,10 +41,10 @@ class LERN
 
     /**
      * Will execute record and notify methods
-     * @param  Exception $e   The exception to use
+     * @param  Throwable $e   The exception to use
      * @return ExceptionModel the recorded Eloquent Model
      */
-    public function handle(Exception $e)
+    public function handle(Throwable $e)
     {
         $this->exception = $e;
         $this->notify($e);
@@ -53,10 +53,10 @@ class LERN
 
     /**
      * Stores the exception in the database
-     * @param  Exception $e   The exception to use
+     * @param  Throwable $e   The exception to use
      * @return \Tylercd100\LERN\Models\ExceptionModel|false The recorded Exception as an Eloquent Model
      */
-    public function record(Exception $e)
+    public function record(Throwable $e)
     {
         $this->exception = $e;
         return $this->recorder->record($e);
@@ -64,10 +64,10 @@ class LERN
 
     /**
      * Will send the exception to all monolog handlers
-     * @param  Exception $e The exception to use
+     * @param  Throwable $e The exception to use
      * @return void
      */
-    public function notify(Exception $e)
+    public function notify(Throwable $e)
     {
         $this->exception = $e;
         $this->notifier->send($e);
@@ -145,7 +145,7 @@ class LERN
 
     /**
      * Set a string or a closure to be called that will generate the message body for the notification
-     * @param function|string $cb This closure function will be passed an Exception and must return a string
+     * @param function|string $cb This closure function will be passed an Throwable and must return a string
      * @return $this
      */
     public function setMessage($cb)
@@ -156,7 +156,7 @@ class LERN
 
     /**
      * Set a string or a closure to be called that will generate the subject line for the notification
-     * @param function|string $cb This closure function will be passed an Exception and must return a string
+     * @param function|string $cb This closure function will be passed an Throwable and must return a string
      * @return $this
      */
     public function setSubject($cb)

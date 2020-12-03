@@ -7,6 +7,7 @@ use Tylercd100\LERN\Components\Recorder;
 use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
 use Exception;
+use Throwable;
 
 class RecorderTest extends TestCase
 {

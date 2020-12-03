@@ -3,12 +3,12 @@
 namespace Tylercd100\LERN\Tests;
 
 use Exception;
+use Throwable;
 use Tylercd100\LERN\Components\Notifier;
 use Tylercd100\LERN\Exceptions\NotifierFailedException;
 use Tylercd100\LERN\Exceptions\RecorderFailedException;
 use Tylercd100\Notify\Factories\MonologHandlerFactory;
 use Illuminate\Support\Facades\Cache;
-
 
 class NotifierTest extends TestCase
 {
@@ -97,7 +97,7 @@ class NotifierTest extends TestCase
         config(['lern.notify.view' => null]);
         $this->notifier = new Notifier;
         $result = $this->notifier->getMessage(new Exception);
-        $this->assertContains('Exception was thrown!', $result);
+        $this->assertStringContainsString('Exception was thrown!', $result);
     }
 
     public function testNotifierReturnsTheCorrectMessageWhenUsingTheDefaultView()
