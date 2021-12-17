@@ -29,8 +29,7 @@
             "Tylercd100\\LERN\\Tests\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    "minimum-stability": "stable",
     "require": {
         "php": "^7.2|^8.0",
         "illuminate/support": "^6.0|^7.0|^8.0",
